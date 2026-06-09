@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screenshot review — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .review-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .review-layout { grid-template-columns: 1fr; }
+  }
+
+  .upload-panel, .results-panel {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 28px;
+  }
+  .upload-panel h2, .results-panel h2 {
+    font-size: var(--fs-500);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .project-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .project-type button {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 12px 8px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: var(--fs-200);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+  }
+  .project-type button:hover {
+    border-color: var(--brand-green);
+  }
+  .project-type button.active {
+    background: var(--brand-green);
+    color: var(--brand-black);
+    border-color: var(--brand-green);
+    font-weight: 500;
+  }
+  .project-type button .pt-icon {
+    font-size: 24px;
+  }
+  .dropzone {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 56px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    background: var(--surface-section);
+    cursor: pointer;
+    transition: border-color 150ms, background 150ms;
+  }
+  .dropzone:hover {
+    border-color: var(--brand-green);
+    background: var(--surface-box);
+  }
+  .dropzone.has-file {
+    border-style: solid;
+    border-color: var(--feedback-success);
+    background: var(--surface-box);
+    padding: 24px;
+  }
+  .dropzone .drop-icon {
+    font-size: 40px;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+  .dropzone strong { color: var(--text-primary); }
+
+  .review-button {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .placeholder-notice {
+    background: var(--surface-section);
+    border-left: 4px solid var(--feedback-warning);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 32px;
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    line-height: var(--lh-150);
+  }
+  .placeholder-notice strong { color: var(--text-primary); }
+
+  /* Sample findings */
+  .finding {
+    background: var(--surface-section);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-left: 4px solid;
+  }
+  .finding.danger { border-color: var(--feedback-danger); }
+  .finding.warning { border-color: var(--feedback-warning); }
+  .finding.success { border-color: var(--feedback-success); }
+  .finding-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .finding-label {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: var(--fs-100);
+    font-weight: 500;
+  }
+  .finding.danger .finding-label { color: var(--feedback-danger); }
+  .finding.warning .finding-label { color: var(--feedback-warning); }
+  .finding.success .finding-label { color: var(--feedback-success); }
+  .finding-title {
+    font-size: var(--fs-400);
+    font-weight: 500;
+    margin-left: auto;
+  }
+  .finding-detail {
+    font-size: var(--fs-200);
+    line-height: var(--lh-150);
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .finding-ref {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+  }
+
+  /* Sample preview */
+  .sample-thumb {
+    background: var(--gray-975);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    color: white;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sample-thumb::after {
+    content: '';
+    position: absolute;
+    right: -20%;
+    top: -30%;
+    width: 60%;
+    height: 160%;
+    background: radial-gradient(circle, #76B900 0%, transparent 60%);
+    opacity: 0.4;
+  }
+  .sample-thumb-inner { position: relative; z-index: 1; }
+  .sample-thumb .label { font-size: var(--fs-100); opacity: 0.7; margin-bottom: 4px; }
+  .sample-thumb .title { font-size: var(--fs-700); font-weight: 700; max-width: 60%; }
+  .sample-thumb .fake-cta {
+    background: #76B900;
+    color: white; /* This is the violation we'll flag */
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: var(--fs-200);
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html" class="active">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <h1 class="page-title">Screenshot review</h1>
+  <p class="page-lede">Upload a slide, video frame, or web mockup. Pick the project type. The tool reads it against the design system and returns specific findings — each one cited to the section that was violated, with the fix attached.</p>
+
+  <div class="placeholder-notice">
+    <strong>Prototype preview.</strong> This page shows the intended UI and a sample review. The actual review engine (vision model that checks color, typography, layout, logo, accessibility) will be wired up in v1.1. The findings below are illustrative — they use real rules from the design system applied to a sample image.
+  </div>
+
+  <div class="review-layout">
+
+    <div class="upload-panel">
+      <h2>1. Pick the project type</h2>
+      <div class="project-type">
+        <button class="active" data-type="slide">
+          <span class="pt-icon">◧</span>
+          Slide
+        </button>
+        <button data-type="video">
+          <span class="pt-icon">▷</span>
+          Video frame
+        </button>
+        <button data-type="web">
+          <span class="pt-icon">◑</span>
+          Web mockup
+        </button>
+      </div>
+
+      <h2>2. Upload your image</h2>
+      <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+        <div class="drop-icon">⤴</div>
+        <strong>Drop a screenshot here</strong>
+        <p style="margin-top:4px;font-size:var(--fs-200);">or click to choose a file · PNG, JPG, up to 10 MB</p>
+      </div>
+      <input type="file" id="file-input" accept="image/*" style="display:none;">
+
+      <button class="btn btn-primary review-button" onclick="showSampleResults()">Review with sample data</button>
+    </div>
+
+    <div class="results-panel" id="results-panel">
+      <h2>What the tool will return</h2>
+      <p style="color:var(--text-secondary);font-size:var(--fs-300);margin-bottom:20px;">Findings group by severity. Each cites the violated rule and proposes the specific fix.</p>
+
+      <div class="sample-thumb">
+        <div class="sample-thumb-inner">
+          <div class="label">Self-Paced Course</div>
+          <div class="title">AI Infrastructure Fundamentals</div>
+          <div class="fake-cta">Enroll Now</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:var(--fs-400);font-weight:500;margin-bottom:12px;">Findings (3)</h3>
+
+      <div class="finding danger">
+        <div class="finding-head">
+          <span class="finding-label">Accessibility</span>
+          <span class="finding-title" style="font-weight:500;font-size:var(--fs-300);">CTA fails WCAG contrast</span>
+        </div>
+        <p class="finding-detail">The "Enroll Now" button uses white text on NVIDIA Green (<code>#76B900</code>). Contrast ratio is 2.41:1, below the AA minimum of 4.5:1 for normal text. Change to <strong>black text on green</strong>, or switch the background to <code>brand-green-secondary</code> (<code>#004831</code>) which passes white text at 11.6:1.</p>
+        <span class="finding-ref">Cited: §01.1.1 · §02.7.2 · §04.2.4</span>
+      </div>
+
+      <div class="finding warning">
+        <div class="finding-head">
+          <span class="finding-label">Typography</span>
+          <span class="finding-title" style="font-weight:500;font-size:var(--fs-300);">Title uses title case, not sentence case</span>
+        </div>
+        <p class="finding-detail">"AI Infrastructure Fundamentals" uses Title Case (every major word capitalized). The Academy system requires sentence case across all surfaces — only the first word and proper nouns are capitalized. Change to "AI infrastructure fundamentals."</p>
+        <span class="finding-ref">Cited: §01.3.5</span>
+      </div>
+
+      <div class="finding success">
+        <div class="finding-head">
+          <span class="finding-label">Hero composition</span>
+          <span class="finding-title" style="font-weight:500;font-size:var(--fs-300);">Correct hero variant for a course title</span>
+        </div>
+        <p class="finding-detail">Embossed-glass NVIDIA hero composition is the canonical variant for course title cards. The linear-scratched variant is correctly reserved for unit and section openers.</p>
+        <span class="finding-ref">Cited: §01.5.2 · §05.2.1</span>
+      </div>
+    </div>
+
+  </div>
+
+  <section style="margin-top:48px;background:var(--surface-section);padding:24px;border-radius:var(--radius-md);">
+    <h2 style="font-size:var(--fs-500);font-weight:700;margin-bottom:8px;">What the review covers</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px;">
+      <div>
+        <strong>Color compliance</strong>
+        <p style="font-size:var(--fs-200);color:var(--text-secondary);margin-top:4px;">Only sanctioned hex values appear · CTA buttons use black-on-green · stripe colors match arch-status rules · note callouts use feedback-attention magenta.</p>
+      </div>
+      <div>
+        <strong>Typography</strong>
+        <p style="font-size:var(--fs-200);color:var(--text-secondary);margin-top:4px;">NVIDIA Sans / Consolas only · sentence case · sizes track the type scale · code slides are dark.</p>
+      </div>
+      <div>
+        <strong>Layout</strong>
+        <p style="font-size:var(--fs-200);color:var(--text-secondary);margin-top:4px;">Matches a known pattern · component anatomy is correct · margins, gutters, and column counts within spec.</p>
+      </div>
+      <div>
+        <strong>Logo &amp; hero</strong>
+        <p style="font-size:var(--fs-200);color:var(--text-secondary);margin-top:4px;">Logo lockup not modified · clear space respected · hero composition matches a sanctioned variant.</p>
+      </div>
+      <div>
+        <strong>Icon sourcing</strong>
+        <p style="font-size:var(--fs-200);color:var(--text-secondary);margin-top:4px;">Icons look like NVDAM monoline · in one of the three sanctioned colors · concept vs. product use is appropriate.</p>
+      </div>
+      <div>
+        <strong>Accessibility</strong>
+        <p style="font-size:var(--fs-200);color:var(--text-secondary);margin-top:4px;">WCAG 2.2 AA contrast · focus indicators visible · no color-only signal · text size meets minimum.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>Other tools</h4>
+      <a href="pattern-tree.html">Pattern decision tree</a>
+      <a href="pptx-validator.html">PowerPoint validator</a>
+      <a href="icons.html">Icon library</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">Browse the system</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a check</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.project-type button').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.project-type button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+  });
+  document.getElementById('file-input').addEventListener('change', e => {
+    if (e.target.files.length > 0) {
+      const dz = document.getElementById('dropzone');
+      dz.classList.add('has-file');
+      dz.innerHTML = `<div class="drop-icon" style="color:var(--feedback-success);">✓</div>
+        <strong>${e.target.files[0].name}</strong>
+        <p style="margin-top:4px;font-size:var(--fs-200);">${(e.target.files[0].size / 1024).toFixed(0)} KB · ready to review</p>`;
+    }
+  });
+  function showSampleResults() {
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+</body>
+</html>

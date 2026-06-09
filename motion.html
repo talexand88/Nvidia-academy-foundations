@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion library — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .v2-banner {
+    background: var(--surface-section);
+    border-left: 4px solid var(--brand-green);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .v2-banner-content { flex: 1; }
+  .v2-banner h2 {
+    font-size: var(--fs-500);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .v2-banner p { color: var(--text-secondary); margin: 0; font-size: var(--fs-300); }
+  .v2-tag {
+    background: var(--brand-green);
+    color: var(--brand-black);
+    font-weight: 500;
+    font-size: var(--fs-200);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin: 32px 0;
+  }
+  @media (max-width: 800px) { .preview-grid { grid-template-columns: 1fr; } }
+
+  .preview-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+  }
+  .preview-card h3 {
+    font-size: var(--fs-500);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .preview-card p { color: var(--text-secondary); font-size: var(--fs-300); margin-bottom: 12px; }
+
+  .pair-mock {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .pair-side {
+    background: var(--surface-section);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    text-align: center;
+  }
+  .pair-side .pair-label {
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .pair-side .pair-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-green);
+    font-size: 48px;
+  }
+  .pair-side.motion .pair-icon {
+    position: relative;
+  }
+  .pair-side.motion .pair-icon::after {
+    content: '▶';
+    position: absolute;
+    bottom: -4px;
+    right: -8px;
+    font-size: 16px;
+    background: var(--brand-green);
+    color: var(--brand-black);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pair-side .duration {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  .timing-table {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .timing-table h3 { font-size: var(--fs-400); font-weight: 500; margin-bottom: 16px; }
+  .timing-table table { width: 100%; border-collapse: collapse; font-size: var(--fs-200); }
+  .timing-table td, .timing-table th { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+  .timing-table th { color: var(--text-secondary); font-weight: 500; }
+  .timing-table td:first-child { font-weight: 500; }
+  .timing-table td:nth-child(2), .timing-table td:nth-child(3) { font-family: var(--font-mono); color: var(--text-secondary); }
+
+  .planned-features {
+    background: var(--surface-section);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    margin-top: 32px;
+  }
+  .planned-features h3 { font-size: var(--fs-500); font-weight: 700; margin-bottom: 12px; }
+  .planned-features ul { font-size: var(--fs-300); line-height: var(--lh-175); color: var(--text-primary); padding-left: 24px; margin: 0; }
+
+  .lottie-cta {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin: 32px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .lottie-cta .lottie-text { flex: 1; }
+  .lottie-cta h3 { font-size: var(--fs-400); font-weight: 500; margin-bottom: 4px; }
+  .lottie-cta p { font-size: var(--fs-200); color: var(--text-secondary); margin: 0; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="active placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <h1 class="page-title">Motion library</h1>
+  <p class="page-lede">A reference library of curated Lottie animations, each paired 1:1 with a static icon from the NVDAM library. Browse, preview, grab the canonical motion for your video — the portal does not generate motion; that's what After Effects is for.</p>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="active">Motion — v2</a>
+  </nav>
+  <div class="v2-banner">
+    <div class="v2-banner-content">
+      <h2>Coming in v2</h2>
+      <p>The Motion library is structurally identical to the Icons library you can already use today. Icons are static-only in v1; v2 adds the matching motion pair for each icon, plus the timing standards and After Effects integration guidance shown below.</p>
+    </div>
+    <span class="v2-tag">v2 — Reserved</span>
+  </div>
+
+  <h2 class="section-title">How motion will be organized</h2>
+  <p style="color:var(--text-secondary);max-width:70ch;">Each icon in the NVDAM static library will have a matching Lottie animation in the curated NVIDIA workspace on lottiefiles.com. The pairing is 1:1 by design: if your slide uses the "AI compute" icon, your matching video uses its Lottie. No mixing across families, no authoring custom motion from a static SVG, no rasterizing a Lottie frame to use as a static icon.</p>
+
+  <div class="preview-grid">
+
+    <div class="preview-card">
+      <h3>Static / motion pairing</h3>
+      <p>Every static icon has exactly one canonical motion partner. Both are sourced — neither is generated in the portal.</p>
+      <div class="pair-mock">
+        <div class="pair-side">
+          <div class="pair-label">Static · NVDAM</div>
+          <div class="pair-icon">◉</div>
+          <strong style="font-size:var(--fs-200);">m48-ai-compute</strong>
+          <div class="duration">grn · blk · wht</div>
+        </div>
+        <div class="pair-side motion">
+          <div class="pair-label">Motion · LottieFiles</div>
+          <div class="pair-icon">◉</div>
+          <strong style="font-size:var(--fs-200);">m48-ai-compute-motion</strong>
+          <div class="duration">2.4 s · plays once</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-card">
+      <h3>When motion vs. static</h3>
+      <p>The rule of thumb: if the surface plays motion automatically, use the Lottie; otherwise use the static icon.</p>
+      <table style="width:100%;font-size:var(--fs-200);margin-top:16px;border-collapse:collapse;">
+        <tr><td style="padding:6px 0;color:var(--text-secondary);">PowerPoint slide</td><td style="padding:6px 0;font-family:var(--font-mono);">→ static</td></tr>
+        <tr><td style="padding:6px 0;color:var(--text-secondary);">Course video opener</td><td style="padding:6px 0;font-family:var(--font-mono);">→ motion</td></tr>
+        <tr><td style="padding:6px 0;color:var(--text-secondary);">Web page (default)</td><td style="padding:6px 0;font-family:var(--font-mono);">→ static</td></tr>
+        <tr><td style="padding:6px 0;color:var(--text-secondary);">Web hero with anim.</td><td style="padding:6px 0;font-family:var(--font-mono);">→ motion</td></tr>
+        <tr><td style="padding:6px 0;color:var(--text-secondary);">Reduced-motion users</td><td style="padding:6px 0;font-family:var(--font-mono);">→ always static</td></tr>
+        <tr><td style="padding:6px 0;color:var(--text-secondary);">Print, screenshot, social</td><td style="padding:6px 0;font-family:var(--font-mono);">→ static</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <h2 class="section-title">Motion timing standards</h2>
+  <p style="color:var(--text-secondary);max-width:70ch;">The Academy publishes default motion durations and easings for video production. Override only with a documented reason. These are referenced from §6.4.3 and will be linked to each motion icon in the v2 library.</p>
+
+  <div class="timing-table">
+    <h3>Default motion durations</h3>
+    <table>
+      <thead><tr><th>Motion type</th><th>Duration</th><th>Easing</th></tr></thead>
+      <tbody>
+        <tr><td>Element fade-in</td><td>300 ms</td><td>ease-out</td></tr>
+        <tr><td>Element fade-out</td><td>200 ms</td><td>ease-in</td></tr>
+        <tr><td>Title card hold</td><td>≥ 4 seconds</td><td>—</td></tr>
+        <tr><td>Slide transitions</td><td>400 ms</td><td>ease-in-out</td></tr>
+        <tr><td>Lottie icon plays</td><td>matches native</td><td>—</td></tr>
+        <tr><td>Camera move / zoom</td><td>≥ 1.5 seconds</td><td>ease-in-out</td></tr>
+        <tr><td>Text reveals</td><td>250 ms per line, 120 ms stagger</td><td>ease-out</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="lottie-cta">
+    <div class="lottie-text">
+      <h3>Working in video today?</h3>
+      <p>The LottieFiles team workspace is currently invite-only. Request access through Academy production. Until v2 launches, motion designers select Lotties directly from the LottieFiles workspace, paired by name to the static library.</p>
+    </div>
+    <a href="https://lottiefiles.com/" target="_blank" class="btn btn-primary">Open LottieFiles ↗</a>
+  </div>
+
+  <h2 class="section-title">Planned features (v2)</h2>
+  <div class="planned-features">
+    <h3>What v2 adds</h3>
+    <ul>
+      <li>Browsable grid of every motion icon, paired to its static counterpart</li>
+      <li>Inline Lottie preview — autoplay, hover-replay, scrub timeline</li>
+      <li>Download as <code>.json</code> (Lottie source) or <code>.lottie</code> (compressed) per icon</li>
+      <li>After Effects export — drop directly into a composition with timing rules pre-applied</li>
+      <li>Reduced-motion fallback notes per icon (which static frame to use, when)</li>
+      <li>Video-frame review tool (extension of the screenshot reviewer for video stills and exports)</li>
+      <li>After Effects starter project library — opening titles, section openers, Coming Up Next bridges, end cards</li>
+      <li>Motion timing reference — durations, easings, and how they relate to the audio mix (-16 LUFS, etc.)</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>Static counterpart</h4>
+      <a href="icons.html">Icon library (live)</a>
+      <a href="content.html">Iconography spec</a>
+    </div>
+    <div>
+      <h4>Video reference</h4>
+      <a href="content.html">Section 06 — Video specs</a>
+      <a href="https://lottiefiles.com/" target="_blank">LottieFiles workspace</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Request motion access</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

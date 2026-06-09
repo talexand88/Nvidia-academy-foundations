@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icon library — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .icons-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* Sidebar filters */
+  .filter-sidebar {
+    position: sticky;
+    top: 100px;
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+  }
+  .filter-section { margin-bottom: 24px; }
+  .filter-section h4 {
+    font-size: var(--fs-200);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .filter-section .filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .filter-section .filter-list button {
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-200);
+    color: var(--text-primary);
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .filter-section .filter-list button:hover {
+    background: var(--surface-section);
+  }
+  .filter-section .filter-list button.active {
+    background: var(--brand-green);
+    color: var(--brand-black);
+    font-weight: 500;
+  }
+  .filter-section .filter-list button .count {
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+  }
+  .filter-section .filter-list button.active .count {
+    color: var(--brand-black);
+  }
+
+  .color-toggle {
+    display: flex;
+    gap: 8px;
+  }
+  .color-toggle button {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--fs-200);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .color-toggle button .swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+  }
+  .color-toggle button.active {
+    border-color: var(--brand-green);
+    background: var(--surface-section);
+  }
+
+  /* Main */
+  .icons-main {
+    min-height: 600px;
+  }
+  .icons-search {
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--fs-400);
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-box);
+    margin-bottom: 16px;
+  }
+  .icons-search:focus {
+    outline: 2px solid var(--brand-green);
+    outline-offset: 2px;
+    border-color: var(--brand-green);
+  }
+  .results-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .icon-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 12px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 150ms, transform 150ms;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .icon-card:hover {
+    border-color: var(--brand-green);
+    transform: translateY(-2px);
+  }
+  .icon-card.on-dark {
+    background: var(--brand-black);
+    border-color: var(--gray-800);
+  }
+  .icon-card.on-dark .icon-name {
+    color: var(--gray-200);
+  }
+  .icon-card.on-dark .icon-category {
+    color: var(--gray-500);
+  }
+  .icon-svg {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-svg svg {
+    width: 100%;
+    height: 100%;
+  }
+  .icon-name {
+    font-size: var(--fs-100);
+    color: var(--text-primary);
+    line-height: 1.3;
+    max-height: 2.6em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .icon-category {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 32px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface-box);
+    border-radius: var(--radius-lg);
+    max-width: 720px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .modal-title {
+    font-size: var(--fs-700);
+    font-weight: 700;
+  }
+  .modal-meta {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+  .modal-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 4px 12px;
+  }
+  .modal-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .modal-preview {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 32px 16px 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .modal-preview.dark { background: var(--brand-black); border-color: var(--gray-800); }
+  .modal-preview.green { background: var(--brand-green); border-color: var(--brand-green); }
+  .modal-preview .modal-preview-icon {
+    width: 80px;
+    height: 80px;
+  }
+  .modal-preview .modal-preview-label {
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+  }
+  .modal-preview.dark .modal-preview-label { color: var(--gray-500); }
+  .modal-preview.green .modal-preview-label { color: var(--brand-black); }
+
+  .download-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .download-row a {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 16px;
+    background: var(--surface-section);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-primary);
+    text-align: center;
+    font-size: var(--fs-200);
+    font-weight: 500;
+  }
+  .download-row a:hover {
+    border-color: var(--brand-green);
+    background: var(--surface-box);
+  }
+
+  .modal-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .modal-section h4 {
+    font-size: var(--fs-300);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .modal-section p {
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    line-height: var(--lh-150);
+    margin: 0 0 8px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-secondary);
+  }
+
+  /* Plugin install banner */
+  .plugin-banner {
+    background: var(--surface-section);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-green);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .plugin-banner .plugin-text {
+    flex: 1;
+  }
+  .plugin-banner .plugin-text h3 {
+    font-size: var(--fs-400);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .plugin-banner .plugin-text p {
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .plugin-banner .btn { flex-shrink: 0; }
+
+  .loading-state {
+    padding: 80px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html" class="active">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <h1 class="page-title">Icon library</h1>
+  <p class="page-lede">672 NVIDIA marketing icons across 31 categories. The same library powered by the PowerPoint Icon plugin — searchable here for design reference, slide planning, and web use.</p>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html" class="active">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+  <div class="plugin-banner">
+    <div class="plugin-text">
+      <h3>Working in PowerPoint?</h3>
+      <p>The Icon Library is also available as a PowerPoint add-in. Install once, insert icons directly from your task pane.</p>
+    </div>
+    <a href="https://talexand88.github.io/nvidia-icon-addin" target="_blank" class="btn btn-primary">Install the plugin</a>
+  </div>
+
+  <div class="icons-layout">
+
+    <aside class="filter-sidebar">
+      <div class="filter-section">
+        <h4>Color variant</h4>
+        <div class="color-toggle">
+          <button data-color="grn" class="active">
+            <span class="swatch" style="background:#76B900;"></span>
+            Green
+          </button>
+          <button data-color="blk">
+            <span class="swatch" style="background:#000000;"></span>
+            Black
+          </button>
+          <button data-color="wht">
+            <span class="swatch" style="background:#FFFFFF;border:1px solid #ccc;"></span>
+            White
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h4>Category</h4>
+        <div class="filter-list" id="category-list">
+          <button data-cat="all" class="active">All categories <span class="count" id="count-all">—</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="icons-main">
+      <input type="text" class="icons-search" id="search-input" placeholder="Search 672 icons — try 'cloud', 'GPU', 'car', 'security'...">
+      <div class="results-meta">
+        <span id="results-count">Loading…</span>
+        <span class="token-pill">m48 — monochrome 48 source</span>
+      </div>
+
+      <div id="icon-grid" class="icon-grid">
+        <div class="loading-state">Loading 672 icons…</div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-meta" id="modal-meta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+    </div>
+
+    <div class="modal-preview-grid">
+      <div class="modal-preview">
+        <div class="modal-preview-icon" id="preview-light" style="color:#76B900;"></div>
+        <div class="modal-preview-label">green on white</div>
+      </div>
+      <div class="modal-preview dark">
+        <div class="modal-preview-icon" id="preview-dark" style="color:#FFFFFF;"></div>
+        <div class="modal-preview-label">white on black</div>
+      </div>
+      <div class="modal-preview green">
+        <div class="modal-preview-icon" id="preview-green" style="color:#000000;"></div>
+        <div class="modal-preview-label">black on green</div>
+      </div>
+    </div>
+
+    <div class="download-row">
+      <a href="#" id="dl-svg-grn" download>Download SVG · green</a>
+      <a href="#" id="dl-svg-blk" download>Download SVG · black</a>
+      <a href="#" id="dl-svg-wht" download>Download SVG · white</a>
+    </div>
+
+    <div class="modal-section">
+      <h4>Usage</h4>
+      <p>This icon ships in three sanctioned color variants per the system §03.2.2. Color is applied at runtime — the underlying path data is monochromatic. To recolor, swap the SVG <code>fill</code> attribute; do not generate variants outside the three sanctioned colors.</p>
+    </div>
+
+    <div class="modal-section" id="lottie-section" style="opacity:0.6;">
+      <h4>Motion pair <span style="font-size:11px;font-weight:400;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.05em;">v2 — coming soon</span></h4>
+      <p>Each static icon will be paired 1:1 with a curated Lottie animation in the v2 Motion library. The Motion tab will show the matching motion, the canonical play duration, and the After Effects integration path.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>Icon resources</h4>
+      <a href="https://talexand88.github.io/nvidia-icon-addin" target="_blank">PowerPoint plugin</a>
+      <a href="https://nvdam.nvidia.com/portals/8nw766or/IconographyPortal" target="_blank">NVDAM portal</a>
+    </div>
+    <div>
+      <h4>Related</h4>
+      <a href="motion.html">Motion library — v2</a>
+      <a href="content.html">Iconography spec</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a new icon</a>
+    </div>
+  </div>
+</footer>
+
+<script src="data/icons.js"></script>
+<script src="data/svg-paths.js"></script>
+<script src="data/synonyms.js"></script>
+<script>
+  let ICONS = [];
+  let SVG_PATHS = {};
+  let SYNONYMS = {};
+  let state = {
+    color: 'grn',
+    category: 'all',
+    query: ''
+  };
+
+  const COLOR_HEX = { grn: '#76B900', blk: '#000000', wht: '#FFFFFF' };
+
+  function loadData() {
+    if (!window.NVDAM_ICONS || !window.NVDAM_PATHS) {
+      document.getElementById('icon-grid').innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1;">
+          <h3 style="margin-bottom:12px;">Icon data didn't load</h3>
+          <p>The data scripts couldn't be found. Make sure these files exist alongside <code>icons.html</code>:</p>
+          <p style="margin-top:12px;font-family:var(--font-mono);font-size:13px;background:var(--surface-section);padding:12px;border-radius:4px;display:inline-block;text-align:left;">
+            data/icons.js<br>
+            data/svg-paths.js<br>
+            data/synonyms.js
+          </p>
+        </div>`;
+      return;
+    }
+    ICONS = window.NVDAM_ICONS;
+    SVG_PATHS = window.NVDAM_PATHS;
+    SYNONYMS = window.NVDAM_SYNONYMS || {};
+    buildCategories();
+    render();
+  }
+
+  function buildCategories() {
+    const counts = {};
+    ICONS.forEach(ic => counts[ic.category] = (counts[ic.category] || 0) + 1);
+    const sorted = Object.entries(counts).sort((a,b) => a[0].localeCompare(b[0]));
+    const list = document.getElementById('category-list');
+    document.getElementById('count-all').textContent = ICONS.length;
+    sorted.forEach(([cat, count]) => {
+      const btn = document.createElement('button');
+      btn.dataset.cat = cat;
+      btn.innerHTML = `${prettyCat(cat)} <span class="count">${count}</span>`;
+      btn.onclick = () => {
+        document.querySelectorAll('#category-list button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.category = cat;
+        render();
+      };
+      list.appendChild(btn);
+    });
+
+    document.querySelector('#category-list button[data-cat="all"]').onclick = () => {
+      document.querySelectorAll('#category-list button').forEach(b => b.classList.remove('active'));
+      document.querySelector('#category-list button[data-cat="all"]').classList.add('active');
+      state.category = 'all';
+      render();
+    };
+  }
+
+  function prettyCat(c) {
+    return c.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  }
+
+  function expandQuery(q) {
+    const terms = new Set([q]);
+    Object.entries(SYNONYMS).forEach(([key, syns]) => {
+      if (q === key || syns.includes(q)) {
+        terms.add(key);
+        syns.forEach(s => terms.add(s));
+      }
+    });
+    return Array.from(terms);
+  }
+
+  function filterIcons() {
+    let filtered = ICONS;
+    if (state.category !== 'all') {
+      filtered = filtered.filter(ic => ic.category === state.category);
+    }
+    if (state.query) {
+      const q = state.query.toLowerCase().trim();
+      const expansions = expandQuery(q);
+      filtered = filtered.filter(ic => {
+        const haystack = (ic.name + ' ' + ic.displayName + ' ' + ic.category).toLowerCase();
+        return expansions.some(term => haystack.includes(term));
+      });
+    }
+    return filtered;
+  }
+
+  function renderIcon(ic, size, color) {
+    const path = SVG_PATHS[ic.svgPathKey];
+    if (!path) return '';
+    return `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><path d="${path}" fill="${color}"/></svg>`;
+  }
+
+  function render() {
+    const filtered = filterIcons();
+    const grid = document.getElementById('icon-grid');
+    const count = document.getElementById('results-count');
+    const colorHex = COLOR_HEX[state.color];
+    const isLight = state.color === 'wht';
+
+    count.textContent = `${filtered.length} icon${filtered.length === 1 ? '' : 's'}` +
+      (state.category !== 'all' ? ` in ${prettyCat(state.category)}` : '') +
+      (state.query ? ` matching "${state.query}"` : '');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+        <h3 style="margin-bottom:8px;">No icons match</h3>
+        <p>Try a broader search term or a different category.</p>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.slice(0, 200).map(ic => `
+      <div class="icon-card ${isLight ? 'on-dark' : ''}" onclick="openModal('${ic.name}')">
+        <div class="icon-svg">${renderIcon(ic, 56, colorHex)}</div>
+        <div class="icon-name">${ic.displayName}</div>
+        <div class="icon-category">${prettyCat(ic.category)}</div>
+      </div>
+    `).join('');
+
+    if (filtered.length > 200) {
+      grid.innerHTML += `<div style="grid-column:1/-1;padding:24px;text-align:center;color:var(--text-secondary);font-size:14px;">Showing first 200 of ${filtered.length}. Refine your search to see more.</div>`;
+    }
+  }
+
+  function openModal(name) {
+    const ic = ICONS.find(i => i.name === name);
+    if (!ic) return;
+    document.getElementById('modal-title').textContent = ic.displayName;
+    document.getElementById('modal-meta').textContent = `${ic.name} · ${prettyCat(ic.category)} · pathKey: ${ic.svgPathKey}`;
+    document.getElementById('preview-light').innerHTML = renderIcon(ic, 80, '#76B900');
+    document.getElementById('preview-dark').innerHTML = renderIcon(ic, 80, '#FFFFFF');
+    document.getElementById('preview-green').innerHTML = renderIcon(ic, 80, '#000000');
+
+    ['grn','blk','wht'].forEach(c => {
+      const dl = document.getElementById('dl-svg-' + c);
+      const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="${SVG_PATHS[ic.svgPathKey]}" fill="${COLOR_HEX[c]}"/></svg>`;
+      const blob = new Blob([svgContent], {type: 'image/svg+xml'});
+      dl.href = URL.createObjectURL(blob);
+      dl.download = `${ic.name}-${c}.svg`;
+    });
+
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  document.querySelectorAll('.color-toggle button').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.color-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.color = btn.dataset.color;
+      render();
+    };
+  });
+
+  document.getElementById('search-input').addEventListener('input', e => {
+    state.query = e.target.value;
+    render();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  loadData();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code &amp; CLI — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 72px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 70ch;
+  }
+
+  /* Code block styles */
+  .code-block {
+    background: #0C0C0C;
+    color: #FFFFFF;
+    padding: 28px 32px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    line-height: 1.4;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .code-block.s-24 { font-size: 24px; }
+  .code-block.s-20 { font-size: 20px; }
+  .code-block.s-18 { font-size: 18px; }
+  .code-block.s-14 { font-size: 14px; }
+
+  /* Syntax token colors */
+  .kw  { color: #FF8FA3; }    /* keywords */
+  .str { color: #76B900; }    /* strings */
+  .com { color: #898989; font-style: italic; } /* comments */
+  .fn  { color: #66D9EF; }    /* function names, identifiers */
+  .num { color: #F5C300; }    /* numbers */
+  .pp  { color: #F5C300; }    /* preprocessor / DOCTYPE */
+  .prompt { color: #76B900; user-select: none; }
+  .path { color: #66D9EF; }
+  .output { color: #A7A7A7; }
+
+  /* Spec card */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .spec-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .spec-card .vis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+  }
+  .spec-card .name { font-size: 16px; font-weight: 500; }
+  .spec-card .codes {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .spec-card .codes .row { display: flex; justify-content: space-between; }
+  .spec-card .codes .k { color: var(--text-tertiary); }
+  .spec-card .use {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    line-height: 1.45;
+  }
+
+  /* Syntax color reference */
+  .color-row {
+    background: #0C0C0C;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 140px 1fr 90px;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .color-row .role {
+    font-family: var(--font-sans);
+    color: #A7A7A7;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .color-row .hex {
+    color: #898989;
+    font-size: 11px;
+    text-align: right;
+  }
+
+  /* Inline code in body */
+  .body-line {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin: 8px 0;
+  }
+  .body-line code {
+    font-family: var(--font-mono);
+    background: var(--surface-section);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  /* Do/Don't */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    padding: 16px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-section);
+  }
+  .dd .sample.dark {
+    background: #0C0C0C;
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Code &amp; CLI</h1>
+    <p class="subtitle">Consolas. Dark background. Same recipe in slides, video, and web.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html" class="active">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">The rule</h2>
+  <div class="summary-note">
+    All code is set in <strong>Consolas</strong> on a <strong>dark background</strong> (<code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">#0C0C0C</code>). Even inside a light-theme deck, code slides go dark. This matches every developer's terminal, and the syntax-highlight colors only read on dark.
+  </div>
+
+  <h2 class="spec-h2">Block sizes</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis" style="width:100%;">
+        <div class="code-block s-24" style="width:100%;padding:14px 18px;">
+          <span class="com"># Up to 8 lines</span><br>
+          $ docker <span class="fn">run</span>
+        </div>
+      </div>
+      <div class="name">Hero code slide</div>
+      <div class="codes">
+        <div class="row"><span class="k">Slide</span><span>24 pt</span></div>
+        <div class="row"><span class="k">Web</span><span>20 px</span></div>
+        <div class="row"><span class="k">Lines</span><span>up to 8</span></div>
+      </div>
+      <div class="use">When code is the focal point of the slide.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis" style="width:100%;">
+        <div class="code-block s-18" style="width:100%;padding:12px 16px;">
+          <span class="com"># 9–16 lines</span><br>
+          $ <span class="fn">nvidia-smi</span>
+        </div>
+      </div>
+      <div class="name">Standard code block</div>
+      <div class="codes">
+        <div class="row"><span class="k">Slide</span><span>20 pt</span></div>
+        <div class="row"><span class="k">Web</span><span>16 px</span></div>
+        <div class="row"><span class="k">Lines</span><span>9–16</span></div>
+      </div>
+      <div class="use">Default for most code examples.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis" style="width:100%;">
+        <div class="code-block s-14" style="width:100%;padding:10px 14px;">
+          <span class="com"># Up to 24 lines</span><br>
+          <span class="kw">def</span> <span class="fn">train</span>(<span class="kw">x</span>):
+        </div>
+      </div>
+      <div class="name">Dense code block</div>
+      <div class="codes">
+        <div class="row"><span class="k">Slide</span><span>18 pt</span></div>
+        <div class="row"><span class="k">Web</span><span>14 px</span></div>
+        <div class="row"><span class="k">Lines</span><span>17–24</span></div>
+      </div>
+      <div class="use">For longer examples. If you need more than 24 lines, split the slide.</div>
+    </div>
+  </div>
+
+  <div class="summary-note">If code wraps onto a second line because it's too wide, the example is too dense for the slide. Break it earlier — don't shrink the type.</div>
+
+  <h2 class="spec-h2">Full-slide example</h2>
+  <div class="code-block s-20">
+    <span class="com"># Run an NVIDIA AI Enterprise container</span><br>
+    $ docker run --gpus all -it <span class="str">nvidia/cuda:12.3.0-base-ubuntu22.04</span><br>
+    <span class="kw">root@host</span>:/# <span class="fn">nvidia-smi</span><br>
+    <span class="com"># Check GPU is detected</span>
+  </div>
+
+  <h2 class="spec-h2">Syntax colors</h2>
+  <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px;max-width:60ch;">Six token colors only. Pick one and use consistently per course — don't mix conventions slide-to-slide.</p>
+
+  <div class="color-row"><span class="role">Keyword</span><span><span class="kw">def class function const let</span></span><span class="hex">#FF8FA3</span></div>
+  <div class="color-row"><span class="role">String</span><span><span class="str">"nvidia/cuda:latest"</span></span><span class="hex">#76B900</span></div>
+  <div class="color-row"><span class="role">Function / identifier</span><span><span class="fn">nvidia-smi train fit</span></span><span class="hex">#66D9EF</span></div>
+  <div class="color-row"><span class="role">Number / directive</span><span><span class="num">12.3.0 8080 #!/bin</span></span><span class="hex">#F5C300</span></div>
+  <div class="color-row"><span class="role">Comment</span><span><span class="com"># Comment text here</span></span><span class="hex">#898989</span></div>
+  <div class="color-row"><span class="role">Plain text</span><span style="color:#FFFFFF;">root user output</span><span class="hex">#FFFFFF</span></div>
+
+  <h2 class="spec-h2">CLI prompt convention</h2>
+  <div class="code-block s-20">
+    <span class="com"># User-level commands</span><br>
+    <span class="prompt">$</span> docker --version<br>
+    <span class="com"># Root-level commands</span><br>
+    <span class="prompt">#</span> systemctl restart docker<br>
+    <span class="com"># Named host prompt</span><br>
+    <span class="kw">root@host</span>:<span class="path">/var/log</span><span class="prompt">#</span> tail -f messages
+  </div>
+  <div class="summary-note">Prompt characters (<code style="font-family:var(--font-mono);">$</code> and <code style="font-family:var(--font-mono);">#</code>) render in green to mark the line as an interactive command. Output lines below the prompt have no leading character — just the result.</div>
+
+  <h2 class="spec-h2">Inline code in body text</h2>
+  <p class="body-line">Run <code>docker run --gpus all</code> to start a container with GPU access. The default image is <code>nvidia/cuda:latest</code>.</p>
+  <p class="body-line">Set the environment variable <code>CUDA_VISIBLE_DEVICES=0</code> to limit the container to a single GPU.</p>
+  <div class="summary-note">Inline code stays at body-text size in <strong>Consolas</strong> with a subtle gray fill behind it (<code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">gray-050</code>). Not bold, not colored — just monospace and a soft background.</div>
+
+  <h2 class="spec-h2">Don'ts</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample">
+        <div style="font-family:var(--font-mono);font-size:14px;color:#000;">$ docker run -it nvidia/cuda</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Code on a light background</div>
+        <div class="why">Always dark, even inside a light-theme deck. The syntax colors don't read on white.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample dark">
+        <div style="font-family:var(--font-sans);font-size:16px;color:#fff;">$ docker run -it</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Code in NVIDIA Sans</div>
+        <div class="why">Code is always Consolas. Sans-serif breaks alignment and developer expectation.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample dark">
+        <div class="code-block" style="background:transparent;padding:0;margin:0;font-size:14px;">
+          <span style="color:#FF6B6B;">def</span> <span style="color:#FFD93D;">train</span>(<span style="color:#6BCB77;">x</span>): <span style="color:#4D96FF;">return</span> <span style="color:#FF6B9D;">x</span>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Custom syntax palette</div>
+        <div class="why">Use the six sanctioned token colors. Don't import a VS Code theme.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample dark">
+        <div style="font-family:var(--font-mono);font-size:11px;color:#A7A7A7;">$ docker run --gpus all --rm -it --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 nvidia/cuda:12.3.0-base-ubuntu22.04-rocm-runtime-mainline-build-master-latest</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Shrink to fit a long line</div>
+        <div class="why">If a command wraps or shrinks below 14 pt to fit, break the example or use a shorter equivalent.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample dark">
+        <div style="font-family:var(--font-mono);font-size:14px;color:#fff;line-height:2.2;">
+          $ docker run<br>
+          $ docker ps
+        </div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Loose line height</div>
+        <div class="why">Code uses 1.4× line height. Anything looser destroys the visual block.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample dark">
+        <div style="font-family:var(--font-mono);font-size:14px;color:#fff;text-align:center;">centered code</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Center-align code</div>
+        <div class="why">Code is always left-aligned. The leading indent is part of the meaning.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Quick reference</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Property</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Font</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">Consolas</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Background</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">#0C0C0C (always dark)</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Default text color</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">#FFFFFF</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Line height</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">1.4×</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Padding</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">28 pt vert / 32 pt horiz (slide) · 20 px / 24 px (web)</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Corner radius</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">8 pt</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Alignment</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">always left</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Inline code background</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">gray-050 with 3 pt radius</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

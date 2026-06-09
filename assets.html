@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assets — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .asset-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 150ms, transform 150ms;
+  }
+  .asset-card:hover {
+    border-color: var(--brand-green);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .asset-card.coming {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .asset-card .preview {
+    aspect-ratio: 16/10;
+    background: var(--surface-section);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .asset-card .meta {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .asset-card .tag {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+  }
+  .asset-card .tag.live { color: var(--feedback-success); }
+  .asset-card h3 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .asset-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .asset-card .count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* Previews */
+  .p-icons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 24px;
+  }
+  .p-icons svg { width: 100%; height: auto; aspect-ratio: 1; }
+
+  .p-logos {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .p-logos .mark {
+    width: 38px;
+    height: 28px;
+    background: var(--brand-green);
+    border-radius: 2px;
+  }
+  .p-logos .wm {
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+
+  .p-hero {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(circle at 70% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%),
+      linear-gradient(135deg, #0C0C0C 0%, #161616 100%);
+    position: relative;
+  }
+  .p-hero::after {
+    content: '';
+    position: absolute;
+    right: 15%;
+    top: 30%;
+    width: 30%;
+    height: 50%;
+    background: radial-gradient(ellipse, rgba(118, 185, 0, 0.9) 20%, transparent 60%);
+    filter: blur(8px);
+  }
+
+  .p-photo {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0a1929 0%, #1a2e44 50%, #0a1929 100%);
+    position: relative;
+  }
+  .p-photo::after {
+    content: '';
+    position: absolute;
+    inset: 30% 18%;
+    background: repeating-linear-gradient(90deg, #1d4567 0px, #1d4567 3px, #0d2c44 3px, #0d2c44 8px);
+    border-radius: 2px;
+  }
+
+  .p-pptx {
+    width: 65%;
+    aspect-ratio: 16/9;
+    background: #0C0C0C;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .p-pptx::after {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: -20%;
+    width: 50%;
+    height: 130%;
+    background: radial-gradient(circle, rgba(118, 185, 0, 0.6) 0%, transparent 60%);
+  }
+  .p-pptx .pptx-title {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .p-ae {
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-green);
+    font-size: 48px;
+    font-family: var(--font-mono);
+  }
+
+  .p-fonts {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    color: var(--brand-black);
+  }
+  .p-fonts .a { font-size: 56px; font-weight: 700; line-height: 1; }
+  .p-fonts .b { font-family: var(--font-mono); font-size: 36px; line-height: 1; }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 56px 0 16px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html" class="active">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Assets</h1>
+  </div>
+
+  <div class="section-label">Brand</div>
+  <div class="asset-grid">
+
+    <a href="icons.html" class="asset-card">
+      <div class="preview">
+        <div class="p-icons">
+          <svg viewBox="0 0 48 48" fill="#76B900"><circle cx="24" cy="24" r="20" fill="none" stroke="#76B900" stroke-width="2"/><path d="M16 24L22 30L34 18" fill="none" stroke="#76B900" stroke-width="2"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><rect x="8" y="14" width="32" height="20" rx="2" fill="none" stroke="#76B900" stroke-width="2"/><circle cx="24" cy="24" r="3"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><circle cx="24" cy="24" r="18" fill="none" stroke="#76B900" stroke-width="2"/><path d="M14 24h20M24 14v20" stroke="#76B900" stroke-width="2"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><rect x="6" y="10" width="36" height="28" rx="3" fill="none" stroke="#76B900" stroke-width="2"/><circle cx="16" cy="20" r="2"/><circle cx="24" cy="20" r="2"/><circle cx="32" cy="20" r="2"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><path d="M24 6L4 16v16l20 10 20-10V16L24 6z" fill="none" stroke="#76B900" stroke-width="2"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><circle cx="24" cy="20" r="8" fill="none" stroke="#76B900" stroke-width="2"/><path d="M10 40c0-8 6-14 14-14s14 6 14 14" fill="none" stroke="#76B900" stroke-width="2"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><path d="M8 24c0-8 6-14 16-14s16 6 16 14-6 14-16 14H8" fill="none" stroke="#76B900" stroke-width="2"/></svg>
+          <svg viewBox="0 0 48 48" fill="#76B900"><path d="M24 4l4 12h12l-10 8 4 14-10-8-10 8 4-14-10-8h12z" fill="none" stroke="#76B900" stroke-width="2"/></svg>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Icons</h3>
+        <div class="desc">NVIDIA marketing icons. Search, filter, download in green, black, or white.</div>
+        <div class="count">672 icons · 31 categories</div>
+      </div>
+    </a>
+
+    <a href="#" class="asset-card coming">
+      <div class="preview">
+        <div class="p-logos">
+          <div class="mark"></div>
+          <div class="wm">NVIDIA</div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>Logos</h3>
+        <div class="desc">Horizontal and vertical lockups. Two-color, all-black, all-white. SVG and PNG.</div>
+        <div class="count">— · pending NVDAM links</div>
+      </div>
+    </a>
+
+    <a href="#" class="asset-card coming">
+      <div class="preview">
+        <div class="p-hero"></div>
+      </div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>Hero compositions</h3>
+        <div class="desc">Embossed-glass and linear-scratched 3D NVIDIA renders. Use on title cards.</div>
+        <div class="count">— · sourced from NVDAM</div>
+      </div>
+    </a>
+
+    <a href="#" class="asset-card coming">
+      <div class="preview">
+        <div class="p-photo"></div>
+      </div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>Photography</h3>
+        <div class="desc">Approved data center, hardware, and lab photography. Curated for Academy use.</div>
+        <div class="count">— · sourced from NVDAM</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">Templates</div>
+  <div class="asset-grid">
+
+    <a href="#" class="asset-card coming">
+      <div class="preview" style="background:var(--gray-050);">
+        <div class="p-pptx">
+          <div class="pptx-title">Course title</div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>PowerPoint master</h3>
+        <div class="desc">Master deck with all canonical Layouts: title cards, syllabus, code, charts, notes.</div>
+        <div class="count">— · .pptx · 40 × 22.5 in canvas</div>
+      </div>
+    </a>
+
+    <a href="#" class="asset-card coming">
+      <div class="preview">
+        <div class="p-ae">▶</div>
+      </div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>After Effects starter</h3>
+        <div class="desc">Project library with title openers, section bridges, Coming Up Next, end cards.</div>
+        <div class="count">— · .aep · 1920 × 1080 · 30 fps</div>
+      </div>
+    </a>
+
+    <a href="#" class="asset-card coming">
+      <div class="preview" style="background:var(--surface-box);">
+        <div class="p-fonts">
+          <span class="a">Aa</span>
+          <span class="b">$_</span>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>Fonts</h3>
+        <div class="desc">NVIDIA Sans and Consolas font files. Installation instructions for Mac and Windows.</div>
+        <div class="count">— · .otf · .ttf</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">Plugins</div>
+  <div class="asset-grid">
+
+    <a href="https://talexand88.github.io/nvidia-icon-addin" target="_blank" class="asset-card">
+      <div class="preview" style="background:#0C0C0C;color:#fff;">
+        <div style="text-align:center;">
+          <div style="font-size:48px;color:var(--brand-green);font-weight:700;margin-bottom:6px;">+</div>
+          <div style="font-size:13px;font-family:var(--font-mono);color:var(--gray-400);">PowerPoint add-in</div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>NVIDIA Icon Library plugin</h3>
+        <div class="desc">PowerPoint task-pane add-in that inserts NVIDIA icons directly into slides. Install once.</div>
+        <div class="count">talexand88.github.io/nvidia-icon-addin ↗</div>
+      </div>
+    </a>
+
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+      <a href="pptx-validator.html">Validate a deck</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest an asset</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

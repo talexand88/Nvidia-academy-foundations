@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Imagery — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 24px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 64px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 70ch;
+  }
+  .summary-note strong { color: var(--text-primary); }
+
+  /* Three-way comparison: photo / illustration / hero */
+  .three-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) { .three-grid { grid-template-columns: 1fr; } }
+
+  .three-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .three-card .vis {
+    aspect-ratio: 4/3;
+    background: var(--surface-section);
+    overflow: hidden;
+    position: relative;
+  }
+  .three-card .vis.photo {
+    background:
+      linear-gradient(135deg, #1a3a5c 0%, #2c5d8f 40%, #0f1e30 100%);
+  }
+  .three-card .vis.photo::after {
+    content: '';
+    position: absolute;
+    inset: 20% 25%;
+    background:
+      radial-gradient(ellipse at 30% 40%, #4a7e9a 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 60%, #2a5a7c 0%, transparent 50%);
+  }
+  .three-card .vis.illust {
+    background: var(--brand-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .three-card .vis.illust svg { width: 50%; height: 50%; }
+  .three-card .vis.hero {
+    background:
+      radial-gradient(circle at 70% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%),
+      linear-gradient(135deg, #0C0C0C 0%, #161616 100%);
+  }
+  .three-card .vis.hero::after {
+    content: '';
+    position: absolute;
+    right: 12%;
+    top: 25%;
+    width: 35%;
+    height: 50%;
+    background: radial-gradient(ellipse, rgba(118, 185, 0, 0.9) 20%, transparent 60%);
+    filter: blur(6px);
+  }
+  .three-card .meta { padding: 20px 22px; }
+  .three-card .name { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .three-card .when {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Photo style examples */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .photo-tile {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .photo-tile .img {
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+  .photo-tile.dc .img { background: linear-gradient(180deg, #0a1929 0%, #1a2e44 50%, #0a1929 100%); }
+  .photo-tile.dc .img::after {
+    content: '';
+    position: absolute;
+    inset: 30% 15%;
+    background: repeating-linear-gradient(90deg, #1d4567 0px, #1d4567 3px, #0d2c44 3px, #0d2c44 8px);
+    border-radius: 2px;
+  }
+  .photo-tile.hw .img { background: linear-gradient(135deg, #2a2a2a 0%, #4a4a4a 50%, #1a1a1a 100%); }
+  .photo-tile.hw .img::after {
+    content: '';
+    position: absolute;
+    inset: 25%;
+    background: linear-gradient(90deg, #76B900 0%, #76B900 8%, transparent 8%, transparent 12%, #76B900 12%, #76B900 20%, transparent 20%);
+    border-radius: 4px;
+  }
+  .photo-tile.lab .img { background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%); position: relative; }
+  .photo-tile.lab .img::after {
+    content: '';
+    position: absolute;
+    inset: 20% 30%;
+    background: radial-gradient(circle, rgba(118, 185, 0, 0.4) 0%, transparent 70%);
+  }
+  .photo-tile .cap {
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* Illustration line art demos */
+  .illust-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-section);
+    padding: 32px;
+    border-radius: 12px;
+  }
+  .illust-row svg { color: var(--brand-black); }
+
+  /* Do/Don't */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    aspect-ratio: 4/3;
+    background: var(--surface-section);
+    overflow: hidden;
+    position: relative;
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+
+  /* Image samples for do/don't */
+  .img-real { background: linear-gradient(135deg, #1a3a5c 0%, #2c5d8f 100%); }
+  .img-real::after {
+    content: '';
+    position: absolute;
+    inset: 25%;
+    background: radial-gradient(ellipse, rgba(118, 185, 0, 0.3) 0%, transparent 60%);
+  }
+  .img-stock { background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 50%, #FFAB91 100%); position: relative; }
+  .img-stock::after {
+    content: '☺';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: #5D4037;
+  }
+  .img-tinted {
+    background: linear-gradient(135deg, #1a3a5c, #76B900 60%, #890C58);
+  }
+  .img-cluttered {
+    background: linear-gradient(135deg, #1a3a5c 0%, #2c5d8f 100%);
+    position: relative;
+  }
+  .img-cluttered::after {
+    content: 'NVIDIA';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 36px;
+    text-shadow: 4px 4px 8px rgba(0,0,0,0.8);
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Imagery</h1>
+    <p class="subtitle">Three families. One brand voice. No stock smiles.</p>
+  </div>
+
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html" class="active">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Three families — pick by intent</h2>
+  <div class="three-grid">
+    <div class="three-card">
+      <div class="vis photo"></div>
+      <div class="meta">
+        <div class="name">Photography</div>
+        <div class="when">Real hardware, data centers, GPUs, labs, real people learning. Use when the topic is concrete and the image adds evidence.</div>
+      </div>
+    </div>
+
+    <div class="three-card">
+      <div class="vis illust">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#000" stroke-width="1.5">
+          <circle cx="24" cy="24" r="14"/>
+          <path d="M16 24 L22 30 L34 18"/>
+        </svg>
+      </div>
+      <div class="meta">
+        <div class="name">Illustration</div>
+        <div class="when">Concept diagrams, monoline line art matching the icon library. Use when the idea is abstract or the photo would be too literal.</div>
+      </div>
+    </div>
+
+    <div class="three-card">
+      <div class="vis hero"></div>
+      <div class="meta">
+        <div class="name">3D hero composition</div>
+        <div class="when">Course title cards, video openers, web hero. Sourced from NVDAM — see <a href="logos-hero.html">Logos &amp; hero</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Photography style</h2>
+
+  <div class="photo-grid">
+    <div class="photo-tile dc">
+      <div class="img"></div>
+      <div class="cap">Data centers · racks · server halls</div>
+    </div>
+    <div class="photo-tile hw">
+      <div class="img"></div>
+      <div class="cap">Hardware · GPUs · boards · NVIDIA-Certified Systems</div>
+    </div>
+    <div class="photo-tile lab">
+      <div class="img"></div>
+      <div class="cap">Labs · learners · workstations</div>
+    </div>
+  </div>
+
+  <div class="summary-note">
+    Subjects are <strong>real NVIDIA hardware, data center environments, and learning contexts</strong>. Get photography from the corporate brand team or NVDAM — don't pull from generic stock libraries.
+  </div>
+
+  <h2 class="spec-h2">Photo treatment</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+      <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Crop generously</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Tight crops on the subject. Avoid wide-angle establishing shots that lose the focal point.</div>
+    </div>
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+      <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Dark tonality</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Photos lean dark — server halls, server-room lighting, deep contrast. Matches the brand surface.</div>
+    </div>
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+      <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Cool color cast</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Blue and green ambient light dominates. Avoid warm orange casts unless documenting a specific environment.</div>
+    </div>
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+      <div style="font-size:14px;font-weight:500;margin-bottom:6px;">No filters</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Black-and-white, sepia, vintage, lens-blur filters all off. The photo is what it is.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Illustration style</h2>
+  <div class="illust-row">
+    <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="#000" stroke-width="1.5">
+      <rect x="8" y="14" width="32" height="20" rx="2"/>
+      <line x1="14" y1="20" x2="34" y2="20"/>
+      <line x1="14" y1="26" x2="28" y2="26"/>
+      <circle cx="36" cy="26" r="1.5" fill="#000"/>
+    </svg>
+    <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="#76B900" stroke-width="1.5">
+      <path d="M8 24 Q8 14, 18 14 L30 14 Q40 14, 40 24 Q40 34, 30 34 L18 34 Q8 34, 8 24 Z"/>
+      <circle cx="24" cy="24" r="6"/>
+      <line x1="14" y1="24" x2="18" y2="24"/>
+      <line x1="30" y1="24" x2="34" y2="24"/>
+    </svg>
+    <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="#000" stroke-width="1.5">
+      <path d="M12 30 L24 14 L36 30 L30 30 L30 38 L18 38 L18 30 Z"/>
+    </svg>
+    <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="#76B900" stroke-width="1.5">
+      <circle cx="24" cy="24" r="14"/>
+      <path d="M16 24 L22 30 L34 18"/>
+    </svg>
+  </div>
+
+  <div class="summary-note">
+    Illustrations match the <strong>monoline icon style</strong> — same stroke weight (1.5 pt nominal), same green or black, same 48-unit grid. They are essentially icons drawn larger. Don't create illustrations in a different style; if you need an illustration, request an icon-style asset.
+  </div>
+
+  <h2 class="spec-h2">When to use which</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Use case</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Family</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Course / unit title card</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">3D hero</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Showing a real DGX rack, GPU, or workstation</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Photography</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Three Questions hook</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Illustration</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Conceptual diagram (AI pipeline, network topology)</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Illustration</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Course page hero on web</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">3D hero</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">"Meet your instructor" headshot</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Photography (square crop)</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Lab walkthrough showing the actual UI</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Screenshot</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);">Decorative break in long body content</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Don't — use spacing instead</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Don'ts</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample img-stock"></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Generic stock photography</div>
+        <div class="why">No smiling office workers, handshakes, lightbulbs, or "futuristic AI brain" cliches. They cheapen the course.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample img-tinted"></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Heavy color overlays</div>
+        <div class="why">Don't tint photos green, purple, or any brand color. The photo's own tonality is the treatment.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample img-cluttered"></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Big text overlaid on photos</div>
+        <div class="why">Photos and titles each need their own space. Put the title in the lower-left clear zone, not floating over the subject.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="80" height="80" viewBox="0 0 48 48" fill="#FF6B9D" stroke="#5D4037" stroke-width="0.5">
+            <circle cx="24" cy="24" r="20"/>
+            <circle cx="18" cy="20" r="2" fill="#fff"/>
+            <circle cx="30" cy="20" r="2" fill="#fff"/>
+            <path d="M16 28 Q24 34, 32 28" stroke="#fff" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Cartoon / mascot illustrations</div>
+        <div class="why">Illustrations are monoline matching the icon style. No characters, mascots, or playful cartoon styles.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample" style="background:linear-gradient(135deg,#FFE0B2,#FFAB91);position:relative;">
+        <div style="position:absolute;inset:25% 15%;background:rgba(0,0,0,0.1);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:48px;color:rgba(0,0,0,0.3);">×</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Low resolution images</div>
+        <div class="why">Photos appear at slide size (1920+ px). Web hero images at 2× the rendered width. Anything pixelated breaks the brand.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample" style="background:#76B900;display:flex;align-items:center;justify-content:center;">
+        <div style="width:60%;aspect-ratio:1;background:linear-gradient(135deg, #1a3a5c, #2c5d8f);border-radius:50%;"></div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Photos on brand-color backgrounds</div>
+        <div class="why">Photos sit on neutral surfaces — black, white, gray. Don't place them on NVIDIA Green or section colors.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Quick reference</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Property</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Spec</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Source</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">NVDAM · corporate brand team · vendor-supplied for partners</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Minimum resolution</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">Slide use: 1920 px wide · Web hero: 2× rendered width</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Crop ratio</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">16:9 default · 1:1 for instructor headshots · 4:3 for in-card</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Photo treatment</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">Untouched · no filters · no color overlays</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Illustration style</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">Monoline · matches icon library · 1.5 pt stroke</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Illustration colors</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">Black or NVIDIA Green · no other colors</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">3D hero</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">Embossed-glass or linear-scratched · NVDAM only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="logos-hero.html">Logos &amp; hero</a>
+      <a href="assets.html">Assets</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

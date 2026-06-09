@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frames &amp; cards — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 72px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Spec card layout (used for strokes, padding, margins) */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .spec-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .spec-card .vis {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spec-card .name {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .spec-card .codes {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .spec-card .codes .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .spec-card .codes .k {
+    color: var(--text-tertiary);
+  }
+  .spec-card .use {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Stroke visualisations */
+  .stroke-box {
+    width: 120px;
+    height: 80px;
+    border-radius: 4px;
+  }
+  .stroke-1 { border: 1px solid var(--brand-black); }
+  .stroke-2 { border: 2px solid var(--brand-green); }
+  .stroke-stripe {
+    width: 120px;
+    height: 80px;
+    background: var(--gray-050);
+    border-left: 4px solid #890C58;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Padding visualisation */
+  .pad-demo {
+    background: var(--brand-white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    position: relative;
+    width: 160px;
+    overflow: hidden;
+  }
+  .pad-demo .inner {
+    background: rgba(118, 185, 0, 0.12);
+    border: 1px dashed #76B900;
+    border-radius: 2px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #4B6F00;
+    font-weight: 500;
+  }
+  .pad-demo.small { padding: 12px; }
+  .pad-demo.medium { padding: 20px; }
+  .pad-demo.large { padding: 32px; }
+  .pad-demo .pad-arrow {
+    position: absolute;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+  }
+  .pad-demo.small .pad-arrow { top: 2px; left: 4px; }
+  .pad-demo.medium .pad-arrow { top: 2px; left: 4px; }
+  .pad-demo.large .pad-arrow { top: 4px; left: 6px; }
+
+  /* Margin visualisation */
+  .margin-demo {
+    display: flex;
+    align-items: center;
+    background: var(--surface-section);
+    padding: 12px;
+    border-radius: 6px;
+  }
+  .margin-demo .blk {
+    width: 60px;
+    height: 60px;
+    background: var(--brand-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .margin-demo .gap {
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-align: center;
+    padding: 0 8px;
+  }
+  .margin-demo.tight .gap-vis { width: 12px; height: 60px; background: rgba(118, 185, 0, 0.12); border-left: 1px dashed #76B900; border-right: 1px dashed #76B900; }
+  .margin-demo.med .gap-vis { width: 24px; height: 60px; background: rgba(118, 185, 0, 0.12); border-left: 1px dashed #76B900; border-right: 1px dashed #76B900; }
+  .margin-demo.loose .gap-vis { width: 40px; height: 60px; background: rgba(118, 185, 0, 0.12); border-left: 1px dashed #76B900; border-right: 1px dashed #76B900; }
+
+  /* Corner radius */
+  .corner-vis {
+    width: 100px;
+    height: 70px;
+    background: var(--surface-section);
+    border: 1px solid var(--border);
+  }
+  .corner-0 { border-radius: 0; }
+  .corner-4 { border-radius: 4px; }
+  .corner-8 { border-radius: 8px; }
+  .corner-12 { border-radius: 12px; }
+
+  /* Two-column comparison: pt vs px translations */
+  .conv-table {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .conv-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .conv-table th, .conv-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  .conv-table th {
+    background: var(--surface-section);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .conv-table tr:last-child td { border-bottom: none; }
+  .conv-table td.num {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+  }
+  .conv-table td:first-child { font-weight: 500; }
+
+  /* Do / Don't gallery */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-section);
+  }
+  .dd .meta {
+    padding: 14px 18px;
+  }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+
+  /* mini frame shapes */
+  .mf {
+    width: 90px;
+    height: 60px;
+    background: var(--brand-white);
+    border-radius: 4px;
+  }
+  .mf-solid { border: 1px solid var(--brand-black); }
+  .mf-thick { border: 2px solid var(--brand-green); }
+  .mf-double { border: 4px double var(--brand-black); }
+  .mf-dashed { border: 1px dashed var(--brand-black); }
+  .mf-shadow { border: 1px solid var(--border); box-shadow: 4px 4px 0 rgba(0,0,0,0.2); }
+  .mf-gradient {
+    background: linear-gradient(135deg, #76B900, #004831);
+    border: none;
+  }
+  .mf-round { border: 1px solid var(--brand-black); border-radius: 24px; }
+  .mf-decor {
+    border: 1px solid var(--brand-black);
+    background-image: linear-gradient(45deg, var(--gray-100) 25%, transparent 25%, transparent 75%, var(--gray-100) 75%);
+    background-size: 8px 8px;
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 70ch;
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Frames &amp; cards</h1>
+    <p class="subtitle">Simple lines. Clear edges. Generous space inside.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html" class="active">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Stroke width &amp; roundness</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis"><div class="stroke-box stroke-1"></div></div>
+      <div class="name">Standard frame</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>1 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>1 px</span></div>
+        <div class="row"><span class="k">Roundness</span><span>0–4 pt</span></div>
+      </div>
+      <div class="use">Default. Lab cards, content cards, detail cards.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis"><div class="stroke-box stroke-2"></div></div>
+      <div class="name">Emphasis frame</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>2 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>2 px</span></div>
+        <div class="row"><span class="k">Roundness</span><span>0–4 pt</span></div>
+      </div>
+      <div class="use">Unit cards in syllabus (green border). Featured cards.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis"><div class="stroke-stripe"></div></div>
+      <div class="name">Accent stripe</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>4 pt one side</span></div>
+        <div class="row"><span class="k">After Effects</span><span>4 px one side</span></div>
+        <div class="row"><span class="k">Roundness</span><span>0 on the stripe edge</span></div>
+      </div>
+      <div class="use">Note callouts, alert states, architecture-stack status indicators. Apply to one edge only.</div>
+    </div>
+  </div>
+
+  <div class="summary-note">Stroke widths above 2 pt feel heavy and start to look decorative. If a frame needs more emphasis, use color (the green border on unit cards) or the accent stripe — not a thicker line.</div>
+
+  <div class="summary-note" style="border-left:4px solid #FAC200;border-radius:0 8px 8px 0;background:var(--surface-section);">
+    <strong style="color:var(--text-primary);">Roundness — proposed.</strong> Corner radius is variable: <strong>0 pt</strong> for technical diagrams (architecture, topology) where right angles signal precision, and <strong>up to 4 pt</strong> for cards and notes. The exact ceiling isn't locked yet — flag a preference. Pick one value per composition; don't mix 0 and 4 in the same view.
+  </div>
+
+  <h2 class="spec-h2">Padding inside</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis">
+        <div class="pad-demo small">
+          <span class="pad-arrow">↔ 12</span>
+          <div class="inner">text</div>
+        </div>
+      </div>
+      <div class="name">Small</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>12 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>14 px</span></div>
+      </div>
+      <div class="use">Stat cards, badges, pills, compact list items.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="pad-demo medium">
+          <span class="pad-arrow">↔ 20</span>
+          <div class="inner">text</div>
+        </div>
+      </div>
+      <div class="name">Medium</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>20 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>24 px</span></div>
+      </div>
+      <div class="use">Unit cards, lab cards, content cards. The default.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="pad-demo large">
+          <span class="pad-arrow">↔ 32</span>
+          <div class="inner">text</div>
+        </div>
+      </div>
+      <div class="name">Large</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>32 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>40 px</span></div>
+      </div>
+      <div class="use">Activity launchers (Knowledge Check, Quiz). Hero cards.</div>
+    </div>
+  </div>
+
+  <div class="summary-note">Padding is uniform on all four sides unless an accent stripe takes one edge. Don't reduce horizontal padding below 12 pt — body text wraps awkwardly.</div>
+
+  <h2 class="spec-h2">Margin between frames</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis">
+        <div class="margin-demo tight">
+          <div class="blk"></div>
+          <div class="gap-vis"></div>
+          <div class="blk"></div>
+        </div>
+      </div>
+      <div class="name">Tight grid</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>12 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>16 px</span></div>
+      </div>
+      <div class="use">Cards in a related grid — unit cards in syllabus, stat cards in a quiz panel.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="margin-demo med">
+          <div class="blk"></div>
+          <div class="gap-vis"></div>
+          <div class="blk"></div>
+        </div>
+      </div>
+      <div class="name">Standard gap</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>24 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>32 px</span></div>
+      </div>
+      <div class="use">Default between two cards on the same canvas.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="margin-demo loose">
+          <div class="blk"></div>
+          <div class="gap-vis"></div>
+          <div class="blk"></div>
+        </div>
+      </div>
+      <div class="name">Section break</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>40 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>48 px</span></div>
+      </div>
+      <div class="use">Between groups of cards — e.g. Lecture row above Lab row.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Creative options</h2>
+  <p style="color:var(--text-secondary);font-size:15px;margin-bottom:20px;max-width:60ch;">The Academy frame is simple by design — a clean line. Keep it that way.</p>
+
+  <h3 style="font-size:18px;font-weight:500;margin:24px 0 12px;color:#76B900;">Do</h3>
+  <div class="dd-grid">
+
+    <div class="dd do">
+      <div class="sample"><div class="mf mf-solid"></div></div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Solid 1 pt black</div>
+        <div class="why">Standard frame.</div>
+      </div>
+    </div>
+
+    <div class="dd do">
+      <div class="sample"><div class="mf mf-thick"></div></div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Solid 2 pt green</div>
+        <div class="why">Emphasis frame (unit cards).</div>
+      </div>
+    </div>
+
+    <div class="dd do">
+      <div class="sample"><div class="mf" style="background:var(--gray-050);border:none;border-left:4px solid #890C58;"></div></div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Gray fill, magenta accent stripe</div>
+        <div class="why">Note callouts. The fill is gray; the stripe carries the attention color.</div>
+      </div>
+    </div>
+
+    <div class="dd do">
+      <div class="sample"><div class="mf" style="background:var(--brand-white);border:1px solid var(--border);border-right:4px solid #76B900;"></div></div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Right-edge stripe for active state</div>
+        <div class="why">Sidebar navigation. Active item gets a 4 pt green stripe on the right.</div>
+      </div>
+    </div>
+
+    <div class="dd do">
+      <div class="sample" style="background:var(--gray-050);padding:14px;">
+        <div class="mf" style="height:auto;width:auto;padding:14px 18px;background:var(--brand-white);border:1px solid var(--border);font-size:11px;color:var(--text-secondary);">card</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">White card inside a gray section</div>
+        <div class="why">Nesting pattern for grouping. Section is gray-050 with no border; cards inside are white with 1 pt border.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="font-size:18px;font-weight:500;margin:40px 0 12px;color:#C2262D;">Don't</h3>
+  <div class="dd-grid">
+
+    <div class="dd dont">
+      <div class="sample"><div class="mf mf-dashed"></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Dashed border</div>
+        <div class="why">Reserved for diagram annotation only — never on content frames.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="mf mf-double"></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Double lines</div>
+        <div class="why">Decorative. Doesn't fit the Academy's flat aesthetic.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="mf mf-shadow"></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Drop shadow</div>
+        <div class="why">No shadows on any frame. Surfaces are flat.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="mf mf-gradient"></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Gradient fill</div>
+        <div class="why">Solid colors only. See Color &gt; Gradients.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="mf mf-round"></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Pill / extreme rounding</div>
+        <div class="why">Stay at 0, 4, or 8 pt corner radius. Pills are for badges only.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="mf mf-decor"></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Decorative fills or patterns</div>
+        <div class="why">No textures, stripes, dots, or other surface decoration.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="spec-h2">Quick reference</h2>
+  <div class="conv-table">
+    <table>
+      <thead>
+        <tr><th>Frame type</th><th>Stroke</th><th>Padding</th><th>Corner</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Lab card</td><td class="num">1 pt black</td><td class="num">20 pt</td><td class="num">0–4 pt</td></tr>
+        <tr><td>Unit card</td><td class="num">2 pt green</td><td class="num">20 pt</td><td class="num">0–4 pt</td></tr>
+        <tr><td>Stat card</td><td class="num">none, gray fill</td><td class="num">16 pt</td><td class="num">0–4 pt</td></tr>
+        <tr><td>Detail card</td><td class="num">1 pt gray-200</td><td class="num">24 pt</td><td class="num">0–4 pt</td></tr>
+        <tr><td>Activity launcher</td><td class="num">1 pt gray-200</td><td class="num">32 pt</td><td class="num">0–4 pt</td></tr>
+        <tr><td>Note callout</td><td class="num">4 pt magenta, left only</td><td class="num">14 pt vertical / 18 pt horizontal</td><td class="num">0–4 pt (right side)</td></tr>
+        <tr><td>Architecture row</td><td class="num">1 pt gray-200</td><td class="num">— horizontal layout</td><td class="num">0 pt</td></tr>
+        <tr><td>Topology node</td><td class="num">1 pt</td><td class="num">8 pt</td><td class="num">0 pt</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

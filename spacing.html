@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spacing &amp; layout — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 72px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .spec-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .spec-card .vis {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spec-card .name {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .spec-card .codes {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .spec-card .codes .row { display: flex; justify-content: space-between; }
+  .spec-card .codes .k { color: var(--text-tertiary); }
+  .spec-card .use {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    line-height: 1.45;
+  }
+
+  /* Slide margins visualization */
+  .slide-vis {
+    width: 200px;
+    height: 112px;
+    background: var(--brand-white);
+    border: 1px solid var(--border);
+    position: relative;
+    border-radius: 2px;
+  }
+  .slide-vis .safe {
+    position: absolute;
+    inset: 12px;
+    border: 1px dashed #76B900;
+    background: rgba(118, 185, 0, 0.08);
+  }
+  .slide-vis.tight .safe { inset: 8px; }
+  .slide-vis.loose .safe { inset: 16px; }
+  .slide-vis .label-edge {
+    position: absolute;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+  }
+  .slide-vis.standard .label-edge { top: 2px; left: 16px; }
+
+  /* Vertical rhythm */
+  .rhythm-vis {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+  }
+  .rhythm-vis .blk {
+    background: var(--gray-100);
+    border-radius: 2px;
+  }
+  .rhythm-vis .title { height: 14px; width: 60%; background: var(--brand-black); }
+  .rhythm-vis .sub { height: 8px; width: 40%; background: var(--gray-400); margin-top: 4px; }
+  .rhythm-vis .body { height: 6px; background: var(--gray-300); margin-top: 12px; }
+  .rhythm-vis .body + .body { margin-top: 4px; }
+  .rhythm-vis .section-break {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+  .rhythm-vis .heading { height: 10px; width: 50%; background: var(--brand-black); }
+  .rhythm-vis .heading + .body { margin-top: 16px; }
+
+  /* Text spacing visualization */
+  .text-vis {
+    width: 240px;
+    padding: 16px;
+    background: var(--brand-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .text-vis .t-title { font-size: 16px; font-weight: 500; line-height: 1.2; }
+  .text-vis .t-sub { font-size: 12px; color: var(--text-secondary); }
+  .text-vis .t-body { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+  .text-vis .gap-marker {
+    background: rgba(118, 185, 0, 0.12);
+    border-left: 1px dashed #76B900;
+    border-right: 1px dashed #76B900;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+    padding: 1px 4px;
+    width: fit-content;
+  }
+
+  /* Video safe zone */
+  .video-vis {
+    width: 240px;
+    aspect-ratio: 16/9;
+    background: var(--gray-975);
+    position: relative;
+    border-radius: 2px;
+  }
+  .video-vis .title-safe {
+    position: absolute;
+    inset: 12%;
+    border: 1px dashed #76B900;
+  }
+  .video-vis .action-safe {
+    position: absolute;
+    inset: 6%;
+    border: 1px dashed #F5C300;
+  }
+  .video-vis .legend {
+    position: absolute;
+    bottom: -56px;
+    left: 0;
+    right: 0;
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  .video-vis .legend .item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .video-vis .legend .item .swatch {
+    width: 10px;
+    height: 10px;
+    border: 1px dashed;
+  }
+
+  /* Web grid */
+  .web-vis {
+    width: 280px;
+    height: 140px;
+    background: var(--gray-050);
+    border-radius: 4px;
+    padding: 12px;
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .web-vis .col {
+    flex: 1;
+    background: rgba(118, 185, 0, 0.18);
+    border-radius: 2px;
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 70ch;
+  }
+
+  /* Quick reference table */
+  .conv-table {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .conv-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .conv-table th, .conv-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  .conv-table th {
+    background: var(--surface-section);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .conv-table tr:last-child td { border-bottom: none; }
+  .conv-table td.num {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+  }
+  .conv-table td:first-child { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Spacing &amp; layout</h1>
+    <p class="subtitle">Generous breathing room. Predictable rhythm. Don't crowd the edges.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html" class="active">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Slide margins — keep content away from the edge</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis"><div class="slide-vis standard"><div class="safe"></div></div></div>
+      <div class="name">Standard slide margin</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint (40 × 22.5 in)</span><span>80 pt</span></div>
+        <div class="row"><span class="k">Video (1920 × 1080)</span><span>96 px</span></div>
+      </div>
+      <div class="use">All four sides. Content lives inside this safe zone. Title, body, frames, footer — nothing touches the canvas edge.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis"><div class="slide-vis tight"><div class="safe"></div></div></div>
+      <div class="name">Tight (full-bleed exceptions)</div>
+      <div class="codes">
+        <div class="row"><span class="k">Margin</span><span>40 pt</span></div>
+      </div>
+      <div class="use">For full-bleed hero compositions (course title cards, section openers). The hero image extends to the edge; the title text still respects the standard margin.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis"><div class="slide-vis loose"><div class="safe"></div></div></div>
+      <div class="name">Loose (focal-content slides)</div>
+      <div class="codes">
+        <div class="row"><span class="k">Margin</span><span>120 pt</span></div>
+      </div>
+      <div class="use">Hook-question slides, single-focal-point slides where the message benefits from extra whitespace.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Vertical rhythm — space between blocks</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis">
+        <div class="rhythm-vis">
+          <div class="title"></div>
+          <div class="sub"></div>
+        </div>
+      </div>
+      <div class="name">Title to subtitle</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>8 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>8 px</span></div>
+      </div>
+      <div class="use">Subtitle sits tight under its title — they read as a pair.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="rhythm-vis">
+          <div class="title"></div>
+          <div class="body"></div>
+          <div class="body"></div>
+        </div>
+      </div>
+      <div class="name">Title to body</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>24 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>24 px</span></div>
+      </div>
+      <div class="use">After a title block, before the body content begins.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="rhythm-vis">
+          <div class="body"></div>
+          <div class="body"></div>
+          <div class="body" style="margin-top:16px;"></div>
+          <div class="body"></div>
+        </div>
+      </div>
+      <div class="name">Paragraph break</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>16 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>16 px</span></div>
+      </div>
+      <div class="use">Between two paragraphs in the same block of body copy.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="rhythm-vis">
+          <div class="body"></div>
+          <div class="body"></div>
+          <div class="section-break"></div>
+          <div class="heading"></div>
+          <div class="body"></div>
+        </div>
+      </div>
+      <div class="name">Section break</div>
+      <div class="codes">
+        <div class="row"><span class="k">PowerPoint</span><span>56 pt</span></div>
+        <div class="row"><span class="k">After Effects</span><span>56 px</span></div>
+      </div>
+      <div class="use">Between two distinct content sections on the same slide. Optional thin rule (1 pt gray-100) inside the gap.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Spacing scale</h2>
+  <div class="summary-note">Use values from this scale only. Don't free-pick spacing — the rhythm holds the whole composition together.</div>
+  <div class="conv-table">
+    <table>
+      <thead>
+        <tr><th>Step</th><th>PowerPoint</th><th>After Effects</th><th>When to use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>XS</td><td class="num">4 pt</td><td class="num">4 px</td><td>Tight spacing inside a pill or badge</td></tr>
+        <tr><td>S</td><td class="num">8 pt</td><td class="num">8 px</td><td>Title to subtitle, label to value</td></tr>
+        <tr><td>M</td><td class="num">16 pt</td><td class="num">16 px</td><td>Paragraph break, between small grouped items</td></tr>
+        <tr><td>L</td><td class="num">24 pt</td><td class="num">24 px</td><td>Default. Title to body, between unrelated cards</td></tr>
+        <tr><td>XL</td><td class="num">40 pt</td><td class="num">40 px</td><td>Between card groups (Lecture row above Lab row)</td></tr>
+        <tr><td>2XL</td><td class="num">56 pt</td><td class="num">56 px</td><td>Section break on a slide</td></tr>
+        <tr><td>3XL</td><td class="num">80 pt</td><td class="num">96 px</td><td>Slide margin (canvas edge to content)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Text spacing inside a frame</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis">
+        <div class="text-vis">
+          <div class="t-title">Card title</div>
+          <div class="gap-marker">8</div>
+          <div class="t-sub">Subtitle line</div>
+          <div class="gap-marker" style="margin-top:8px;">16</div>
+          <div class="t-body">Body text begins here, sitting comfortably below the title pair.</div>
+        </div>
+      </div>
+      <div class="name">Inside a card</div>
+      <div class="codes">
+        <div class="row"><span class="k">Title → subtitle</span><span>8 pt</span></div>
+        <div class="row"><span class="k">Subtitle → body</span><span>16 pt</span></div>
+      </div>
+      <div class="use">Title block stays compact; body breaks away. The 16 pt gap is the air the body needs.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="text-vis">
+          <div class="t-body" style="font-weight:500;color:var(--text-primary);">Run quick checks</div>
+          <div class="gap-marker">12</div>
+          <div class="t-body">Check log files for errors.</div>
+          <div class="t-body" style="margin-top:6px;">Verify the runtime version.</div>
+          <div class="t-body" style="margin-top:6px;">Ensure GPU is detected.</div>
+        </div>
+      </div>
+      <div class="name">List inside a card</div>
+      <div class="codes">
+        <div class="row"><span class="k">Heading → first item</span><span>12 pt</span></div>
+        <div class="row"><span class="k">Item → item</span><span>6 pt</span></div>
+      </div>
+      <div class="use">List items breathe at 6 pt; the heading-to-list gap is larger to mark the start.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Video safe zone</h2>
+  <div class="spec-grid">
+    <div class="spec-card" style="grid-column:span 2;">
+      <div class="vis" style="height:auto;padding:8px 0 64px;">
+        <div class="video-vis">
+          <div class="action-safe"></div>
+          <div class="title-safe"></div>
+          <div class="legend">
+            <div class="item"><span class="swatch" style="border-color:#F5C300;"></span>Action safe — 6% inset</div>
+            <div class="item"><span class="swatch" style="border-color:#76B900;"></span>Title safe — 12% inset</div>
+          </div>
+        </div>
+      </div>
+      <div class="name">Keep titles and key visuals inside the safe zone</div>
+      <div class="codes">
+        <div class="row"><span class="k">Title safe</span><span>~96 px inset · 12%</span></div>
+        <div class="row"><span class="k">Action safe</span><span>~48 px inset · 6%</span></div>
+        <div class="row"><span class="k">Frame</span><span>1920 × 1080</span></div>
+      </div>
+      <div class="use">Title text and primary content live inside the title-safe rectangle. Background, ambient motion, and decorative elements may extend to the action-safe rectangle but never past it. Standard broadcast and projector cutoff convention.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Quick reference</h2>
+  <div class="conv-table">
+    <table>
+      <thead>
+        <tr><th>Spacing role</th><th>PowerPoint</th><th>After Effects</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Slide outer margin (canvas → content)</td><td class="num">80 pt</td><td class="num">96 px</td></tr>
+        <tr><td>Tight margin (full-bleed hero)</td><td class="num">40 pt</td><td class="num">48 px</td></tr>
+        <tr><td>Loose margin (focal slide)</td><td class="num">120 pt</td><td class="num">128 px</td></tr>
+        <tr><td>Title → subtitle</td><td class="num">8 pt</td><td class="num">8 px</td></tr>
+        <tr><td>Title → body</td><td class="num">24 pt</td><td class="num">24 px</td></tr>
+        <tr><td>Body paragraph break</td><td class="num">16 pt</td><td class="num">16 px</td></tr>
+        <tr><td>Section break (within a slide)</td><td class="num">56 pt</td><td class="num">56 px</td></tr>
+        <tr><td>Card group break</td><td class="num">40 pt</td><td class="num">40 px</td></tr>
+        <tr><td>Video title-safe inset</td><td>—</td><td class="num">96 px (12%)</td></tr>
+        <tr><td>Video action-safe inset</td><td>—</td><td class="num">48 px (6%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="frames-cards.html">Frames &amp; cards</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

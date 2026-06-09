@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toolkit — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .tool-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .tool-card:hover {
+    border-color: var(--brand-green);
+    text-decoration: none;
+  }
+  .tool-card .status {
+    font-size: var(--fs-100);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .status.live { color: var(--feedback-success); }
+  .status.coming { color: var(--text-tertiary); }
+  .tool-card h2 {
+    font-size: var(--fs-700);
+    font-weight: 700;
+    line-height: var(--lh-125);
+  }
+  .tool-card .tool-desc {
+    color: var(--text-secondary);
+    font-size: var(--fs-300);
+    line-height: var(--lh-150);
+  }
+  .tool-card .tool-cta {
+    color: var(--brand-green-secondary);
+    font-weight: 500;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html" class="active">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <h1 class="page-title">Toolkit</h1>
+  <p class="page-lede">Working tools for producers. Pick the right pattern, validate your work, audit a deck, and find an icon — without leaving the system.</p>
+
+  <div class="tool-grid">
+
+    <a href="pattern-tree.html" class="tool-card">
+      <span class="status live">Live</span>
+      <h2>Pattern decision tree</h2>
+      <p class="tool-desc">Answer three questions about your project — surface, moment, density — and land on the right pattern with the recipe and links to assets.</p>
+      <span class="tool-cta">Start the tree →</span>
+    </a>
+
+    <a href="screenshot-review.html" class="tool-card">
+      <span class="status live">Live</span>
+      <h2>Screenshot review</h2>
+      <p class="tool-desc">Upload a slide, video frame, or web mockup. Pick the project type. Get specific findings — color compliance, typography, layout, accessibility — cited to the system, with the fix attached.</p>
+      <span class="tool-cta">Review a screenshot →</span>
+    </a>
+
+    <a href="pptx-validator.html" class="tool-card">
+      <span class="status live">Live</span>
+      <h2>PowerPoint deck validator</h2>
+      <p class="tool-desc">Upload your .pptx. Catch the wrong canvas size, legacy fonts (Trebuchet, Calibri), white-on-green CTAs, non-system icons, missing sentence case, and more in seconds.</p>
+      <span class="tool-cta">Validate a deck →</span>
+    </a>
+
+    <a href="icons.html" class="tool-card">
+      <span class="status live">Live</span>
+      <h2>Icon library</h2>
+      <p class="tool-desc">672 NVIDIA marketing icons across 31 categories. Search by keyword (synonyms supported), filter by category, preview in three colors, download, and grab the PowerPoint plugin install link.</p>
+      <span class="tool-cta">Browse icons →</span>
+    </a>
+
+    <a href="motion.html" class="tool-card" style="opacity:0.7;">
+      <span class="status coming">v2 — Reserved</span>
+      <h2>Motion library</h2>
+      <p class="tool-desc">Curated Lottie animations matched 1:1 to the static icon library. Browse, preview, grab the canonical motion. Mirrors the Icons page structure exactly — it's a reference library, not a motion-production tool.</p>
+      <span class="tool-cta" style="color:var(--text-tertiary);">See the placeholder →</span>
+    </a>
+
+    <a href="#" class="tool-card" style="opacity:0.5;pointer-events:none;">
+      <span class="status coming">v2 — Stretch</span>
+      <h2>Course coherence checker</h2>
+      <p class="tool-desc">Upload three to five screenshots from one course (title, mid-content, quiz, end card). Get a report on whether they belong to the same Academy course — section identity colors, hero variant family, typography, icon source.</p>
+      <span class="tool-cta" style="color:var(--text-tertiary);">Coming later →</span>
+    </a>
+
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>System</h4>
+      <a href="index.html">Home</a>
+      <a href="content.html">Content</a>
+    </div>
+    <div>
+      <h4>Other tools</h4>
+      <a href="icons.html">Icon library</a>
+      <a href="pattern-tree.html">Pattern tree</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a tool</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typography — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  /* Section heading */
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 72px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Font preview cards */
+  .font-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .font-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 36px;
+  }
+  .font-card.dark {
+    background: var(--gray-975);
+    color: var(--brand-white);
+    border-color: var(--gray-800);
+  }
+  .font-card .font-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .font-card.dark .font-label { color: var(--gray-500); }
+  .font-card .font-name {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .font-card .font-sample {
+    font-size: 18px;
+    color: var(--text-secondary);
+  }
+  .font-card.dark .font-sample {
+    color: var(--gray-300);
+    font-family: var(--font-mono);
+  }
+  .font-card .font-use {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .font-card.dark .font-use { border-color: var(--gray-800); color: var(--gray-500); }
+
+  /* Type specimen rows */
+  .specimen {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 32px;
+    align-items: baseline;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .specimen:last-child { border-bottom: none; }
+  .specimen .sample { line-height: 1.15; color: var(--text-primary); }
+  .specimen .meta {
+    text-align: right;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .specimen .meta .role {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .specimen .meta .size {
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .specimen .meta .weight {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* Code specimen */
+  .code-block {
+    background: var(--gray-975);
+    color: var(--brand-white);
+    padding: 32px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    line-height: 1.4;
+    margin: 16px 0;
+  }
+  .code-block .kw { color: #FF8FA3; }
+  .code-block .str { color: #76B900; }
+  .code-block .com { color: var(--gray-500); font-style: italic; }
+  .code-block .fn { color: #66D9EF; }
+
+  /* Weights row */
+  .weights-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .weight-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .weight-card .weight-sample {
+    font-size: 42px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .weight-card .weight-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+
+  /* Do/Don't pairs */
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+  }
+  .dd.do { border-left: 4px solid #76B900; }
+  .dd.dont { border-left: 4px solid #C2262D; }
+  .dd .badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .dd-sample {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+  .dd .dd-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  /* Compact rule rows */
+  .rule-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .rule-row .term {
+    font-weight: 500;
+  }
+  .rule-row .ans {
+    color: var(--text-secondary);
+  }
+  .rule-row .ans .num {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 500;
+    background: var(--surface-section);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* Visual frame for "inside a card" demo */
+  .nested-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 16px 0;
+  }
+  .nested-demo .standalone {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+  }
+  .nested-demo .standalone .label-top {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .nested-demo .in-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .nested-demo .in-card .inner {
+    background: var(--surface-section);
+    border-radius: 6px;
+    padding: 24px;
+  }
+  .demo-title-big { font-size: 18pt; font-weight: 500; line-height: 1.25; }
+  .demo-title-small { font-size: 16pt; font-weight: 500; line-height: 1.25; }
+  .demo-body-big { font-size: 12pt; color: var(--text-secondary); margin-top: 6px; }
+  .demo-body-small { font-size: 11pt; color: var(--text-secondary); margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Typography</h1>
+    <p class="subtitle">Two fonts. Discrete sizes. One rule: sentence case.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html" class="active">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Fonts</h2>
+  <div class="font-row">
+    <div class="font-card">
+      <div class="font-label">Default</div>
+      <div class="font-name">NVIDIA Sans</div>
+      <div class="font-sample">The quick brown fox jumps over 12 lazy dogs.</div>
+      <div class="font-use">Everything except code · titles, body, captions, UI</div>
+    </div>
+    <div class="font-card dark">
+      <div class="font-label">Code &amp; CLI</div>
+      <div class="font-name">Consolas</div>
+      <div class="font-sample">$ docker run -it nvidia/cuda</div>
+      <div class="font-use">Code, terminal output, fixed-width data</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Sizes by surface</h2>
+  <p style="color:var(--text-secondary);font-size:14px;max-width:60ch;margin-bottom:24px;">Video and PowerPoint use different absolute sizes for the same role. Set the size for the surface you're authoring; don't assume the pt and px values are equivalent.</p>
+
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:15px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:500;padding:14px 18px;text-align:left;">Role</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:500;padding:14px 18px;text-align:right;">Video</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:500;padding:14px 18px;text-align:right;">PowerPoint</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:500;padding:14px 18px;text-align:right;">Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);"><div style="font-weight:700;font-size:17px;">Intro / Cover page</div><div style="color:var(--text-tertiary);font-size:12px;margin-top:2px;">Opening slide · video hero</div></td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">76 px</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">120 pt</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;color:var(--text-secondary);">Bold</td>
+        </tr>
+        <tr>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);"><div style="font-weight:700;font-size:16px;">Page Title</div><div style="color:var(--text-tertiary);font-size:12px;margin-top:2px;">Content page / section title</div></td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">55 px</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">88 pt</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;color:var(--text-secondary);">Bold</td>
+        </tr>
+        <tr>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);"><div style="font-weight:500;font-size:15px;">Page Subtitle</div><div style="color:var(--text-tertiary);font-size:12px;margin-top:2px;">Under a Page Title</div></td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">38 px</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">48 pt</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;color:var(--text-secondary);">Medium</td>
+        </tr>
+        <tr>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);"><div style="font-weight:500;font-size:14px;">Title</div><div style="color:var(--text-tertiary);font-size:12px;margin-top:2px;">Card / frame title</div></td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">34 px</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">44 pt</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;color:var(--text-secondary);">Medium</td>
+        </tr>
+        <tr>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);"><div style="font-weight:400;font-size:13px;">General text</div><div style="color:var(--text-tertiary);font-size:12px;margin-top:2px;">Body, captions</div></td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">28–32 px</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;font-family:var(--font-mono);">36 pt</td>
+          <td style="padding:16px 18px;border-top:1px solid var(--border);text-align:right;color:var(--text-secondary);">Regular</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Code &amp; CLI</h2>
+  <div class="code-block" style="font-size:20px;font-family:'Consolas', ui-monospace, 'SF Mono', Menlo, monospace;">
+    <span class="com"># Run an NVIDIA AI Enterprise container</span><br>
+    $ docker run --gpus all -it <span class="str">nvidia/cuda:12.3.0-base-ubuntu22.04</span><br>
+    <span class="kw">root@host</span>:/# <span class="fn">nvidia-smi</span>
+  </div>
+  <p style="font-size:14px;color:var(--text-secondary);margin-top:16px;max-width:70ch;">Code uses <strong>Consolas</strong> on a dark background, always — even inside a light deck. White text on near-black matches every developer terminal. See <a href="code-cli.html">Code &amp; CLI</a> for sizes and syntax colors.</p>
+
+  <h2 class="spec-h2">Weights</h2>
+  <div class="weights-row">
+    <div class="weight-card">
+      <div class="weight-sample" style="font-weight:700;">Bold</div>
+      <div class="weight-label">700 · Titles · CTAs</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-sample" style="font-weight:500;">Medium</div>
+      <div class="weight-label">500 · Subtitles · "semibold"</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-sample" style="font-weight:400;">Regular</div>
+      <div class="weight-label">400 · Body · default</div>
+    </div>
+  </div>
+  <p style="font-size:14px;color:var(--text-secondary);margin-top:16px;">NVIDIA's "semibold" token = Medium weight (500), not the conventional semibold (600). In PowerPoint, pick NVIDIA Sans <strong>Medium</strong>.</p>
+
+  <h2 class="spec-h2">Sentence case</h2>
+  <div class="do-dont">
+    <div class="dd do">
+      <div class="badge">Do</div>
+      <div class="dd-sample">Course overview</div>
+      <div class="dd-note">First word capitalized. Everything else lowercase.</div>
+    </div>
+    <div class="dd dont">
+      <div class="badge">Don't</div>
+      <div class="dd-sample">Course Overview</div>
+      <div class="dd-note">Title case is never used in Academy materials.</div>
+    </div>
+  </div>
+  <div class="do-dont">
+    <div class="dd do">
+      <div class="badge">Do</div>
+      <div class="dd-sample">Enroll now</div>
+      <div class="dd-note">Button labels follow the same rule.</div>
+    </div>
+    <div class="dd dont">
+      <div class="badge">Don't</div>
+      <div class="dd-sample">ENROLL NOW</div>
+      <div class="dd-note">All-caps reserved for short labels and badges only.</div>
+    </div>
+  </div>
+  <p style="font-size:14px;color:var(--text-secondary);margin-top:16px;">Acronyms (AI, GPU, VM, API), proper nouns, and product names keep their capitalization.</p>
+
+  <h2 class="spec-h2">Line spacing</h2>
+  <div>
+    <div class="rule-row">
+      <div class="term">Titles &amp; display</div>
+      <div class="ans"><span class="num">1.25×</span> &nbsp; PowerPoint: Multiple, At: 1.25</div>
+    </div>
+    <div class="rule-row">
+      <div class="term">Body</div>
+      <div class="ans"><span class="num">1.5×</span></div>
+    </div>
+    <div class="rule-row">
+      <div class="term">Long body (3+ paragraphs)</div>
+      <div class="ans"><span class="num">1.75×</span></div>
+    </div>
+    <div class="rule-row">
+      <div class="term">Code blocks</div>
+      <div class="ans"><span class="num">1.4×</span></div>
+    </div>
+    <div class="rule-row">
+      <div class="term">Buttons, labels</div>
+      <div class="ans"><span class="num">1.0×</span> &nbsp; single line</div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="assets.html">Assets</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Content — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .topic-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 180px;
+    transition: border-color 150ms, transform 150ms;
+  }
+  .topic-card:hover {
+    border-color: var(--brand-green);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .topic-card.coming {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .topic-card .preview {
+    flex: 1;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .topic-card h3 {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .topic-card .topic-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .topic-card .tag {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+  }
+  .topic-card .tag.live { color: var(--feedback-success); }
+
+  /* Mini previews per topic */
+  .p-type {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1;
+    background: linear-gradient(180deg, transparent 0%, transparent 60%, var(--gray-050) 60%, var(--gray-050) 100%);
+    padding: 6px 12px;
+  }
+  .p-color {
+    display: flex;
+    gap: 4px;
+  }
+  .p-color .sw { width: 28px; height: 28px; border-radius: 4px; }
+
+  .p-frame {
+    width: 80px; height: 50px;
+    border: 2px solid var(--brand-green);
+    border-radius: 4px;
+  }
+  .p-spacing {
+    display: flex;
+    gap: 8px;
+  }
+  .p-spacing .blk { width: 36px; height: 36px; background: var(--gray-100); border-radius: 4px; }
+
+  .p-icon svg { width: 56px; height: 56px; }
+
+  .p-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .p-logo .m { width: 32px; height: 22px; background: var(--brand-green); border-radius: 2px; }
+  .p-logo .t { font-weight: 700; font-size: 18px; }
+
+  .p-imagery {
+    width: 100px; height: 60px;
+    background: linear-gradient(135deg, var(--gray-975), #2a5a1f);
+    border-radius: 4px;
+  }
+  .p-code {
+    font-family: var(--font-mono);
+    background: var(--gray-975);
+    color: var(--brand-white);
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .p-code .g { color: var(--brand-green); }
+  .p-code .c { color: var(--gray-500); }
+
+  .p-chart {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: conic-gradient(#76B900 0% 35%, #008564 35% 60%, #0071C5 60% 80%, #5D1682 80% 100%);
+  }
+  .p-motion {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--brand-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-green);
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Content</h1>
+  </div>
+
+  <div class="topic-grid">
+
+    <a href="typography.html" class="topic-card">
+      <div class="preview"><div class="p-type">Aa</div></div>
+      <span class="tag live">Live</span>
+      <h3>Typography</h3>
+      <div class="topic-desc">Font, size, weight for every use case.</div>
+    </a>
+
+    <a href="color.html" class="topic-card">
+      <div class="preview">
+        <div class="p-color">
+          <div class="sw" style="background:#76B900;"></div>
+          <div class="sw" style="background:#000000;"></div>
+          <div class="sw" style="background:#FFFFFF;border:1px solid var(--border);"></div>
+          <div class="sw" style="background:#004831;"></div>
+        </div>
+      </div>
+      <span class="tag live">Live</span>
+      <h3>Color</h3>
+      <div class="topic-desc">Combinations that work, ones to avoid, gradients.</div>
+    </a>
+
+    <a href="frames-cards.html" class="topic-card">
+      <div class="preview"><div class="p-frame"></div></div>
+      <span class="tag live">Live</span>
+      <h3>Frames &amp; cards</h3>
+      <div class="topic-desc">Stroke, padding, margins. How creative you can get.</div>
+    </a>
+
+    <a href="spacing.html" class="topic-card">
+      <div class="preview">
+        <div class="p-spacing">
+          <div class="blk"></div>
+          <div class="blk"></div>
+          <div class="blk"></div>
+        </div>
+      </div>
+      <span class="tag live">Live</span>
+      <h3>Spacing &amp; layout</h3>
+      <div class="topic-desc">Grid, margins, breathing room.</div>
+    </a>
+
+    <a href="icons.html" class="topic-card">
+      <div class="preview">
+        <div class="p-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#76B900">
+            <path d="M24 4L4 14v20l20 10 20-10V14L24 4zm0 4.5L40 17 24 25 8 17l16-8.5zM6 19l16 8v17L6 36V19zm20 25V27l16-8v17l-16 8z"/>
+          </svg>
+        </div>
+      </div>
+      <span class="tag live">Live</span>
+      <h3>Icons</h3>
+      <div class="topic-desc">672 icons. Searchable. Three colors only.</div>
+    </a>
+
+    <a href="logos-hero.html" class="topic-card">
+      <div class="preview">
+        <div class="p-logo">
+          <div class="m"></div>
+          <div class="t">NVIDIA</div>
+        </div>
+      </div>
+      <span class="tag live">Live</span>
+      <h3>Logos &amp; hero</h3>
+      <div class="topic-desc">Placement, sizing, clear space, which hero when.</div>
+    </a>
+
+    <a href="imagery.html" class="topic-card">
+      <div class="preview"><div class="p-imagery"></div></div>
+      <span class="tag live">Live</span>
+      <h3>Imagery</h3>
+      <div class="topic-desc">When photos, when illustrations, when hero.</div>
+    </a>
+
+    <a href="code-cli.html" class="topic-card">
+      <div class="preview">
+        <div class="p-code">
+          <span class="c"># run</span><br>
+          $ docker <span class="g">run</span>
+        </div>
+      </div>
+      <span class="tag live">Live</span>
+      <h3>Code &amp; CLI</h3>
+      <div class="topic-desc">Font, size, syntax color, background.</div>
+    </a>
+
+    <a href="charts.html" class="topic-card">
+      <div class="preview"><div class="p-chart"></div></div>
+      <span class="tag live">Live</span>
+      <h3>Charts &amp; data viz</h3>
+      <div class="topic-desc">Chart types, colors per series, labeling.</div>
+    </a>
+
+    <a href="motion.html" class="topic-card">
+      <div class="preview"><div class="p-motion">▶</div></div>
+      <span class="tag">v2 reserved</span>
+      <h3>Motion</h3>
+      <div class="topic-desc">Curated motion library, matched 1:1 to icons.</div>
+    </a>
+
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Quick links</h4>
+      <a href="typography.html">Typography</a>
+      <a href="assets.html">Assets</a>
+      <a href="motion.html">Motion</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+      <a href="pptx-validator.html">Validate a deck</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

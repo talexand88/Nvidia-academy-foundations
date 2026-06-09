@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logos &amp; hero — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 72px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 70ch;
+  }
+
+  /* Logo lockup representation */
+  .nv-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--brand-black);
+  }
+  .nv-logo .mark {
+    width: 38px;
+    height: 28px;
+    background: var(--brand-green);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .nv-logo .wordmark {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: 24px;
+  }
+  .nv-logo.vertical {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .nv-logo.vertical .mark {
+    width: 48px;
+    height: 36px;
+  }
+  .nv-logo.vertical .wordmark {
+    font-size: 20px;
+  }
+  .nv-logo.white .mark { /* leave green */ }
+  .nv-logo.white .wordmark { color: var(--brand-white); }
+  .nv-logo.solid-black .mark { background: var(--brand-black); }
+  .nv-logo.solid-white .mark { background: var(--brand-white); border: 1px solid var(--gray-300); }
+  .nv-logo.solid-white .wordmark { color: var(--brand-white); }
+  .nv-logo.tiny .mark { width: 18px; height: 14px; }
+  .nv-logo.tiny .wordmark { font-size: 12px; }
+
+  /* Spec card */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .spec-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .spec-card.dark { background: var(--gray-975); color: var(--brand-white); border-color: var(--gray-800); }
+  .spec-card.green { background: var(--brand-green); color: var(--brand-black); border-color: var(--brand-green); }
+  .spec-card .vis {
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spec-card .name {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .spec-card.dark .name { color: var(--brand-white); }
+  .spec-card .codes {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .spec-card .codes .row { display: flex; justify-content: space-between; }
+  .spec-card .codes .k { color: var(--text-tertiary); }
+  .spec-card.dark .codes { color: var(--gray-400); }
+  .spec-card.dark .codes .k { color: var(--gray-500); }
+  .spec-card .use {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .spec-card.dark .use { color: var(--gray-400); border-color: var(--gray-800); }
+
+  /* Clear space diagram */
+  .clear-space-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 32px;
+  }
+  .clear-space {
+    position: relative;
+    padding: 20px;
+    border: 1px dashed var(--brand-green);
+    background: rgba(118, 185, 0, 0.06);
+    display: inline-flex;
+    align-items: center;
+  }
+  .clear-space::before,
+  .clear-space::after {
+    content: '↕';
+    position: absolute;
+    color: var(--brand-green);
+    font-size: 14px;
+    font-family: var(--font-mono);
+  }
+  .clear-space::before { top: 4px; left: 6px; content: 'N'; font-size: 11px; font-weight: 700; }
+  .clear-space::after { display: none; }
+  .clear-space .core {
+    background: var(--brand-white);
+    padding: 16px 20px;
+    border: 1px solid var(--gray-200);
+  }
+  .clear-space .n-marker {
+    position: absolute;
+    background: var(--brand-green);
+    width: 2px;
+    height: 20px;
+  }
+  .clear-space .n-marker.top { top: 0; left: 12px; }
+  .clear-space .n-marker.bottom { bottom: 0; left: 12px; }
+  .clear-space .n-marker.left { left: 0; top: 50%; transform: translateY(-50%); width: 20px; height: 2px; }
+  .clear-space .n-marker.right { right: 0; top: 50%; transform: translateY(-50%); width: 20px; height: 2px; }
+  .clear-space-caption {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 16px;
+  }
+  .clear-space-caption code {
+    background: var(--surface-section);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  /* Minimum size */
+  .minsize-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .minsize-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .minsize-card .vis {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-section);
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .minsize-card .name { font-size: 16px; font-weight: 500; margin-bottom: 8px; }
+  .minsize-card .sizes {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .minsize-card .sizes .k { color: var(--text-tertiary); display: block; }
+
+  /* Placement diagram */
+  .slide-mock {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 16/9;
+    background: var(--gray-975);
+    border-radius: 4px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .slide-mock::after {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: -10%;
+    width: 60%;
+    height: 130%;
+    background: radial-gradient(circle, #76B900 0%, transparent 60%);
+    opacity: 0.45;
+  }
+  .slide-mock .logo-pos {
+    position: absolute;
+    top: 24px;
+    left: 32px;
+    z-index: 2;
+  }
+  .slide-mock .title-pos {
+    position: absolute;
+    bottom: 28px;
+    left: 32px;
+    z-index: 2;
+    color: var(--brand-white);
+  }
+  .slide-mock .title-pos .label {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+  .slide-mock .title-pos .title {
+    font-size: 22px;
+    font-weight: 700;
+    max-width: 60%;
+    line-height: 1.1;
+  }
+  .slide-mock .annot {
+    position: absolute;
+    background: rgba(118, 185, 0, 0.18);
+    border: 1px dashed #76B900;
+    z-index: 3;
+  }
+  .slide-mock .annot-tl { top: 12px; left: 18px; width: 110px; height: 36px; }
+  .slide-mock .annot-bl { bottom: 18px; left: 18px; width: 200px; height: 60px; }
+  .slide-mock .annot-label {
+    position: absolute;
+    font-size: 11px;
+    color: var(--brand-green);
+    font-weight: 500;
+    z-index: 4;
+    background: rgba(0,0,0,0.6);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+  .slide-mock .annot-label.top { top: 52px; left: 18px; }
+  .slide-mock .annot-label.bot { bottom: 84px; left: 18px; }
+
+  /* Do/Don't */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-section);
+  }
+  .dd .sample.dark { background: var(--brand-black); }
+  .dd .sample.green { background: var(--brand-green); }
+  .dd .sample.busy {
+    background: linear-gradient(45deg, #76B900, #5D1682, #890C58);
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+
+  .nv-stretched .mark { width: 60px; height: 18px; }
+  .nv-stretched .wordmark { font-size: 30px; letter-spacing: -0.1em; }
+  .nv-rotated { transform: rotate(-12deg); }
+  .nv-shadow { filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.4)); }
+
+  /* Hero variants */
+  .hero-card {
+    background: var(--gray-975);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--gray-800);
+  }
+  .hero-card .vis {
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card .vis.embossed {
+    background:
+      radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%),
+      linear-gradient(135deg, #0C0C0C 0%, #161616 100%);
+  }
+  .hero-card .vis.embossed::after {
+    content: '';
+    position: absolute;
+    right: 8%;
+    top: 30%;
+    width: 35%;
+    height: 50%;
+    background: radial-gradient(ellipse, rgba(118, 185, 0, 0.9) 20%, transparent 60%);
+    filter: blur(8px);
+  }
+  .hero-card .vis.linear {
+    background:
+      repeating-linear-gradient(110deg, transparent 0, transparent 4px, rgba(255,255,255,0.04) 4px, rgba(255,255,255,0.04) 5px),
+      radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.5) 0%, transparent 55%),
+      #0C0C0C;
+  }
+  .hero-card .vis .h-logo {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    color: var(--brand-white);
+    z-index: 2;
+  }
+  .hero-card .vis .h-logo .mark {
+    width: 22px;
+    height: 16px;
+    background: var(--brand-green);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    border-radius: 2px;
+  }
+  .hero-card .vis .h-logo .wm {
+    font-weight: 700;
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  .hero-card .vis .h-title {
+    position: absolute;
+    bottom: 24px;
+    left: 22px;
+    color: var(--brand-white);
+    z-index: 2;
+  }
+  .hero-card .vis .h-title .label {
+    font-size: 10px;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }
+  .hero-card .vis .h-title .t {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+    max-width: 60%;
+  }
+  .hero-card .meta {
+    padding: 18px 22px;
+    color: var(--brand-white);
+  }
+  .hero-card .meta .name { font-size: 16px; font-weight: 500; margin-bottom: 8px; }
+  .hero-card .meta .usage { font-size: 13px; color: var(--gray-400); line-height: 1.5; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 800px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .nvdam-banner {
+    background: var(--surface-section);
+    border-left: 4px solid var(--brand-green);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 16px 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .nvdam-banner .nvdam-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .nvdam-banner .nvdam-text strong { color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Logos &amp; hero</h1>
+    <p class="subtitle">The NVIDIA logo, where to put it. The 3D hero composition, when to use it.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html" class="active">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Logo variants</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="name">Horizontal lockup</div>
+      <div class="codes">
+        <div class="row"><span class="k">Use</span><span>most cases</span></div>
+      </div>
+      <div class="use">Default. Slide corners, video opener, web header, footer.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis"><div class="nv-logo vertical"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="name">Vertical lockup</div>
+      <div class="codes">
+        <div class="row"><span class="k">Use</span><span>tight spaces</span></div>
+      </div>
+      <div class="use">Certificates, square or tall social formats, co-branding next to a vertical partner logo.</div>
+    </div>
+  </div>
+
+  <div class="summary-note">Pick whichever fits the space. Don't switch lockups within the same deck unless layout demands it.</div>
+
+  <h2 class="spec-h2">Clear space around the logo</h2>
+  <div class="clear-space-wrap">
+    <div>
+      <div class="clear-space">
+        <span class="n-marker top"></span>
+        <span class="n-marker bottom"></span>
+        <span class="n-marker left"></span>
+        <span class="n-marker right"></span>
+        <div class="core">
+          <div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div>
+        </div>
+      </div>
+      <div class="clear-space-caption">Minimum clear space on every side = the height of the <strong>N</strong> in the NVIDIA wordmark.</div>
+    </div>
+  </div>
+
+  <div class="summary-note">The rule is proportional, not fixed: <strong>clear space scales with the logo.</strong> Whatever pt or px size the wordmark renders at, the clear space on all four sides equals that same height. The bigger the logo, the more breathing room around it.</div>
+
+  <div class="conv-table" style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:16px 0 24px;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Wordmark height (cap-height of "N")</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Clear space on all sides</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Typical use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:12px 16px;border-top:1px solid var(--border);font-weight:500;">16 pt / 21 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);color:var(--text-secondary);">16 pt / 21 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);color:var(--text-secondary);">Slide footer mark</td></tr>
+        <tr><td style="padding:12px 16px;border-top:1px solid var(--border);font-weight:500;">24 pt / 32 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);color:var(--text-secondary);">24 pt / 32 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);color:var(--text-secondary);">Slide corner, standard</td></tr>
+        <tr><td style="padding:12px 16px;border-top:1px solid var(--border);font-weight:500;">32 pt / 43 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);color:var(--text-secondary);">32 pt / 43 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);color:var(--text-secondary);">Video opener, web header</td></tr>
+        <tr><td style="padding:12px 16px;border-top:1px solid var(--border);font-weight:500;">40 pt / 53 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);color:var(--text-secondary);">40 pt / 53 px</td><td style="padding:12px 16px;border-top:1px solid var(--border);color:var(--text-secondary);">Hero title cards, large displays</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Minimum size</h2>
+  <div class="minsize-grid">
+    <div class="minsize-card">
+      <div class="vis"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="name">Horizontal — minimum</div>
+      <div class="sizes">
+        <div><span class="k">Digital</span>15 px tall</div>
+        <div><span class="k">Print</span>0.12 in / 3 mm</div>
+      </div>
+    </div>
+    <div class="minsize-card">
+      <div class="vis"><div class="nv-logo vertical"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="name">Vertical — minimum</div>
+      <div class="sizes">
+        <div><span class="k">Digital</span>38 px tall</div>
+        <div><span class="k">Print</span>0.35 in / 9 mm</div>
+      </div>
+    </div>
+  </div>
+  <div class="summary-note">Below these sizes the logo becomes illegible. If you can't fit the logo at its minimum, the canvas isn't ready for branding yet.</div>
+
+  <h2 class="spec-h2">Color variants</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="name">Two-color</div>
+      <div class="codes">
+        <div class="row"><span class="k">Background</span><span>white / light</span></div>
+      </div>
+      <div class="use">Default. Green eyemark + black wordmark. Use on white or light-gray backgrounds.</div>
+    </div>
+
+    <div class="spec-card dark">
+      <div class="vis"><div class="nv-logo white"><div class="mark"></div><div class="wordmark" style="color:#FFFFFF;">NVIDIA</div></div></div>
+      <div class="name">Two-color on dark</div>
+      <div class="codes">
+        <div class="row"><span class="k">Background</span><span>dark</span></div>
+      </div>
+      <div class="use">Green eyemark + white wordmark. The same logo, just the wordmark switches to white on dark surfaces.</div>
+    </div>
+
+    <div class="spec-card green">
+      <div class="vis"><div class="nv-logo solid-white"><div class="mark"></div><div class="wordmark" style="color:#FFFFFF;">NVIDIA</div></div></div>
+      <div class="name">All-white</div>
+      <div class="codes">
+        <div class="row"><span class="k">Background</span><span>NVIDIA Green / busy</span></div>
+      </div>
+      <div class="use">On solid green backgrounds — the two-color mark would clash. Single-color all-white only.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Placement on a slide or video frame</h2>
+  <div class="slide-mock">
+    <div class="logo-pos">
+      <div class="nv-logo white"><div class="mark" style="width:28px;height:20px;"></div><div class="wordmark" style="color:#FFFFFF;font-size:16px;">NVIDIA</div></div>
+    </div>
+    <div class="title-pos">
+      <div class="label">Self-Paced Course</div>
+      <div class="title">Course title goes here</div>
+    </div>
+    <div class="annot annot-tl"></div>
+    <div class="annot-label top">Logo · upper-left</div>
+    <div class="annot annot-bl"></div>
+    <div class="annot-label bot">Title · lower-left</div>
+  </div>
+  <div class="summary-note">Logo lives in the <strong>upper-left</strong> of every Academy slide and video frame. Title and content sit in the <strong>lower-left</strong>. The right side stays open for the hero composition or visual content.</div>
+
+  <h2 class="spec-h2">Don'ts</h2>
+  <div class="dd-grid">
+
+    <div class="dd dont">
+      <div class="sample"><div class="nv-logo nv-stretched"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Stretch or distort</div>
+        <div class="why">Logo proportions are fixed. Scale uniformly only.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="nv-logo nv-rotated"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Rotate or angle</div>
+        <div class="why">Logo always sits horizontal (or vertical lockup). No tilts, no skews.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="nv-logo nv-shadow"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Apply shadow or effects</div>
+        <div class="why">No drop shadow, glow, bevel, outline, or gradient overlay.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample busy"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Place on busy backgrounds</div>
+        <div class="why">Logo needs clean ground. Use a solid color or single-color version on backgrounds.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div class="nv-logo tiny"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Scale below minimum</div>
+        <div class="why">Below 15 px (horizontal) the logo becomes illegible.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample"><div style="display:inline-flex;align-items:center;gap:10px;"><div style="width:38px;height:28px;background:#5D1682;border-radius:2px;"></div><div style="font-weight:700;font-size:24px;letter-spacing:-0.02em;color:#5D1682;">NVIDIA</div></div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Change the colors</div>
+        <div class="why">Only the three approved colorways: two-color, all-black, all-white.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="spec-h2">3D hero composition</h2>
+  <div class="summary-note">The rendered 3D NVIDIA "eye" you see on course title cards is not a logo — it's a sanctioned brand illustration. You don't generate it; you grab the approved asset from NVDAM.</div>
+
+  <div class="nvdam-banner">
+    <div class="nvdam-text"><strong>Get the asset from NVDAM.</strong> Don't generate, render, or modify hero compositions yourself. If a needed variant doesn't exist, request it through the corporate brand team.</div>
+    <a href="https://nvdam.nvidia.com/" target="_blank" class="btn btn-primary">Open NVDAM ↗</a>
+  </div>
+
+  <h2 class="spec-h2">Two approved hero variants</h2>
+  <div class="hero-grid">
+
+    <div class="hero-card">
+      <div class="vis embossed">
+        <div class="h-logo"><span class="mark"></span><span class="wm">NVIDIA</span></div>
+        <div class="h-title">
+          <div class="label">Self-Paced Course</div>
+          <div class="t">AI infrastructure fundamentals</div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Embossed glass</div>
+        <div class="usage">The default. Use on <strong>course title cards</strong> — the opening identifier for the whole course. Smooth radial glow, glass-rendered eye.</div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="vis linear">
+        <div class="h-logo"><span class="mark"></span><span class="wm">NVIDIA</span></div>
+        <div class="h-title">
+          <div class="label">Unit 13</div>
+          <div class="t">Management and monitoring</div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Linear scratched</div>
+        <div class="usage">Use on <strong>unit and section openers</strong>. Provides visual differentiation from the course title without breaking the family. Linear texture across the eye.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="spec-h2">Which hero, when</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis"><div style="width:100%;aspect-ratio:16/9;background:radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%), linear-gradient(135deg, #0C0C0C, #161616);border-radius:4px;"></div></div>
+      <div class="name">Embossed glass →</div>
+      <div class="use">Course title card · web course detail hero · marketing materials for the course as a whole</div>
+    </div>
+    <div class="spec-card">
+      <div class="vis"><div style="width:100%;aspect-ratio:16/9;background:repeating-linear-gradient(110deg, transparent 0, transparent 4px, rgba(255,255,255,0.04) 4px, rgba(255,255,255,0.04) 5px), radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.5) 0%, transparent 55%), #0C0C0C;border-radius:4px;"></div></div>
+      <div class="name">Linear scratched →</div>
+      <div class="use">Unit title card · section opener · transitions inside a course</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Title placement on a hero composition</h2>
+  <div class="slide-mock">
+    <div class="logo-pos">
+      <div class="nv-logo white"><div class="mark" style="width:28px;height:20px;"></div><div class="wordmark" style="color:#FFFFFF;font-size:16px;">NVIDIA</div></div>
+    </div>
+    <div class="title-pos">
+      <div class="label">Self-Paced Course</div>
+      <div class="title">Course title goes here</div>
+    </div>
+  </div>
+  <div class="summary-note">Logo upper-left. Course / unit label small above. Title in the lower-left, large and bold, at Display 1 (<code style="font-family:var(--font-mono);background:var(--surface-section);padding:2px 6px;border-radius:3px;font-size:12px;">48 pt / 64 px, Bold, white</code>). The 3D eye occupies the right two-thirds of the frame.</div>
+
+  <h2 class="spec-h2">Don'ts for hero compositions</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample dark"><div style="color:#fff;font-size:13px;text-align:center;">Custom render<br>in Blender</div></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Generate your own 3D variant</div>
+        <div class="why">Only use the variants in NVDAM. No in-house renders, no AI-generated alternatives.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample" style="background:radial-gradient(circle at 75% 50%, #890C58 0%, #0C0C0C 60%);"></div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Recolor the hero</div>
+        <div class="why">The green glow is part of the asset. No magenta, blue, or other tints.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample" style="background:#FFFFFF;">
+        <div style="width:80%;aspect-ratio:16/9;background:radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%), linear-gradient(135deg, #0C0C0C, #161616);"></div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Place a hero on a light slide</div>
+        <div class="why">Hero compositions are dark-mode only. On a light slide, use a flat green or photographic surface instead.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample" style="background:#0C0C0C;position:relative;">
+        <div style="position:absolute;left:10%;top:30%;color:#fff;font-size:11px;text-align:left;">Title<br>over the<br>eye area</div>
+        <div style="position:absolute;right:0;top:0;width:60%;height:100%;background:radial-gradient(circle at 50% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 60%);"></div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Overlap title with the eye</div>
+        <div class="why">Title stays in the lower-left clear zone. The eye composition is its own focal element.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="color.html">Color</a>
+      <a href="typography.html">Typography</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

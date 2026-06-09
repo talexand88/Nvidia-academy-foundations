@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PowerPoint validator — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .placeholder-notice {
+    background: var(--surface-section);
+    border-left: 4px solid var(--feedback-warning);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 32px;
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    line-height: var(--lh-150);
+  }
+  .placeholder-notice strong { color: var(--text-primary); }
+
+  .upload-section {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .upload-section h2 { font-size: var(--fs-600); font-weight: 700; margin-bottom: 8px; }
+  .upload-section p { color: var(--text-secondary); margin-bottom: 24px; }
+  .dropzone-pptx {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 64px 20px;
+    background: var(--surface-section);
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  .dropzone-pptx:hover { border-color: var(--brand-green); }
+  .dropzone-pptx .drop-icon { font-size: 48px; color: var(--text-tertiary); margin-bottom: 12px; }
+
+  /* Report */
+  .report-summary {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+  }
+  .summary-stat .num {
+    font-size: var(--fs-1000);
+    font-weight: 700;
+    line-height: var(--lh-125);
+  }
+  .summary-stat .num.danger { color: var(--feedback-danger); }
+  .summary-stat .num.warning { color: var(--feedback-warning); }
+  .summary-stat .num.success { color: var(--feedback-success); }
+  .summary-stat .label {
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  .check-group {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .check-group-head {
+    padding: 16px 24px;
+    background: var(--surface-section);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: var(--fs-400);
+    font-weight: 500;
+  }
+  .check-item {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .check-mark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .check-mark.pass { background: var(--feedback-success); }
+  .check-mark.fail { background: var(--feedback-danger); }
+  .check-mark.warn { background: var(--feedback-warning); color: var(--brand-black); }
+  .check-text strong { display: block; margin-bottom: 4px; }
+  .check-text { font-size: var(--fs-300); }
+  .check-text p { font-size: var(--fs-200); color: var(--text-secondary); margin: 0; line-height: var(--lh-150); }
+  .check-ref {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  .what-it-checks {
+    background: var(--surface-section);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-top: 32px;
+  }
+  .what-it-checks h2 { font-size: var(--fs-500); font-weight: 700; margin-bottom: 12px; }
+  .what-it-checks ul {
+    margin: 0;
+    padding-left: 24px;
+    font-size: var(--fs-300);
+    line-height: var(--lh-175);
+    color: var(--text-secondary);
+  }
+  .what-it-checks ul strong { color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html" class="active">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <h1 class="page-title">PowerPoint deck validator</h1>
+  <p class="page-lede">Upload your <code>.pptx</code>. The tool unpacks the deck, checks it against the design system, and returns a compliance report. Catch the wrong canvas size, legacy fonts, white-on-green CTAs, and non-system icons before your deck ships.</p>
+
+  <div class="placeholder-notice">
+    <strong>Prototype preview.</strong> This page shows the intended UI and a sample report. The actual validator runs client-side .pptx parsing (canvas size, fonts, text content, color hex) plus optional server-side icon recognition. Sample report below uses a real Academy deck from the audit.
+  </div>
+
+  <div class="upload-section">
+    <h2>Upload a deck</h2>
+    <p>PowerPoint (<code>.pptx</code>) files only · up to 100 MB · processed in your browser, never uploaded to a server</p>
+    <div class="dropzone-pptx" onclick="document.getElementById('pptx-input').click()">
+      <div class="drop-icon">⤴</div>
+      <strong>Drop a .pptx here</strong>
+      <p style="margin-top:4px;font-size:var(--fs-200);">or click to choose · processed locally</p>
+    </div>
+    <input type="file" id="pptx-input" accept=".pptx" style="display:none;">
+    <button class="btn btn-primary" onclick="showSampleReport()">Show sample report</button>
+  </div>
+
+  <div id="report" style="display:none;">
+
+    <h2 style="font-size:var(--fs-700);font-weight:700;margin-bottom:16px;">Report — NVIDIA_Academy_Template - PPT.pptx</h2>
+
+    <div class="report-summary">
+      <div class="summary-stat">
+        <div class="num">130</div>
+        <div class="label">Slides scanned</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num danger">4</div>
+        <div class="label">Critical issues</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num warning">3</div>
+        <div class="label">Warnings</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num success">5</div>
+        <div class="label">Passing</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num" style="color:var(--text-primary);">76 MB</div>
+        <div class="label">File size</div>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-head">Canvas &amp; deck structure</div>
+      <div class="check-item">
+        <div class="check-mark fail">✕</div>
+        <div class="check-text">
+          <strong>Canvas size — wrong</strong>
+          <p>Deck canvas is 20 × 11.25 in. Academy system requires 40 × 22.5 in (matches corporate, eliminates rescale drift, video-ready). Migration: PowerPoint → Design → Slide Size → Custom Slide Size → enter 40 × 22.5.</p>
+        </div>
+        <span class="check-ref">§06.3.1</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark fail">✕</div>
+        <div class="check-text">
+          <strong>File size — too large</strong>
+          <p>76 MB exceeds the recommended ceiling of 20 MB for master templates. Likely cause: 424 embedded images. Compress images via PowerPoint → File → Info → Compress Pictures, or link to NVDAM assets instead of embedding.</p>
+        </div>
+        <span class="check-ref">audit insight</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark pass">✓</div>
+        <div class="check-text">
+          <strong>Slide count within range</strong>
+          <p>130 slides — within the system's guidance for course master templates.</p>
+        </div>
+        <span class="check-ref">§06.6</span>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-head">Typography</div>
+      <div class="check-item">
+        <div class="check-mark fail">✕</div>
+        <div class="check-text">
+          <strong>Deprecated font present — Trebuchet MS</strong>
+          <p>Found on 14 slides. Trebuchet MS is deprecated as of v0.1; only NVIDIA Sans and Consolas are sanctioned. Replace via Home → Replace → Fonts.</p>
+        </div>
+        <span class="check-ref">§01.3.1</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark pass">✓</div>
+        <div class="check-text">
+          <strong>NVIDIA Sans installed and used</strong>
+          <p>NVIDIA Sans is the primary face on 116 of 130 slides.</p>
+        </div>
+        <span class="check-ref">§01.3.1</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark warn">!</div>
+        <div class="check-text">
+          <strong>Title Case detected on 23 slide titles</strong>
+          <p>Sentence case is binding across all surfaces. Review titles like "Course Outline", "Coming Up Next", "Meet Your Instructor" — should become "Course outline", "Coming up next", "Meet your instructor."</p>
+        </div>
+        <span class="check-ref">§01.3.5</span>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-head">Color &amp; CTAs</div>
+      <div class="check-item">
+        <div class="check-mark fail">✕</div>
+        <div class="check-text">
+          <strong>White-on-NVIDIA-Green button found</strong>
+          <p>Slide 47 contains a button with #FFFFFF text on #76B900 background. Contrast ratio 2.41:1, fails WCAG AA. Change text to black, or change background to brand-green-secondary (#004831).</p>
+        </div>
+        <span class="check-ref">§01.1.1 · §04.2.4</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark warn">!</div>
+        <div class="check-text">
+          <strong>Off-system colors present</strong>
+          <p>Detected #C2262D on 2 slides — likely a stray danger / error color. If intentional, this is the canonical danger token. If it's an old accident from a copied deck, replace with a system color.</p>
+        </div>
+        <span class="check-ref">§02</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark pass">✓</div>
+        <div class="check-text">
+          <strong>NVIDIA Green used as primary accent</strong>
+          <p>76B900 appears in 273 places across the deck — appropriate for the primary brand accent.</p>
+        </div>
+        <span class="check-ref">§01.1</span>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-head">Layout &amp; spacing</div>
+      <div class="check-item">
+        <div class="check-mark warn">!</div>
+        <div class="check-text">
+          <strong>Line spacing inconsistent</strong>
+          <p>Detected line spacing values ranging from 1.0 to 1.5 across title text boxes. The system specifies 1.25 (lh-125) for Title and Display text. Standardize across the deck.</p>
+        </div>
+        <span class="check-ref">§01.3.3 · §06.3.7</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark pass">✓</div>
+        <div class="check-text">
+          <strong>Theme colors mapped correctly</strong>
+          <p>Accent 1 = #76B900 (brand-green). Other accents follow the section identity palette.</p>
+        </div>
+        <span class="check-ref">§06.3.3</span>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-head">Icons &amp; imagery</div>
+      <div class="check-item">
+        <div class="check-mark warn">!</div>
+        <div class="check-text">
+          <strong>Possible custom-drawn icons detected</strong>
+          <p>17 slides contain shape compositions that resemble icons but don't match any NVDAM library entry. Verify whether these are sanctioned icons sourced via the plugin, or hand-drawn one-offs that should be replaced.</p>
+        </div>
+        <span class="check-ref">§03.2</span>
+      </div>
+      <div class="check-item">
+        <div class="check-mark pass">✓</div>
+        <div class="check-text">
+          <strong>Third-party logos retain brand colors</strong>
+          <p>Docker, Kubernetes, and Red Hat marks present in original brand colors (correct).</p>
+        </div>
+        <span class="check-ref">§03.2.4</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="what-it-checks">
+    <h2>What the validator checks</h2>
+    <ul>
+      <li><strong>Canvas &amp; structure</strong> — slide dimensions, file size, slide count, masters and layouts present</li>
+      <li><strong>Typography</strong> — font families used, font sizes against type scale, line spacing, sentence case, deprecated font detection</li>
+      <li><strong>Color</strong> — hex values present, off-system colors, CTA contrast (white-on-green fail), theme color mapping</li>
+      <li><strong>Layout &amp; spacing</strong> — line spacing consistency, margin compliance, component anatomy where detectable</li>
+      <li><strong>Icons &amp; imagery</strong> — third-party logos retain brand colors, NVDAM-sourced icons vs. custom-drawn (heuristic), hexagon containers limited to product icons</li>
+      <li><strong>Logo</strong> — NVIDIA logo present and unmodified, no effects applied, clear space respected, no retired logo variants</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>Other tools</h4>
+      <a href="pattern-tree.html">Pattern decision tree</a>
+      <a href="screenshot-review.html">Screenshot review</a>
+      <a href="icons.html">Icon library</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">Content</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a check</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('pptx-input').addEventListener('change', e => {
+    if (e.target.files.length > 0) showSampleReport();
+  });
+  function showSampleReport() {
+    document.getElementById('report').style.display = 'block';
+    document.getElementById('report').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+</body>
+</html>

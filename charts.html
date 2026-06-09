@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charts &amp; data viz — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 24px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  /* Sub-nav for Content pages */
+  .topic-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0 0 56px;
+    padding: 6px;
+    background: var(--surface-section);
+    border-radius: 12px;
+  }
+  .topic-nav a {
+    font-size: 13px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .topic-nav a:hover {
+    background: var(--surface-box);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .topic-nav a.active {
+    background: var(--brand-green);
+    color: var(--brand-black);
+    font-weight: 500;
+  }
+  .topic-nav a.disabled {
+    color: var(--text-tertiary);
+    cursor: default;
+  }
+  .topic-nav a.disabled:hover {
+    background: transparent;
+    color: var(--text-tertiary);
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 64px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 70ch;
+  }
+  .summary-note.proposed {
+    border-left: 4px solid #F5C300;
+    border-radius: 0 8px 8px 0;
+    background: var(--surface-section);
+  }
+  .summary-note strong { color: var(--text-primary); }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .spec-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .spec-card .vis {
+    flex: 1;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spec-card .name { font-size: 16px; font-weight: 500; }
+  .spec-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Chart mocks */
+  .chart-donut {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    position: relative;
+    background: conic-gradient(
+      #76B900 0% 35%,
+      #008564 35% 60%,
+      #5D1682 60% 80%,
+      #890C58 80% 100%
+    );
+  }
+  .chart-donut::after {
+    content: '';
+    position: absolute;
+    inset: 28%;
+    border-radius: 50%;
+    background: var(--brand-black);
+  }
+  .chart-donut .center-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 22px;
+    z-index: 2;
+  }
+
+  .chart-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 130px;
+  }
+  .chart-bar .bar {
+    width: 18px;
+    background: #76B900;
+    border-radius: 2px 2px 0 0;
+  }
+  .chart-bar .b1 { height: 60%; }
+  .chart-bar .b2 { height: 85%; background: #008564; }
+  .chart-bar .b3 { height: 45%; background: #5D1682; }
+  .chart-bar .b4 { height: 95%; background: #890C58; }
+  .chart-bar .b5 { height: 70%; background: #0071C5; }
+
+  .chart-line {
+    width: 200px;
+    height: 130px;
+    position: relative;
+  }
+  .chart-line svg { width: 100%; height: 100%; }
+
+  .chart-simple {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--brand-black);
+    text-align: center;
+  }
+  .chart-simple .unit {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+
+  /* Palette swatches */
+  .palette-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .palette-row .sw {
+    background: var(--brand-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .palette-row .sw .fill { height: 70px; }
+  .palette-row .sw .label {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .palette-row .sw .label .name { font-weight: 500; }
+  .palette-row .sw .label .hex {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* Sample chart with annotations */
+  .annotated-chart {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .annotated-chart .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .annotated-chart .subtitle {
+    font-size: 14px;
+    color: #76B900;
+    margin-bottom: 24px;
+  }
+  .annotated-chart .body {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .annotated-chart .legend {
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .annotated-chart .legend .item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .annotated-chart .legend .item .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .annotated-chart .source {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 24px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Do/Don't */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-section);
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+
+  /* Mini chart variants for do/don't */
+  .mc {
+    width: 80px;
+    height: 70px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .mc .bar { width: 12px; border-radius: 2px 2px 0 0; }
+  .mc-good .bar:nth-child(1) { height: 50%; background: #76B900; }
+  .mc-good .bar:nth-child(2) { height: 80%; background: #008564; }
+  .mc-good .bar:nth-child(3) { height: 60%; background: #5D1682; }
+  .mc-rainbow .bar:nth-child(1) { height: 50%; background: #FF6B6B; }
+  .mc-rainbow .bar:nth-child(2) { height: 80%; background: #4ECDC4; }
+  .mc-rainbow .bar:nth-child(3) { height: 60%; background: #FFD93D; }
+  .mc-rainbow .bar:nth-child(4) { height: 70%; background: #95E1D3; }
+  .mc-rainbow .bar:nth-child(5) { height: 40%; background: #C44569; }
+  .mc-3d {
+    perspective: 200px;
+  }
+  .mc-3d .bar {
+    background: linear-gradient(to bottom, #76B900, #4a7700);
+    transform: rotateY(15deg) rotateX(-10deg);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Charts &amp; data viz</h1>
+    <p class="subtitle">Limited palette. Always labeled. Source cited.</p>
+  </div>
+
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html" class="active">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Chart types we use</h2>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="vis">
+        <div class="chart-donut"><div class="center-icon">◐</div></div>
+      </div>
+      <div class="name">Doughnut with icon</div>
+      <div class="desc">The Academy's signature chart. Centered concept icon anchors the subject. Use for share/proportion data with 3–5 segments max.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="chart-bar">
+          <div class="bar b1"></div>
+          <div class="bar b2"></div>
+          <div class="bar b3"></div>
+          <div class="bar b4"></div>
+          <div class="bar b5"></div>
+        </div>
+      </div>
+      <div class="name">Bar / column</div>
+      <div class="desc">Discrete comparisons. 5–8 bars max. Each bar in one solid color from the chart palette.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="chart-line">
+          <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 100 L 50 70 L 90 80 L 130 40 L 170 25 L 190 50" stroke="#76B900" stroke-width="2.5" fill="none"/>
+            <path d="M 10 110 L 50 95 L 90 100 L 130 75 L 170 65 L 190 80" stroke="#008564" stroke-width="2.5" fill="none"/>
+            <line x1="10" y1="0" x2="10" y2="120" stroke="#CCCCCC" stroke-width="1"/>
+            <line x1="10" y1="120" x2="200" y2="120" stroke="#CCCCCC" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+      <div class="name">Line</div>
+      <div class="desc">Trends over time. Up to 3 series, distinct colors from the chart palette. Axes in gray-200.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="vis">
+        <div class="chart-simple">
+          93<span style="font-size:32px;">%</span>
+          <span class="unit">customer satisfaction</span>
+        </div>
+      </div>
+      <div class="name">Big number</div>
+      <div class="desc">For a single headline metric. Display 1 size, bold black with a small unit label below.</div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Chart series palette</h2>
+
+  <div class="summary-note proposed">
+    <strong>Proposed — not yet finalized.</strong> The Academy reuses the five Section identity colors as the default chart-series palette. A dedicated chart palette is on the v0.2 governance shortlist. Flag any preference; otherwise these are the defaults.
+  </div>
+
+  <div class="palette-row">
+    <div class="sw"><div class="fill" style="background:#76B900;"></div><div class="label"><div class="name">Series 1</div><div class="hex">#76B900</div></div></div>
+    <div class="sw"><div class="fill" style="background:#008564;"></div><div class="label"><div class="name">Series 2</div><div class="hex">#008564</div></div></div>
+    <div class="sw"><div class="fill" style="background:#5D1682;"></div><div class="label"><div class="name">Series 3</div><div class="hex">#5D1682</div></div></div>
+    <div class="sw"><div class="fill" style="background:#890C58;"></div><div class="label"><div class="name">Series 4</div><div class="hex">#890C58</div></div></div>
+    <div class="sw"><div class="fill" style="background:#0071C5;"></div><div class="label"><div class="name">Series 5</div><div class="hex">#0071C5</div></div></div>
+  </div>
+
+  <div class="summary-note">
+    Assign in order: first series in NVIDIA Green, second in deep teal, and so on. If you need more than five series, the chart is too dense — group categories together or split into multiple charts.
+  </div>
+
+  <h2 class="spec-h2">Anatomy of a chart</h2>
+  <div class="annotated-chart">
+    <div class="title">Course completion by region</div>
+    <div class="subtitle">Q3 2026</div>
+    <div class="body">
+      <div class="chart-donut"><div class="center-icon">◐</div></div>
+      <div class="legend">
+        <div class="item"><div class="dot" style="background:#76B900;"></div>Americas — 35%</div>
+        <div class="item"><div class="dot" style="background:#008564;"></div>EMEA — 25%</div>
+        <div class="item"><div class="dot" style="background:#5D1682;"></div>APAC — 20%</div>
+        <div class="item"><div class="dot" style="background:#890C58;"></div>India — 20%</div>
+      </div>
+    </div>
+    <div class="source">Source: NVIDIA Academy completion telemetry, Q3 2026 · NVIDIA Sans, 11 pt, gray</div>
+  </div>
+
+  <div class="summary-note">
+    Every chart includes a <strong>title</strong> (Title 4 / 18 pt bold black), a <strong>subtitle</strong> (14 pt deep teal — the "what slice of the data" line), the <strong>chart itself</strong>, a <strong>legend</strong> with one row per series, and a <strong>source line</strong> at the bottom in 9 pt / 11 px gray.
+  </div>
+
+  <h2 class="spec-h2">Don'ts</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample">
+        <div class="mc mc-rainbow"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Off-system rainbow palette</div>
+        <div class="why">Use chart-series colors only. No PowerPoint default palette, no Tableau theme, no random tints.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample">
+        <div class="mc mc-3d"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">3D / extruded charts</div>
+        <div class="why">Flat 2D charts only. No depth, no perspective, no shadows on bars.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample">
+        <div class="chart-donut" style="background:conic-gradient(#76B900 0% 8%, #008564 8% 16%, #5D1682 16% 22%, #890C58 22% 30%, #0071C5 30% 40%, #F5C300 40% 50%, #C2262D 50% 60%, #FF8FA3 60% 70%, #66D9EF 70% 80%, #A7A7A7 80% 100%);width:80px;height:80px;"><div style="position:absolute;inset:28%;border-radius:50%;background:var(--brand-black);"></div></div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">More than 5 segments</div>
+        <div class="why">Group small slices into "Other" or split across two charts. Beyond five, no one can distinguish the segments.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample">
+        <div style="color:var(--text-secondary);font-size:12px;text-align:center;line-height:1.5;font-style:italic;">[chart with<br>no source or<br>legend]</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">No source citation</div>
+        <div class="why">Every chart cites its source line. Internal data, public report, telemetry — name it.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample">
+        <div style="width:80px;height:80px;border-radius:50%;background:#76B900;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;">93%</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">White text on NVIDIA Green</div>
+        <div class="why">Same WCAG rule as the Color page — black text on green, or use Secondary Green for white text.</div>
+      </div>
+    </div>
+
+    <div class="dd dont">
+      <div class="sample">
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-secondary);line-height:1.3;text-align:center;">
+          12.3 · 47.8 · 19.1 · 34.5<br>62.1 · 28.6 · 11.4 · 53.2<br>17.9 · 41.0 · 25.6 · 38.4
+        </div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Data dump without visualization</div>
+        <div class="why">If your numbers fit a chart, chart them. Tables only for reference data the audience will scan, not consume linearly.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Quick reference</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Element</th>
+          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Spec</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Title</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">18 pt / 24 px · Bold · text-primary</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Subtitle</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">14 pt / 18 px · Regular · #008564 (deep teal)</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Legend</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">11 pt / 13 px · Regular · text-primary · 12 px swatch</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Axis labels</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">10 pt / 12 px · gray-500</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Source line</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">9 pt / 11 px · gray-500 · NVIDIA Sans</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Series 1–5</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">#76B900 · #008564 · #5D1682 · #890C58 · #0071C5</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Max segments per chart</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">5</td></tr>
+        <tr><td style="padding:10px 16px;border-top:1px solid var(--border);font-weight:500;">Dimensionality</td><td style="padding:10px 16px;border-top:1px solid var(--border);font-family:var(--font-mono);">2D only · no shadows</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="color.html">Color</a>
+      <a href="assets.html">Assets</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

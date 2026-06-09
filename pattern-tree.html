@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pattern decision tree — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .tree-layout {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .progress {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    align-items: center;
+  }
+  .progress .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gray-200);
+  }
+  .progress .dot.active { background: var(--brand-green); }
+  .progress .dot.done { background: var(--feedback-success); }
+  .progress .step-label {
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    margin-left: auto;
+    font-family: var(--font-mono);
+  }
+
+  .question-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .question-card h2 {
+    font-size: var(--fs-700);
+    font-weight: 700;
+    line-height: var(--lh-125);
+    margin-bottom: 8px;
+  }
+  .question-card .question-help {
+    color: var(--text-secondary);
+    font-size: var(--fs-300);
+    margin-bottom: 24px;
+  }
+
+  .options {
+    display: grid;
+    gap: 12px;
+  }
+  .option {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 150ms, transform 150ms;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .option:hover {
+    border-color: var(--brand-green);
+    transform: translateX(2px);
+  }
+  .option:focus-visible {
+    outline: 2px solid var(--brand-green);
+    outline-offset: 2px;
+  }
+  .option-icon {
+    font-size: 28px;
+    color: var(--brand-green-secondary);
+    flex-shrink: 0;
+    width: 36px;
+    text-align: center;
+  }
+  .option-text {
+    flex: 1;
+  }
+  .option-title {
+    font-size: var(--fs-400);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .option-desc {
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    line-height: var(--lh-150);
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  /* Result page */
+  .result-card {
+    background: var(--surface-box);
+    border: 2px solid var(--brand-green);
+    border-radius: var(--radius-md);
+    padding: 32px;
+  }
+  .result-card .result-label {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: var(--fs-100);
+    color: var(--feedback-success);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .result-card h2 {
+    font-size: var(--fs-900);
+    font-weight: 700;
+    line-height: var(--lh-125);
+    margin-bottom: 12px;
+  }
+  .result-card .result-ref {
+    font-family: var(--font-mono);
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .result-card .result-desc {
+    font-size: var(--fs-400);
+    color: var(--text-secondary);
+    line-height: var(--lh-150);
+    margin-bottom: 32px;
+  }
+
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .recipe-grid dt {
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: var(--fs-200);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .recipe-grid dd {
+    margin: 0;
+    font-size: var(--fs-300);
+  }
+
+  .your-path {
+    background: var(--surface-section);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+  }
+  .your-path span {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html" class="active">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <h1 class="page-title">Pattern decision tree</h1>
+  <p class="page-lede">Answer three quick questions about what you're building. We'll land you on the right pattern with the right component recipe and the right downloads.</p>
+
+  <div class="tree-layout">
+
+    <div class="progress">
+      <span class="dot" id="dot-1"></span>
+      <span class="dot" id="dot-2"></span>
+      <span class="dot" id="dot-3"></span>
+      <span class="step-label" id="step-label">Step 1 of 3</span>
+    </div>
+
+    <div id="step-host"></div>
+
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>Other toolkit items</h4>
+      <a href="screenshot-review.html">Screenshot review</a>
+      <a href="pptx-validator.html">PowerPoint validator</a>
+      <a href="icons.html">Icon library</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All patterns (§05)</a>
+      <a href="content.html">Components (§04)</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a new pattern</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Decision tree data — keyed paths lead to patterns
+  const QUESTIONS = [
+    {
+      id: 'surface',
+      title: 'What surface are you producing for?',
+      help: 'Pick the primary output medium. If your content is multi-surface, pick the one you author first.',
+      options: [
+        { id: 'slide', label: 'Slide deck (PowerPoint)', icon: '◧', desc: 'Course master deck, instructor slides, conference talk' },
+        { id: 'video', label: 'Course video (After Effects)', icon: '▷', desc: 'Course overview, section opener, unit instruction, lab walkthrough' },
+        { id: 'web',   label: 'Web platform (course site)', icon: '◑', desc: 'Course detail page, in-course player, marketing page' }
+      ]
+    },
+    {
+      id: 'moment',
+      title: 'What moment in the course is this?',
+      help: 'Pick the closest fit. If you\'re building multiple moments, run the tree once per moment.',
+      options: [
+        { id: 'opener', label: 'Course or unit opener', icon: '◆', desc: 'Title cards, course identity, section openers' },
+        { id: 'syllabus', label: 'Syllabus / orientation', icon: '☷', desc: 'Course outline, layout overview, prerequisites, instructor intro' },
+        { id: 'instruction', label: 'Instructional content', icon: '✎', desc: 'Concepts, diagrams, code, charts, hooks' },
+        { id: 'assessment', label: 'Assessment', icon: '?', desc: 'Knowledge check, quiz, completion exam' },
+        { id: 'transition', label: 'Transition / wayfinding', icon: '↦', desc: 'Coming up next, section dividers, progress markers' }
+      ]
+    },
+    {
+      id: 'density',
+      title: 'How dense is the content?',
+      help: 'Light = single focus. Medium = grouped items. Heavy = full architectural or data composition.',
+      options: [
+        { id: 'light',  label: 'Light — one focal idea', icon: '◌', desc: 'Hero question, single concept, instructor intro' },
+        { id: 'medium', label: 'Medium — grouped items', icon: '⬚', desc: 'Three to nine units, feature row, prerequisite cards' },
+        { id: 'heavy',  label: 'Heavy — architectural / dense', icon: '▦', desc: 'Layered stack, network topology, deep-dive callouts' }
+      ]
+    }
+  ];
+
+  // Result lookup table — pattern matches by path
+  // Default fallback patterns provide reasonable answers for less-common combinations
+  const PATTERNS = {
+    // Course title card
+    'slide:opener:light': {
+      name: 'Course title card',
+      ref: '§5.2.1',
+      desc: 'The opening identifier for an entire course. Dark canvas with the 3D NVIDIA hero composition on the right, course title in lower-left at Display 1 size.',
+      recipe: {
+        'Surface': 'PowerPoint slide, 40 × 22.5 in',
+        'Layout': 'Title — course',
+        'Background': 'surface-dark-canvas (#0C0C0C) + embossed-glass hero composition',
+        'Title type': 'Display 1 (fs-1400 / 48 pt), brand-white, bold',
+        'Hero asset': 'NVDAM Corporate Portal — embossed-glass variant',
+        'Components': 'Section opener layout · NVIDIA logo upper-left',
+        'Don\'t': 'Use linear-scratched hero (reserved for unit openers)'
+      }
+    },
+    'video:opener:light': {
+      name: 'Course title card (video opener)',
+      ref: '§5.2.1, §6.4.5',
+      desc: 'Same composition as the slide title, with the canonical 4-stage animation sequence. Hero in, logo in, label in, title in, then 4-second hold before transition.',
+      recipe: {
+        'Surface': '1920 × 1080, 30 fps',
+        'Background': 'surface-dark-canvas + embossed-glass hero',
+        'Title type': '48 pt, brand-white, bold',
+        'Animation': '800 ms hero in → 600 ms logo → 1000 ms label → 1200 ms title slide-up → 4s hold',
+        'Audio': 'First 500 ms silent (player ramp-up)',
+        'Don\'t': 'Author motion outside the canonical sequence — it is a fixed asset'
+      }
+    },
+    // Unit title
+    'slide:opener:medium': {
+      name: 'Unit title card',
+      ref: '§5.2.2',
+      desc: 'Opening identifier for a single unit. Linear-scratched hero variant (not embossed-glass — that\'s reserved for course title), with the unit title plus "Unit N" subtitle.',
+      recipe: {
+        'Surface': 'PowerPoint slide, 40 × 22.5 in',
+        'Layout': 'Title — unit',
+        'Hero variant': 'Linear-scratched (NVDAM)',
+        'Title': 'Display 1 (48 pt), brand-white',
+        'Subtitle': 'Display 5 (40 pt) "Unit N", brand-white, regular weight'
+      }
+    },
+    'video:opener:medium': {
+      name: 'Unit title card (video)',
+      ref: '§5.2.2',
+      desc: 'Video unit opener using the linear-scratched hero variant with the canonical animation sequence.',
+      recipe: {
+        'Surface': '1920 × 1080, 30 fps',
+        'Hero variant': 'Linear-scratched (NVDAM)',
+        'Animation': 'Same as course title — 800/600/1000/1200 ms cascade'
+      }
+    },
+    // Syllabus — slide
+    'slide:syllabus:light': {
+      name: 'Meet Your Instructor',
+      ref: '§5.5',
+      desc: 'Two-column instructor introduction. Photo on left, four labeled sections on right (Personal Profile → Work Experience → Education → Skills/Hobbies). Order is binding.',
+      recipe: {
+        'Layout': 'Meet Your Instructor master layout',
+        'Photo': 'Square crop, 4 px corner radius',
+        'Title': 'Title 2 (fs-800 / 24 pt), bold',
+        'Section labels': 'fs-300 bold in section-color-0-base (green)',
+        'Body': 'fs-300 regular',
+        'For multi-instructor courses': 'Stack vertically; no side-by-side grid'
+      }
+    },
+    'slide:syllabus:medium': {
+      name: 'Course Outline grid',
+      ref: '§5.3.1',
+      desc: 'Two-row composition: 3-column grid of green-bordered Unit cards (Lecture Component), then below it a row of black-bordered Lab cards (Lab Component).',
+      recipe: {
+        'Layout': 'Course Outline grid master layout',
+        'Lecture grid': '3 columns × N rows of Unit cards (§4.4.1 — green 2 px border)',
+        'Lab row': 'Up to 4 columns of Lab cards (§4.4.2 — black 1 px border)',
+        'Container': 'surface-light-section (#EEEEEE) groups',
+        'Max units': '12 total — split across slides if more',
+        'Don\'t': 'Mix lectures and labs in the same row, or invert the border colors'
+      }
+    },
+    'slide:syllabus:heavy': {
+      name: 'Course Layout',
+      ref: '§5.3.2',
+      desc: 'Condensed alternative to Course Outline grid showing sections with color-coded tabs, icons, unit ranges, and duration circles. The most-used syllabus pattern.',
+      recipe: {
+        'Layout': 'Course Layout master layout',
+        'Tabs': '12 px wide left tab per row in section-color-N-base',
+        'Section label': 'fs-300 bold, text-primary',
+        'Icon': 'M size (40 px), blk variant',
+        'Section name': 'fs-600 semibold',
+        'Unit pill': 'fs-200 in surface-light-section',
+        'Duration circle': '48 px circle, 2 px gray-300 border',
+        'Total': 'Dashed circle on far right'
+      }
+    },
+    'video:syllabus:medium': {
+      name: 'Course Outline grid (video)',
+      ref: '§5.3.1',
+      desc: 'Same Course Outline composition with subtle animation: all cards fade in together at 300 ms — never sequentially.',
+      recipe: {
+        'Surface': '1920 × 1080',
+        'Animation': 'Fade in all cards together at 300 ms ease-out',
+        'Don\'t': 'Stagger card entries — pattern is presented as a complete syllabus'
+      }
+    },
+    'video:syllabus:heavy': {
+      name: 'Course Layout (video)',
+      ref: '§5.3.2, §6.4',
+      desc: 'Course Layout pattern with rows animating in top-to-bottom and the total duration callout scaling in at the end.',
+      recipe: {
+        'Surface': '1920 × 1080',
+        'Animation': 'Rows top-to-bottom at 150 ms intervals; total callout scales in at end',
+        'Hold': 'Minimum 6 seconds after full reveal for learner orientation'
+      }
+    },
+    // Instruction
+    'slide:instruction:light': {
+      name: 'Hook-question slide',
+      ref: '§5.8.4',
+      desc: 'Single big question, framed for impact. Differs from Three Questions hook in that it asks one focused question, used as a unit-opening curiosity hook.',
+      recipe: {
+        'Layout': 'Hook question master layout',
+        'Title type': 'Display 3 (fs-1200 / 38 pt), bold, centered',
+        'Length': 'Maximum 12 words, ends with "?"',
+        'Optional icon': 'XL concept icon above question, grn variant',
+        'Background': 'surface-light-canvas or surface-dark-canvas'
+      }
+    },
+    'video:instruction:light': {
+      name: 'Three Questions hook',
+      ref: '§5.4.1',
+      desc: 'Three open questions, one per column, with line illustrations. Used in section opener videos to set learner expectation. Locked at exactly three.',
+      recipe: {
+        'Surface': '1920 × 1080',
+        'Columns': 'Three equal columns',
+        'Icon': 'L size (96 px), blk concept icon, Circle container (optionally dashed)',
+        'Question type': 'Title 4 (fs-600 / 18 pt), regular',
+        'Animation': 'Columns fade in left-to-right at 400 ms intervals',
+        'Hold': '4-6 seconds before transition',
+        'Don\'t': 'Use product icons, give answers, exceed three columns'
+      }
+    },
+    'slide:instruction:medium': {
+      name: 'Benefits row',
+      ref: '§5.8.3',
+      desc: '3-4 icon-plus-caption columns showing parallel benefits, features, or principles. The most-reused content pattern across instructional decks.',
+      recipe: {
+        'Layout': 'Benefits row master layout',
+        'Columns': '3 or 4 equal-width groups (max 4)',
+        'Icon': 'L size (96 px slide), grn or blk variant',
+        'Caption': 'fs-300 regular, max 8-10 words, centered',
+        'Subtitle': '"Benefits" or similar in section-color-0-base (green)'
+      }
+    },
+    'video:instruction:medium': {
+      name: 'Benefits row (animated)',
+      ref: '§5.8.3, §6.4',
+      desc: 'Benefits row with sequential entry animation.',
+      recipe: {
+        'Animation': 'Items fade in left-to-right at 200 ms intervals',
+        'Lottie': 'Use matching Lottie if an icon represents an active concept (running, scaling, processing)'
+      }
+    },
+    'slide:instruction:heavy': {
+      name: 'Layered architecture stack',
+      ref: '§5.7.1',
+      desc: 'Vertical stack of horizontal product/component rows with colored left-stripe indicators per row signaling arch-status (NVIDIA / Optional / Required-separate / Workload).',
+      recipe: {
+        'Layout': 'Layered Architecture master layout',
+        'Rows': 'surface-light-section background, 1 px gray-200 border, 56 px row height',
+        'Left stripe': '12 px wide, arch-status color',
+        'Layer label': 'Title 4 (fs-600), semibold, centered',
+        'Legend': 'Mandatory — every arch diagram includes the color → meaning legend',
+        'Don\'t': 'Use background fills instead of left stripes — strip is the canonical signal'
+      }
+    },
+    'video:instruction:heavy': {
+      name: 'Network topology diagram',
+      ref: '§5.7.2',
+      desc: 'Node-and-edge architecture diagram. Connection lines colored per the diagram-line palette (compute teal, storage blue, management black, out-of-band gray).',
+      recipe: {
+        'Surface': '1920 × 1080',
+        'Nodes': 'Isometric hardware icons from NVDAM where available',
+        'Lines': '2 px web / 3 pt slide weight; color per diagram-line tokens',
+        'Legend': 'Mandatory — lower-left corner',
+        'Don\'t': 'Encode meaning in line style (dashed/dotted) without legend documentation'
+      }
+    },
+    // Assessment
+    'web:assessment:light': {
+      name: 'Knowledge Check launcher',
+      ref: '§5.6.1',
+      desc: 'Unit-level low-stakes quiz launcher. Activity card with title, subtitle in green, description, 2×2 stat-card grid, and Start quiz primary button.',
+      recipe: {
+        'Component': 'Activity card (§4.4.5)',
+        'Title': 'Unit N - {Topic} title, Title 3 centered',
+        'Subtitle': '"Knowledge Check" in feedback-success (deep teal), semibold',
+        'Stat grid': '2 × 2 — Number of attempts, Passing score, Quiz duration, Number of questions',
+        'CTA': 'Primary button "Start quiz" — black text on green',
+        'Don\'t': 'Include a Note callout — low-stakes launcher, no attention treatment needed'
+      }
+    },
+    'web:assessment:medium': {
+      name: 'Course Completion Quiz launcher',
+      ref: '§5.6.2',
+      desc: 'Final-assessment launcher. Same anatomy as Knowledge Check but with a mandatory Note callout below the stat grid explaining attempts, lockout, retry policy.',
+      recipe: {
+        'Component': 'Activity card (§4.4.5)',
+        'Title': 'Course name, Title 3',
+        'Subtitle': '"Course Completion Quiz" in feedback-success',
+        'Stat grid': '2 × 2 (typically: 2 attempts, 70% pass, 90 min, 25 questions)',
+        'Note callout': 'Mandatory — magenta stripe + "NOTE" label, explains retry rules',
+        'CTA': 'Primary button "Start quiz" — black text on green'
+      }
+    },
+    'slide:assessment:medium': {
+      name: 'Course Completion Quiz launcher (slide)',
+      ref: '§5.6.2',
+      desc: 'Slide equivalent of the web completion quiz launcher, shown when previewing assessment structure in syllabus videos.',
+      recipe: {
+        'Layout': 'Activity card composition (§4.4.5)',
+        'Note callout': 'Required'
+      }
+    },
+    // Transition
+    'video:transition:light': {
+      name: 'Coming Up Next',
+      ref: '§5.2.4',
+      desc: '5-10 second bridge between unit videos showing where the learner is in the course arc. Horizontal timeline with past (gray), current (section color), and future stops.',
+      recipe: {
+        'Surface': '1920 × 1080',
+        'Title': '"Coming up next" centered top, Title 1',
+        'Timeline': 'Horizontal track, current stop in section-color-N-base, past in gray, future as outlined circles',
+        'Animation': 'Stops animate left-to-right; current-unit highlight pulses once at 800 ms',
+        'Hold': '5-10 seconds'
+      }
+    },
+    'slide:transition:light': {
+      name: 'Section opener',
+      ref: '§5.2.3',
+      desc: 'Section divider slide. Title centered, section label below in section identity color. Identifies the chapter the learner has just entered.',
+      recipe: {
+        'Layout': 'Section opener master layout',
+        'Title': 'Display 2 (fs-1300 / 42 pt), bold, centered',
+        'Label': '"Section N" or named section, Title 2 in section-color-N-base',
+        'Optional icon': 'M size, centered above title, grn or blk variant'
+      }
+    },
+  };
+
+  // Fallback patterns by surface
+  const DEFAULTS = {
+    'slide:instruction': PATTERNS['slide:instruction:medium'],
+    'video:instruction': PATTERNS['video:instruction:medium'],
+    'web':              PATTERNS['web:assessment:light'],
+    'slide':            PATTERNS['slide:instruction:medium'],
+    'video':            PATTERNS['video:instruction:medium']
+  };
+
+  let answers = {};
+  let step = 0;
+
+  function renderStep() {
+    const host = document.getElementById('step-host');
+    if (step < QUESTIONS.length) {
+      const q = QUESTIONS[step];
+      host.innerHTML = `
+        <div class="question-card">
+          <h2>${q.title}</h2>
+          <p class="question-help">${q.help}</p>
+          <div class="options">
+            ${q.options.map(o => `
+              <button class="option" onclick="answer('${q.id}', '${o.id}')">
+                <span class="option-icon">${o.icon}</span>
+                <span class="option-text">
+                  <span class="option-title">${o.label}</span>
+                  <span class="option-desc">${o.desc}</span>
+                </span>
+              </button>
+            `).join('')}
+          </div>
+          ${step > 0 ? `<div class="nav-buttons"><button class="btn btn-secondary" onclick="goBack()">← Back</button></div>` : ''}
+        </div>
+      `;
+    } else {
+      renderResult();
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    for (let i = 0; i < 3; i++) {
+      const dot = document.getElementById('dot-' + (i+1));
+      dot.classList.remove('active','done');
+      if (i < step) dot.classList.add('done');
+      else if (i === step) dot.classList.add('active');
+    }
+    document.getElementById('step-label').textContent = step >= QUESTIONS.length ? 'Result' : `Step ${step+1} of 3`;
+  }
+
+  function answer(qid, oid) {
+    answers[qid] = oid;
+    step++;
+    renderStep();
+  }
+
+  function goBack() {
+    if (step > 0) {
+      step--;
+      renderStep();
+    }
+  }
+
+  function reset() {
+    answers = {};
+    step = 0;
+    renderStep();
+  }
+
+  function renderResult() {
+    const key = `${answers.surface}:${answers.moment}:${answers.density}`;
+    const partialKey = `${answers.surface}:${answers.moment}`;
+    const result = PATTERNS[key] || DEFAULTS[partialKey] || DEFAULTS[answers.surface] || {
+      name: 'No exact pattern match',
+      ref: 'open',
+      desc: 'No canonical pattern is currently defined for this exact combination. Closest matches and a suggestion follow.',
+      recipe: { 'Action': 'File a pattern proposal — see Governance §7.3' }
+    };
+
+    const surfaceLabel = { slide: 'Slide deck', video: 'Course video', web: 'Web platform' }[answers.surface];
+    const momentLabel = QUESTIONS[1].options.find(o => o.id === answers.moment).label;
+    const densityLabel = QUESTIONS[2].options.find(o => o.id === answers.density).label;
+
+    const host = document.getElementById('step-host');
+    host.innerHTML = `
+      <div class="your-path">
+        Your path: <span>${surfaceLabel}</span> → <span>${momentLabel}</span> → <span>${densityLabel}</span>
+      </div>
+      <div class="result-card">
+        <div class="result-label">Recommended pattern</div>
+        <h2>${result.name}</h2>
+        <div class="result-ref">${result.ref}</div>
+        <p class="result-desc">${result.desc}</p>
+
+        <h3 style="font-size:var(--fs-400);font-weight:500;margin-bottom:12px;">Recipe</h3>
+        <dl class="recipe-grid">
+          ${Object.entries(result.recipe).map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}
+        </dl>
+
+        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="reset()">Start over</button>
+          <a href="content.html" class="btn btn-secondary">Browse all patterns</a>
+        </div>
+      </div>
+    `;
+  }
+
+  renderStep();
+</script>
+
+</body>
+</html>

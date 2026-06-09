@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .search-hero {
+    background: var(--surface-section);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  .search-hero h1 {
+    font-size: var(--fs-1000);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .search-hero p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .search-input-big {
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--fs-500);
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-box);
+  }
+  .search-input-big:focus {
+    outline: 2px solid var(--brand-green);
+    outline-offset: 2px;
+    border-color: var(--brand-green);
+  }
+  .search-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .search-suggestions button {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: var(--fs-200);
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+  .search-suggestions button:hover {
+    border-color: var(--brand-green);
+  }
+
+  .result-section {
+    margin-bottom: 32px;
+  }
+  .result-section h3 {
+    font-size: var(--fs-300);
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .result-section h3 .count {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    background: var(--surface-section);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .result-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 8px;
+    display: block;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .result-card:hover {
+    border-color: var(--brand-green);
+    text-decoration: none;
+  }
+  .result-card .result-kind {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .result-card .result-title {
+    font-size: var(--fs-500);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .result-card .result-snippet {
+    font-size: var(--fs-200);
+    color: var(--text-secondary);
+    line-height: var(--lh-150);
+  }
+  .result-card .result-meta {
+    margin-top: 8px;
+    font-size: var(--fs-100);
+    color: var(--text-tertiary);
+  }
+  mark {
+    background: var(--brand-green);
+    color: var(--brand-black);
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 64px;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="search-hero">
+    <h1>Search the system</h1>
+    <p>Type a project, token, color, pattern, or rule. Search spans tokens, components, patterns, the icon library, and binding rules.</p>
+    <input type="text" id="q" class="search-input-big" placeholder="course title slide · #76B900 contrast · Knowledge Check · NVIDIA Sans pt mapping · how to install plugin">
+    <div class="search-suggestions">
+      <button onclick="setQ('course title slide')">course title slide</button>
+      <button onclick="setQ('Knowledge Check')">Knowledge Check</button>
+      <button onclick="setQ('section opener video')">section opener video</button>
+      <button onclick="setQ('Note callout')">Note callout</button>
+      <button onclick="setQ('#76B900')">#76B900 contrast</button>
+      <button onclick="setQ('canvas size')">canvas size</button>
+      <button onclick="setQ('sentence case')">sentence case</button>
+      <button onclick="setQ('cloud')">cloud (icons)</button>
+    </div>
+  </div>
+
+  <div id="results"></div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft · June 2026</div>
+    </div>
+    <div>
+      <h4>System</h4>
+      <a href="index.html">Home</a>
+      <a href="content.html">Content</a>
+      <a href="assets.html">Assets</a>
+    </div>
+    <div>
+      <h4>Toolkit</h4>
+      <a href="pattern-tree.html">Pattern decision tree</a>
+      <a href="screenshot-review.html">Screenshot review</a>
+      <a href="pptx-validator.html">PowerPoint validator</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Search index — keyed entries with kind, title, snippet, href, tags
+  const INDEX = [
+    // Patterns
+    { kind: 'Pattern', title: 'Course title card', snippet: 'Opening identifier for an entire course. Dark canvas with 3D NVIDIA hero composition; title in Display 1.', href: 'pattern-tree.html?p=course-title', tags: ['title','course','opener','hero','slide','video','web','first slide'] },
+    { kind: 'Pattern', title: 'Unit title card', snippet: 'Opening identifier for a single unit. Linear-scratched hero variant with Unit N subtitle.', href: 'pattern-tree.html?p=unit-title', tags: ['title','unit','opener','hero'] },
+    { kind: 'Pattern', title: 'Section opener', snippet: 'Section divider slide. Title centered with section label in section identity color.', href: 'content.html', tags: ['section','opener','divider','identity'] },
+    { kind: 'Pattern', title: 'Coming Up Next timeline', snippet: 'Bridging pattern between units. Horizontal timeline showing past/current/future stops.', href: 'content.html', tags: ['timeline','transition','wayfinding','progress'] },
+    { kind: 'Pattern', title: 'Course Outline grid', snippet: 'Two-row syllabus composition: green-bordered Unit cards above black-bordered Lab cards.', href: 'content.html', tags: ['syllabus','outline','units','labs'] },
+    { kind: 'Pattern', title: 'Course Layout', snippet: 'Condensed syllabus showing sections with color tabs, icons, unit ranges, durations.', href: 'content.html', tags: ['syllabus','layout','sections','duration'] },
+    { kind: 'Pattern', title: 'Three Questions hook', snippet: 'Pre-content motivation pattern: three open questions with line illustrations.', href: 'content.html', tags: ['hook','questions','three','opener','section video'] },
+    { kind: 'Pattern', title: 'Meet Your Instructor', snippet: 'Two-column instructor introduction with photo and four labeled sections.', href: 'content.html', tags: ['instructor','bio','intro','people'] },
+    { kind: 'Pattern', title: 'Knowledge Check launcher', snippet: 'Unit-level quiz launcher. Activity card with 2×2 stat grid and Start quiz button.', href: 'content.html', tags: ['knowledge check','quiz','assessment','launcher'] },
+    { kind: 'Pattern', title: 'Course Completion Quiz launcher', snippet: 'Final assessment launcher with mandatory Note callout explaining attempts and retries.', href: 'content.html', tags: ['quiz','assessment','completion','final'] },
+    { kind: 'Pattern', title: 'Layered architecture stack', snippet: 'Vertical product stack diagram with color-coded left stripes per row (NVIDIA / Optional / Required-separate / Workload).', href: 'content.html', tags: ['architecture','stack','diagram','BasePOD'] },
+    { kind: 'Pattern', title: 'Network topology diagram', snippet: 'Node-and-edge architecture diagram with color-coded line types and mandatory legend.', href: 'content.html', tags: ['topology','network','diagram'] },
+    { kind: 'Pattern', title: 'Code slide', snippet: 'For displaying code excerpts in lectures. Always dark, Consolas, with syntax highlighting.', href: 'content.html', tags: ['code','programming','dark','mono','jetbrains'] },
+    { kind: 'Pattern', title: 'Benefits row', snippet: '3-4 icon-plus-caption columns showing parallel benefits, features, or principles. Maximum 4 items.', href: 'content.html', tags: ['benefits','features','row'] },
+
+    // Components
+    { kind: 'Component', title: 'Primary button', snippet: 'Single most important action. Solid NVIDIA Green fill with black text (binding accessibility rule).', href: 'content.html', tags: ['button','cta','primary','enroll','start'] },
+    { kind: 'Component', title: 'Note callout', snippet: 'Canonical magenta-stripe with uppercase NOTE label. Identical on web, slide, and video. Replaces historical divergence.', href: 'content.html', tags: ['note','callout','alert','attention','magenta'] },
+    { kind: 'Component', title: 'Stat card', snippet: 'Label gray, value in feedback-success (deep teal). Used in Knowledge Check and Quiz screens.', href: 'content.html', tags: ['stat','metric','card','quiz','knowledge check'] },
+    { kind: 'Component', title: 'Unit card', snippet: 'Green-bordered card for lecture units in syllabus compositions.', href: 'content.html', tags: ['unit','card','lecture','syllabus'] },
+    { kind: 'Component', title: 'Lab card', snippet: 'Black-bordered card for lab exercises in syllabus compositions.', href: 'content.html', tags: ['lab','exercise','card','syllabus'] },
+    { kind: 'Component', title: 'Course outline sidebar tree', snippet: 'Left-sidebar hierarchical navigation: Section → Unit → Lesson. Green right-bar marks active item.', href: 'content.html', tags: ['sidebar','navigation','tree','outline','active'] },
+
+    // Tokens / Foundations
+    { kind: 'Token', title: 'brand-green (#76B900)', snippet: 'NVIDIA Green. Primary accent. Fails white-text contrast (2.41:1) — use black text on green CTAs.', href: 'content.html', tags: ['#76B900','green','brand','primary','color','contrast','wcag','accessibility'] },
+    { kind: 'Token', title: 'brand-green-secondary (#004831)', snippet: 'NVIDIA Secondary Green. Deep forest. Passes white text at 11.6:1.', href: 'content.html', tags: ['#004831','green','secondary','color'] },
+    { kind: 'Token', title: 'section-color palette', snippet: 'Five-color palette for course chapter identity: green / deep teal / purple / magenta / blue.', href: 'content.html', tags: ['section identity','palette','chapters','course'] },
+    { kind: 'Token', title: 'feedback-attention (#890C58)', snippet: 'Deep magenta. Note callouts and attention-required UI.', href: 'content.html', tags: ['#890C58','magenta','attention','note','feedback'] },
+    { kind: 'Token', title: 'NVIDIA Sans typography', snippet: 'Default sans face. Used everywhere except code. Trebuchet MS is deprecated.', href: 'content.html', tags: ['font','typography','nvidia sans','typeface'] },
+    { kind: 'Token', title: 'Consolas typography', snippet: 'Default monospace face. Used in code blocks and fixed-width data.', href: 'content.html', tags: ['font','mono','code','jetbrains'] },
+    { kind: 'Token', title: 'Slide canvas size — 40 × 22.5 inches', snippet: 'Canonical PowerPoint canvas. Matches corporate template. 1:1 to 1920 × 1080 video frames on export.', href: 'content.html', tags: ['canvas','slide','powerpoint','size','dimensions','40','22.5'] },
+    { kind: 'Token', title: 'Type scale — fs-50 to fs-1400', snippet: '15-step pixel scale from 10 px (fs-50) to 64 px (fs-1400). Slide pt equivalents in §1.3.4.', href: 'content.html', tags: ['type','scale','fs','sizes','pt mapping'] },
+    { kind: 'Token', title: 'Sentence case rule', snippet: 'All UI, navigation, body, slide titles, button labels use sentence case. Binding across all surfaces.', href: 'content.html', tags: ['sentence case','title case','typography','capitalization'] },
+
+    // Rules / accessibility
+    { kind: 'Rule', title: 'White text on NVIDIA Green is forbidden', snippet: 'Fails WCAG 2.2 AA at 2.41:1. Use black text on green for CTAs, or use brand-green-secondary if white text is needed.', href: 'content.html', tags: ['wcag','contrast','accessibility','white','green','cta','enroll'] },
+    { kind: 'Rule', title: 'One color system per composition', snippet: 'A slide showing an architecture diagram uses arch-status tokens; it does not also code shapes by section identity.', href: 'content.html', tags: ['color','disambiguation','system'] },
+    { kind: 'Rule', title: 'Icons in three colors only', snippet: 'NVDAM icons ship in grn / blk / wht only. Do not recolor outside this set.', href: 'content.html', tags: ['icons','color','three','grn','blk','wht'] },
+
+    // Toolkit
+    { kind: 'Toolkit', title: 'Pattern decision tree', snippet: 'Answer three questions about your project and land on the right pattern with the recipe.', href: 'pattern-tree.html', tags: ['decision tree','pattern','help','wizard'] },
+    { kind: 'Toolkit', title: 'Screenshot review', snippet: 'Upload a slide, video frame, or web mockup; get specific findings cited to the system.', href: 'screenshot-review.html', tags: ['screenshot','review','audit','validator'] },
+    { kind: 'Toolkit', title: 'PowerPoint deck validator', snippet: 'Upload your .pptx; catch wrong canvas size, legacy fonts, white-on-green, non-system icons.', href: 'pptx-validator.html', tags: ['powerpoint','pptx','validator','review','audit'] },
+    { kind: 'Toolkit', title: 'Icon library', snippet: '672 NVIDIA marketing icons across 31 categories. Search, preview, download. Plugin install inline.', href: 'icons.html', tags: ['icons','library','search','nvdam','plugin'] },
+
+    // How-to
+    { kind: 'How-to', title: 'Install the PowerPoint Icon plugin', snippet: 'Central M365 admin deploy (recommended) or side-load via Insert → Get Add-ins → Upload My Add-in.', href: 'icons.html', tags: ['plugin','install','powerpoint','m365','add-in'] },
+    { kind: 'How-to', title: 'Set PowerPoint line spacing to lh-125', snippet: 'In PowerPoint: Line Spacing → Multiple → 1.25. Apply to all Title and Display text boxes.', href: 'content.html', tags: ['powerpoint','line spacing','lh-125','typography'] },
+    { kind: 'How-to', title: 'Migrate a 20" canvas deck to 40"', snippet: 'In PowerPoint Design → Slide Size → Custom Slide Size, set 40 × 22.5 inches. Check for layout drift after.', href: 'content.html', tags: ['canvas','migrate','20','40','resize'] }
+  ];
+
+  function setQ(text) {
+    const input = document.getElementById('q');
+    input.value = text;
+    runSearch(text);
+    input.focus();
+  }
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 1);
+    let result = text;
+    terms.forEach(t => {
+      const re = new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      result = result.replace(re, '<mark>$1</mark>');
+    });
+    return result;
+  }
+
+  function score(item, query) {
+    const q = query.toLowerCase();
+    let s = 0;
+    if (item.title.toLowerCase().includes(q)) s += 100;
+    if (item.tags.some(t => t.toLowerCase() === q)) s += 80;
+    if (item.tags.some(t => t.toLowerCase().includes(q))) s += 40;
+    if (item.snippet.toLowerCase().includes(q)) s += 20;
+    // Multi-term scoring
+    q.split(/\s+/).forEach(term => {
+      if (term.length < 2) return;
+      if (item.title.toLowerCase().includes(term)) s += 30;
+      if (item.tags.some(t => t.toLowerCase().includes(term))) s += 15;
+      if (item.snippet.toLowerCase().includes(term)) s += 8;
+    });
+    return s;
+  }
+
+  function runSearch(query) {
+    const resultsEl = document.getElementById('results');
+    if (!query || !query.trim()) {
+      resultsEl.innerHTML = '<div class="empty"><p>Type a query above or pick a suggestion to begin.</p></div>';
+      return;
+    }
+
+    const ranked = INDEX
+      .map(item => ({ item, s: score(item, query) }))
+      .filter(r => r.s > 0)
+      .sort((a, b) => b.s - a.s);
+
+    if (ranked.length === 0) {
+      resultsEl.innerHTML = `<div class="empty"><p>No matches for "${query}". Try a broader term or browse <a href="content.html">all sections</a>.</p></div>`;
+      return;
+    }
+
+    // Group by kind
+    const grouped = {};
+    ranked.forEach(r => {
+      grouped[r.item.kind] = grouped[r.item.kind] || [];
+      grouped[r.item.kind].push(r.item);
+    });
+
+    const kindOrder = ['Pattern', 'Component', 'Token', 'Rule', 'How-to', 'Toolkit'];
+    let html = '';
+    kindOrder.forEach(kind => {
+      if (!grouped[kind]) return;
+      html += `<div class="result-section">
+        <h3>${kind}s <span class="count">${grouped[kind].length}</span></h3>
+        ${grouped[kind].map(item => `
+          <a href="${item.href}" class="result-card">
+            <div class="result-kind">${item.kind}</div>
+            <div class="result-title">${highlight(item.title, query)}</div>
+            <div class="result-snippet">${highlight(item.snippet, query)}</div>
+          </a>
+        `).join('')}
+      </div>`;
+    });
+    resultsEl.innerHTML = html;
+  }
+
+  document.getElementById('q').addEventListener('input', e => runSearch(e.target.value));
+
+  // Parse ?q= from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get('q');
+  if (initialQuery) {
+    document.getElementById('q').value = initialQuery;
+    runSearch(initialQuery);
+  } else {
+    runSearch('');
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color — NVIDIA Academy Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 48px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 72px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Brand palette */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .swatch {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .swatch .fill {
+    height: 140px;
+    border-bottom: 1px solid var(--border);
+  }
+  .swatch .body {
+    padding: 18px 20px;
+  }
+  .swatch .name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .swatch .codes {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .swatch .codes .row { display: flex; justify-content: space-between; }
+  .swatch .codes .row .k { color: var(--text-tertiary); }
+  .swatch .use {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Combinations — Do / Don't */
+  .combo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .combo {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .combo.do { border-top: 4px solid #76B900; }
+  .combo.dont { border-top: 4px solid #C2262D; }
+  .combo .sample {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-weight: 500;
+    font-size: 22px;
+  }
+  .combo .meta {
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+  }
+  .combo .badge {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .combo.do .badge { color: #76B900; }
+  .combo.dont .badge { color: #C2262D; }
+  .combo .label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .combo .why {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .combo .codes {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+
+  /* Big yes/no card for gradients */
+  .answer-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin: 16px 0 24px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .answer-card .verdict {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .answer-card .verdict.no { color: #C2262D; }
+  .answer-card .verdict.yes { color: #76B900; }
+  .answer-card .verdict.except { color: var(--text-primary); font-size: 32px; }
+  .answer-card .verdict .v-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .answer-card .detail h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .answer-card .detail p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .answer-card .detail ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Gradient examples */
+  .grad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .grad {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .grad .vis {
+    height: 100px;
+  }
+  .grad .vis.hero {
+    background: radial-gradient(circle at 70% 50%, #76B900 0%, #1a1a1a 70%);
+  }
+  .grad .vis.dark-bg {
+    background: linear-gradient(180deg, #0C0C0C, #161616);
+  }
+  .grad .vis.green-other {
+    background: linear-gradient(90deg, #76B900, #C2262D);
+  }
+  .grad .vis.green-only {
+    background: linear-gradient(135deg, #76B900, #004831);
+  }
+  .grad .grad-label {
+    padding: 12px 16px;
+    background: var(--surface-box);
+    font-size: 13px;
+  }
+  .grad .grad-label .verdict {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .grad .grad-label .verdict.yes { color: #76B900; }
+  .grad .grad-label .verdict.no { color: #C2262D; }
+  .grad .grad-label .verdict.limited { color: #F5C300; }
+  .grad .grad-label .label { font-weight: 500; }
+  .grad .grad-label .note { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Color</h1>
+    <p class="subtitle">Four brand colors. Five section colors. Use them with care.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html" class="active">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="assets.html">Assets</a>
+    <a href="logos-hero.html">Logos &amp; hero</a>
+    <a href="imagery.html">Imagery</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="motion.html" class="disabled">Motion — v2</a>
+  </nav>
+
+  <h2 class="spec-h2">Primary colors</h2>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="fill" style="background:#76B900;"></div>
+      <div class="body">
+        <div class="name">NVIDIA Green</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#76B900</span></div>
+          <div class="row"><span class="k">RGB</span><span>118 / 185 / 0</span></div>
+          <div class="row"><span class="k">CMYK</span><span>50 / 0 / 100 / 0</span></div>
+          <div class="row"><span class="k">PMS</span><span>376 C</span></div>
+        </div>
+        <div class="use">Primary accent · CTAs · active state</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="fill" style="background:#004831;"></div>
+      <div class="body">
+        <div class="name">NVIDIA Secondary Green</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#004831</span></div>
+          <div class="row"><span class="k">RGB</span><span>0 / 72 / 49</span></div>
+        </div>
+        <div class="use">Inverse CTAs · accent when white text is needed</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="fill" style="background:#000000;"></div>
+      <div class="body">
+        <div class="name">Black</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#000000</span></div>
+          <div class="row"><span class="k">RGB</span><span>0 / 0 / 0</span></div>
+          <div class="row"><span class="k">CMYK</span><span>0 / 0 / 0 / 100</span></div>
+        </div>
+        <div class="use">Text · dark surface · primary contrast</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="fill" style="background:#FFFFFF;border-bottom:1px solid var(--border);"></div>
+      <div class="body">
+        <div class="name">White</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#FFFFFF</span></div>
+          <div class="row"><span class="k">RGB</span><span>255 / 255 / 255</span></div>
+          <div class="row"><span class="k">CMYK</span><span>0 / 0 / 0 / 0</span></div>
+        </div>
+        <div class="use">Light surface · text on dark</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="fill" style="background:#CDCDCD;"></div>
+      <div class="body">
+        <div class="name">Light Gray</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#CDCDCD</span></div>
+          <div class="row"><span class="k">RGB</span><span>205 / 205 / 205</span></div>
+        </div>
+        <div class="use">Subtle borders · disabled states · low-emphasis backgrounds</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="fill" style="background:#8C8C8C;"></div>
+      <div class="body">
+        <div class="name">Medium Gray</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#8C8C8C</span></div>
+          <div class="row"><span class="k">RGB</span><span>140 / 140 / 140</span></div>
+        </div>
+        <div class="use">Captions · secondary labels · UI separators</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="fill" style="background:#5E5E5E;"></div>
+      <div class="body">
+        <div class="name">Dark Gray</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#5E5E5E</span></div>
+          <div class="row"><span class="k">RGB</span><span>94 / 94 / 94</span></div>
+        </div>
+        <div class="use">Body text on light · secondary text · stronger borders</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Secondary colors</h2>
+  <p style="color:var(--text-secondary);font-size:15px;margin-bottom:20px;max-width:60ch;">Use as accents — chapter identities, chart series, alert tones. Pick deliberately; don't combine more than two in the same composition.</p>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="fill" style="background:#008564;"></div>
+      <div class="body">
+        <div class="name">Emerald green</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#008564</span></div>
+          <div class="row"><span class="k">RGB</span><span>0 / 133 / 100</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="fill" style="background:#0071C5;"></div>
+      <div class="body">
+        <div class="name">CPU Blue</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#0071C5</span></div>
+          <div class="row"><span class="k">RGB</span><span>0 / 113 / 197</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="fill" style="background:#5D1682;"></div>
+      <div class="body">
+        <div class="name">Amethyst</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#5D1682</span></div>
+          <div class="row"><span class="k">RGB</span><span>93 / 22 / 130</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="fill" style="background:#FAC200;"></div>
+      <div class="body">
+        <div class="name">Fluorite</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#FAC200</span></div>
+          <div class="row"><span class="k">RGB</span><span>250 / 194 / 0</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="fill" style="background:#890C58;"></div>
+      <div class="body">
+        <div class="name">Garnet</div>
+        <div class="codes">
+          <div class="row"><span class="k">HEX</span><span>#890C58</span></div>
+          <div class="row"><span class="k">RGB</span><span>137 / 12 / 88</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Combinations that work</h2>
+  <div class="combo-grid">
+
+    <div class="combo do">
+      <div class="sample" style="background:#000000;color:#76B900;">NVIDIA</div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Green on black</div>
+        <div class="why">The canonical hero pairing. Highest punch.</div>
+        <div class="codes">#76B900 on #000000</div>
+      </div>
+    </div>
+
+    <div class="combo do">
+      <div class="sample" style="background:#76B900;color:#000000;">Enroll now</div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Black on green</div>
+        <div class="why">Use this for CTA buttons. Passes WCAG AA at 8.71:1.</div>
+        <div class="codes">#000000 on #76B900</div>
+      </div>
+    </div>
+
+    <div class="combo do">
+      <div class="sample" style="background:#FFFFFF;color:#000000;border-bottom:1px solid var(--border);">Body text</div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Black on white</div>
+        <div class="why">Default body. Maximum legibility.</div>
+        <div class="codes">#000000 on #FFFFFF</div>
+      </div>
+    </div>
+
+    <div class="combo do">
+      <div class="sample" style="background:#004831;color:#FFFFFF;">White text</div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">White on Secondary Green</div>
+        <div class="why">When you need a white-on-green moment, use Secondary Green. 11.6:1 contrast.</div>
+        <div class="codes">#FFFFFF on #004831</div>
+      </div>
+    </div>
+
+    <div class="combo do">
+      <div class="sample" style="background:#0C0C0C;color:#FFFFFF;">Dark UI</div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">White on near-black</div>
+        <div class="why">Dark-theme surfaces. Pair with green accents.</div>
+        <div class="codes">#FFFFFF on #0C0C0C</div>
+      </div>
+    </div>
+
+    <div class="combo do">
+      <div class="sample" style="background:#EEEEEE;color:#000000;">Card surface</div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Black on light gray</div>
+        <div class="why">Section containers, callouts. Soft contrast.</div>
+        <div class="codes">#000000 on #EEEEEE</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="spec-h2">Combinations to avoid</h2>
+  <div class="combo-grid">
+
+    <div class="combo dont">
+      <div class="sample" style="background:#76B900;color:#FFFFFF;">Enroll now</div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">White on NVIDIA Green</div>
+        <div class="why">Fails WCAG AA at 2.41:1. Use black text on green, or switch to Secondary Green.</div>
+        <div class="codes">#FFFFFF on #76B900 — 2.41:1</div>
+      </div>
+    </div>
+
+    <div class="combo dont">
+      <div class="sample" style="background:#76B900;color:#C2262D;">Vibrating</div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Green next to red</div>
+        <div class="why">Colors fight. Visually harsh. Reds are reserved for danger states only.</div>
+        <div class="codes">#76B900 with #C2262D</div>
+      </div>
+    </div>
+
+    <div class="combo dont">
+      <div class="sample" style="background:#FAC200;color:#FFFFFF;">Hard to read</div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">White on Fluorite</div>
+        <div class="why">Fails AA at 1.78:1. Fluorite always takes black text.</div>
+        <div class="codes">#FFFFFF on #FAC200 — 1.78:1</div>
+      </div>
+    </div>
+
+    <div class="combo dont">
+      <div class="sample" style="background:#FFFFFF;color:#CDCDCD;border-bottom:1px solid var(--border);">Faded text</div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Light Gray on white</div>
+        <div class="why">Low contrast for body text. Use Dark Gray (#5E5E5E) or darker.</div>
+        <div class="codes">#CDCDCD on #FFFFFF — 1.61:1</div>
+      </div>
+    </div>
+
+    <div class="combo dont">
+      <div class="sample" style="background:#5D1682;color:#0071C5;">Hard to read</div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Two secondary colors together</div>
+        <div class="why">Secondary colors fight each other when paired as foreground / background. Place them on neutral surfaces instead.</div>
+        <div class="codes">Any secondary × any other</div>
+      </div>
+    </div>
+
+    <div class="combo dont">
+      <div class="sample" style="background:#76B900;color:#0071C5;">CTA</div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">CPU Blue on NVIDIA Green</div>
+        <div class="why">Primary and secondary colors don't mix as foreground / background. Keep palettes separate.</div>
+        <div class="codes">#0071C5 on #76B900</div>
+      </div>
+    </div>
+
+    <div class="combo dont">
+      <div class="sample" style="padding:0;background:#FFFFFF;">
+        <div style="display:flex;flex-direction:column;gap:4px;padding:14px;width:100%;height:100%;justify-content:center;">
+          <div style="height:9px;background:#FAC200;border-radius:2px;"></div>
+          <div style="height:9px;background:#FF8A1F;border-radius:2px;"></div>
+          <div style="height:9px;background:#890C58;border-radius:2px;"></div>
+          <div style="height:9px;background:#C2262D;border-radius:2px;"></div>
+          <div style="height:9px;background:#5D1682;border-radius:2px;"></div>
+          <div style="height:9px;background:#3A1F73;border-radius:2px;"></div>
+          <div style="height:9px;background:#008564;border-radius:2px;"></div>
+          <div style="height:9px;background:#1A3A5C;border-radius:2px;"></div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">A different color per row</div>
+        <div class="why">When every list item, table row, or data source gets its own color, no color means anything any more. The composition reads as decoration, not information. Use color only where it carries meaning — chapter identity, status, series — and let everything else stay neutral.</div>
+        <div class="codes">Cap at one primary + two secondary per composition</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="spec-h2">Gradients — yes or no?</h2>
+
+  <div class="answer-card">
+    <div>
+      <div class="verdict no">No</div>
+      <div class="v-sub">For UI, content, charts, icons</div>
+    </div>
+    <div class="detail">
+      <h3>Don't generate gradients yourself</h3>
+      <p>The Academy uses solid colors for backgrounds, buttons, frames, cards, text, icons, charts, and surfaces. No gradient fills on any UI element. No gradient text. No gradient buttons. No multi-stop rainbow effects.</p>
+    </div>
+  </div>
+
+  <div class="answer-card">
+    <div>
+      <div class="verdict except">Except</div>
+      <div class="v-sub">For sanctioned hero imagery</div>
+    </div>
+    <div class="detail">
+      <h3>The 3D NVIDIA hero composition</h3>
+      <p>The 3D-rendered NVIDIA "eye" composition on title cards has a built-in radial green glow. You don't generate this — grab the asset from NVDAM. The gradient lives inside the sanctioned image; it isn't a CSS or PowerPoint fill you apply.</p>
+    </div>
+  </div>
+
+  <div class="grad-grid">
+    <div class="grad">
+      <div class="vis hero"></div>
+      <div class="grad-label">
+        <div class="verdict yes">Yes</div>
+        <div class="label">3D hero composition</div>
+        <div class="note">Sanctioned · sourced from NVDAM</div>
+      </div>
+    </div>
+    <div class="grad">
+      <div class="vis dark-bg"></div>
+      <div class="grad-label">
+        <div class="verdict limited">Limited</div>
+        <div class="label">Subtle dark background</div>
+        <div class="note">#0C0C0C → #161616 only · section opener backgrounds</div>
+      </div>
+    </div>
+    <div class="grad">
+      <div class="vis green-only"></div>
+      <div class="grad-label">
+        <div class="verdict no">No</div>
+        <div class="label">Green-to-green gradient</div>
+        <div class="note">Don't apply to buttons, cards, backgrounds</div>
+      </div>
+    </div>
+    <div class="grad">
+      <div class="vis green-other"></div>
+      <div class="grad-label">
+        <div class="verdict no">No</div>
+        <div class="label">Multi-color gradients</div>
+        <div class="note">Never. No green-to-red, green-to-blue, rainbow</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>More</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="assets.html">Assets</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Review a screenshot</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
