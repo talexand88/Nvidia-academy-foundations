@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Toolkit — NVIDIA Academy Foundations</title>
+<title>Toolkit — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .tool-grid {
@@ -30,8 +30,8 @@
   .tool-card .status {
     font-size: var(--fs-100);
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    
+    
   }
   .status.live { color: var(--feedback-success); }
   .status.coming { color: var(--text-tertiary); }
@@ -59,7 +59,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -67,6 +67,7 @@
     <a href="content.html">Content</a>
     <a href="toolkit.html" class="active">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
 
   </nav>
@@ -79,16 +80,9 @@
 <main class="portal-main">
 
   <h1 class="page-title">Toolkit</h1>
-  <p class="page-lede">Working tools for producers. Pick the right pattern, validate your work, audit a deck, and find an icon — without leaving the system.</p>
+  <p class="page-lede">Working tools for producers. Run a screenshot through the reviewer or validate a deck against the system — fast feedback before publishing.</p>
 
   <div class="tool-grid">
-
-    <a href="pattern-tree.html" class="tool-card">
-      <span class="status live">Live</span>
-      <h2>Pattern decision tree</h2>
-      <p class="tool-desc">Answer three questions about your project — surface, moment, density — and land on the right pattern with the recipe and links to assets.</p>
-      <span class="tool-cta">Start the tree →</span>
-    </a>
 
     <a href="screenshot-review.html" class="tool-card">
       <span class="status live">Live</span>
@@ -104,35 +98,52 @@
       <span class="tool-cta">Validate a deck →</span>
     </a>
 
-    <a href="icons.html" class="tool-card">
-      <span class="status live">Live</span>
-      <h2>Icon library</h2>
-      <p class="tool-desc">672 NVIDIA marketing icons across 31 categories. Search by keyword (synonyms supported), filter by category, preview in three colors, download, and grab the PowerPoint plugin install link.</p>
-      <span class="tool-cta">Browse icons →</span>
-    </a>
-
-    <a href="motion.html" class="tool-card" style="opacity:0.7;">
-      <span class="status coming">v2 — Reserved</span>
-      <h2>Motion library</h2>
-      <p class="tool-desc">Curated Lottie animations matched 1:1 to the static icon library. Browse, preview, grab the canonical motion. Mirrors the Icons page structure exactly — it's a reference library, not a motion-production tool.</p>
-      <span class="tool-cta" style="color:var(--text-tertiary);">See the placeholder →</span>
+    <a href="pattern-tree.html" class="tool-card" style="opacity:0.55;pointer-events:none;">
+      <span class="status coming">Coming soon</span>
+      <h2>Pattern decision tree</h2>
+      <p class="tool-desc">Answer three questions about your project — surface, moment, density — and land on the right pattern with the recipe and links to assets.</p>
+      <span class="tool-cta" style="color:var(--text-tertiary);">In planning →</span>
     </a>
 
     <a href="#" class="tool-card" style="opacity:0.5;pointer-events:none;">
-      <span class="status coming">v2 — Stretch</span>
+      <span class="status coming">TBD</span>
       <h2>Course coherence checker</h2>
       <p class="tool-desc">Upload three to five screenshots from one course (title, mid-content, quiz, end card). Get a report on whether they belong to the same Academy course — section identity colors, hero variant family, typography, icon source.</p>
-      <span class="tool-cta" style="color:var(--text-tertiary);">Coming later →</span>
+      <span class="tool-cta" style="color:var(--text-tertiary);">Stretch goal →</span>
     </a>
 
   </div>
+
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
 
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft · June 2026</div>
     </div>
     <div>

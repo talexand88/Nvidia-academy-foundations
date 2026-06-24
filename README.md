@@ -1,4 +1,4 @@
-# NVIDIA Academy Foundations
+# NVIDIA Academy Visual Foundations
 
 The design reference portal for everyone producing NVIDIA Academy materials — slides, video, and web.
 
@@ -6,8 +6,8 @@ Design standards, downloadable assets, and production tools in one place.
 
 ## What's inside
 
-- **Content** — practical guides for typography, color, frames & cards, spacing, logos & hero, imagery, code & CLI, and charts. Specs by surface (PowerPoint and After Effects), do / don't examples, quick-reference tables.
-- **Assets** — searchable library of 672 NVIDIA marketing icons, plus the asset categories for logos, hero compositions, photography, fonts, and starter templates.
+- **Content** — practical guides for typography, color, frames & cards, spacing, logos, code & CLI, and charts. Specs by surface (PowerPoint and After Effects), do / don't examples, quick-reference tables.
+- **Assets** — searchable library of 672 NVIDIA marketing icons, plus the asset categories for logos, photography, fonts, and starter templates.
 - **Toolkit** — a pattern picker that recommends the right pattern from three quick questions, a screenshot reviewer (UI mockup), and a PowerPoint deck validator (UI mockup).
 - **Motion** — reserved for v2. Will mirror the Icons library structure, paired 1:1 with Lottie animations.
 
@@ -31,7 +31,7 @@ Then visit <http://localhost:8000>.
    ```
    git init
    git add .
-   git commit -m "Initial commit — NVIDIA Academy Foundations v0.1"
+   git commit -m "Initial commit — NVIDIA Academy Visual Foundations v0.1"
    git branch -M main
    git remote add origin https://github.com/<your-username>/<your-repo>.git
    git push -u origin main
@@ -55,19 +55,32 @@ portal/
 ├── frames-cards.html         guide
 ├── spacing.html              guide
 ├── icons.html                live icon library (672 icons)
-├── logos-hero.html           guide
+├── logos.html                logos asset page (download lockups)
+├── templates.html            templates asset page (PowerPoint master, AE)
+├── logos-hero.html           guide (Logos)
 ├── imagery.html              guide
 ├── code-cli.html             guide
 ├── charts.html               guide
+├── patterns.html             patterns hub (banners, notifications, …)
+├── topologies.html           guide (network and system diagrams, draft)
+├── banners.html              pattern: Kaizen banner (info/warning/error/success)
+├── notifications.html        pattern: Kaizen notification (white card + stripe)
+├── tables.html               pattern: Academy table (green titles, zebra rows, ✓/✗)
+├── lists.html                pattern: 3-level bullets, NVIDIA-green dots
+├── timeline.html             pattern: horizontal stops + progress bar
+├── hero.html                 pattern: Kaizen hero (eyebrow / title / body / CTAs)
 ├── pattern-tree.html         tool
 ├── screenshot-review.html    tool (UI mockup)
 ├── pptx-validator.html       tool (UI mockup)
 ├── shared/
 │   └── tokens.css            design tokens + shared component CSS
-└── data/
-    ├── icons.js              672 icons metadata
-    ├── svg-paths.js          SVG path strings keyed by hash
-    └── synonyms.js           search synonym expansion
+├── data/
+│   ├── icons.js              672 icons metadata
+│   ├── svg-paths.js          SVG path strings keyed by hash
+│   └── synonyms.js           search synonym expansion
+└── downloads/
+    ├── logos/                NVIDIA wordmark PNGs (6 variants)
+    └── templates/            PowerPoint masters (Light, Dark)
 ```
 
 ## Status

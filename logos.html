@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logos — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 500;
+    
+    
+    color: var(--text-secondary);
+    margin: 56px 0 20px;
+  }
+
+  .usage-note {
+    background: var(--surface-section);
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 24px 0 0;
+    max-width: 72ch;
+  }
+  .usage-note strong { color: var(--text-primary); }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .logo-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .logo-card .preview {
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+  }
+  .logo-card .preview.light { background: #FFFFFF; }
+  .logo-card .preview.dark { background: #0C0C0C; }
+  .logo-card .preview img {
+    max-width: 80%;
+    max-height: 80%;
+    height: auto;
+    object-fit: contain;
+  }
+  .logo-card .preview.vert img { max-width: 45%; }
+
+  .logo-card .meta {
+    padding: 20px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px solid var(--border);
+  }
+  .logo-card .name {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .logo-card .specs {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 4px 0 14px;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--brand-green);
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 0;
+    text-decoration: none;
+    transition: background 150ms;
+    width: fit-content;
+  }
+  .download-btn:hover {
+    background: #92d100;
+    text-decoration: none;
+  }
+  .download-btn svg { width: 14px; height: 14px; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html" class="active">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="assets.html">Assets</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Logos</span>
+  </nav>
+
+
+  <div class="topic-hero">
+    <h1>Logos</h1>
+    <p class="sub">Official NVIDIA wordmark. Pick the variant that matches your background, then click Download.</p>
+  </div>
+
+  <div class="usage-note">
+    <strong>Quick rules.</strong> Don't recolor or rearrange the lockup. Keep clear space at least equal to the height of the "N". No drop shadows, glows, gradients, or outlines. The all-white (1-color) variant is for situations where full color isn't possible.
+  </div>
+
+  <div class="section-label">Horizontal Lockup</div>
+  <div class="logo-grid">
+
+    <div class="logo-card">
+      <div class="preview light">
+        <img src="downloads/logos/nvidia-logo-horiz-rgb-blk-for-screen.png" alt="NVIDIA horizontal logo, color, black wordmark">
+      </div>
+      <div class="meta">
+        <div class="name">Color · on light background</div>
+        <div class="specs">PNG · transparent · 3027 × 1067</div>
+        <a class="download-btn" href="downloads/logos/nvidia-logo-horiz-rgb-blk-for-screen.png" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download PNG
+        </a>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="preview dark">
+        <img src="downloads/logos/nvidia-logo-horiz-rgb-wht-for-screen.png" alt="NVIDIA horizontal logo, color, white wordmark">
+      </div>
+      <div class="meta">
+        <div class="name">Color · on dark background</div>
+        <div class="specs">PNG · transparent · 3028 × 1067</div>
+        <a class="download-btn" href="downloads/logos/nvidia-logo-horiz-rgb-wht-for-screen.png" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download PNG
+        </a>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="preview dark">
+        <img src="downloads/logos/nvidia-logo-horiz-rgb-1c-wht-for-screen.png" alt="NVIDIA horizontal logo, all white">
+      </div>
+      <div class="meta">
+        <div class="name">All white (1-color)</div>
+        <div class="specs">PNG · transparent · 3028 × 1067</div>
+        <a class="download-btn" href="downloads/logos/nvidia-logo-horiz-rgb-1c-wht-for-screen.png" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download PNG
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Vertical Lockup</div>
+  <div class="logo-grid">
+
+    <div class="logo-card">
+      <div class="preview light vert">
+        <img src="downloads/logos/nvidia-logo-vert-rgb-blk-for-screen.png" alt="NVIDIA vertical logo, color, black wordmark">
+      </div>
+      <div class="meta">
+        <div class="name">Color · on light background</div>
+        <div class="specs">PNG · transparent · 2219 × 1856</div>
+        <a class="download-btn" href="downloads/logos/nvidia-logo-vert-rgb-blk-for-screen.png" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download PNG
+        </a>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="preview dark vert">
+        <img src="downloads/logos/nvidia-logo-vert-rgb-wht-for-screen.png" alt="NVIDIA vertical logo, color, white wordmark">
+      </div>
+      <div class="meta">
+        <div class="name">Color · on dark background</div>
+        <div class="specs">PNG · transparent · 2219 × 1856</div>
+        <a class="download-btn" href="downloads/logos/nvidia-logo-vert-rgb-wht-for-screen.png" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download PNG
+        </a>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="preview dark vert">
+        <img src="downloads/logos/nvidia-logo-vert-rgb-1c-wht-for-screen.png" alt="NVIDIA vertical logo, all white">
+      </div>
+      <div class="meta">
+        <div class="name">All white (1-color)</div>
+        <div class="specs">PNG · transparent · 2219 × 1856</div>
+        <a class="download-btn" href="downloads/logos/nvidia-logo-vert-rgb-1c-wht-for-screen.png" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download PNG
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="logos-hero.html">Logos</a>
+      <a href="typography.html">Typography</a>
+    </div>
+    <div>
+      <h4>Assets</h4>
+      <a href="assets.html">All assets</a>
+      <a href="icons.html">Icons</a>
+      <a href="templates.html">Templates</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest an asset</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Imagery — NVIDIA Academy Foundations</title>
+<title>Imagery — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .topic-hero { margin-bottom: 24px; }
@@ -22,8 +22,8 @@
   h2.spec-h2 {
     font-size: 14px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    
+    
     color: var(--text-secondary);
     margin: 64px 0 24px;
     padding-bottom: 12px;
@@ -32,7 +32,7 @@
 
   .summary-note {
     background: var(--surface-section);
-    border-radius: 8px;
+    border-radius: 0;
     padding: 16px 20px;
     font-size: 14px;
     color: var(--text-secondary);
@@ -53,7 +53,7 @@
   .three-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
   }
   .three-card .vis {
@@ -113,7 +113,7 @@
   .photo-tile {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
   }
   .photo-tile .img {
@@ -134,7 +134,7 @@
     position: absolute;
     inset: 25%;
     background: linear-gradient(90deg, #76B900 0%, #76B900 8%, transparent 8%, transparent 12%, #76B900 12%, #76B900 20%, transparent 20%);
-    border-radius: 4px;
+    border-radius: 0;
   }
   .photo-tile.lab .img { background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%); position: relative; }
   .photo-tile.lab .img::after {
@@ -157,7 +157,7 @@
     justify-content: center;
     background: var(--surface-section);
     padding: 32px;
-    border-radius: 12px;
+    border-radius: 0;
   }
   .illust-row svg { color: var(--brand-black); }
 
@@ -170,7 +170,7 @@
   .dd {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
   }
   .dd.do { border-top: 4px solid #76B900; }
@@ -185,8 +185,8 @@
   .dd .badge {
     font-size: 11px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    
+    
     margin-bottom: 6px;
   }
   .dd.do .badge { color: #76B900; }
@@ -241,7 +241,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -249,6 +249,7 @@
     <a href="content.html" class="active">Content</a>
     <a href="toolkit.html">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
   </nav>
   <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
@@ -258,6 +259,14 @@
 </header>
 
 <main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Imagery</span>
+  </nav>
+
 
   <div class="topic-hero">
     <h1>Imagery</h1>
@@ -269,15 +278,12 @@
     <a href="color.html">Color</a>
     <a href="frames-cards.html">Frames &amp; cards</a>
     <a href="spacing.html">Spacing &amp; layout</a>
-    <a href="assets.html">Assets</a>
-    <a href="logos-hero.html">Logos &amp; hero</a>
-    <a href="imagery.html" class="active">Imagery</a>
+    <a href="logos-hero.html">Logos</a>
     <a href="code-cli.html">Code &amp; CLI</a>
     <a href="charts.html">Charts</a>
-    <a href="motion.html" class="disabled">Motion — v2</a>
   </nav>
 
-  <h2 class="spec-h2">Three families — pick by intent</h2>
+  <h2 class="spec-h2">Three Families — Pick By Intent</h2>
   <div class="three-grid">
     <div class="three-card">
       <div class="vis photo"></div>
@@ -304,12 +310,12 @@
       <div class="vis hero"></div>
       <div class="meta">
         <div class="name">3D hero composition</div>
-        <div class="when">Course title cards, video openers, web hero. Sourced from NVDAM — see <a href="logos-hero.html">Logos &amp; hero</a>.</div>
+        <div class="when">Course title cards, video openers, web hero. Sourced from NVDAM — see <a href="logos-hero.html">Logos</a>.</div>
       </div>
     </div>
   </div>
 
-  <h2 class="spec-h2">Photography style</h2>
+  <h2 class="spec-h2">Photography Style</h2>
 
   <div class="photo-grid">
     <div class="photo-tile dc">
@@ -330,27 +336,27 @@
     Subjects are <strong>real NVIDIA hardware, data center environments, and learning contexts</strong>. Get photography from the corporate brand team or NVDAM — don't pull from generic stock libraries.
   </div>
 
-  <h2 class="spec-h2">Photo treatment</h2>
+  <h2 class="spec-h2">Photo Treatment</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
-    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;padding:20px;">
       <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Crop generously</div>
       <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Tight crops on the subject. Avoid wide-angle establishing shots that lose the focal point.</div>
     </div>
-    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;padding:20px;">
       <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Dark tonality</div>
       <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Photos lean dark — server halls, server-room lighting, deep contrast. Matches the brand surface.</div>
     </div>
-    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;padding:20px;">
       <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Cool color cast</div>
       <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Blue and green ambient light dominates. Avoid warm orange casts unless documenting a specific environment.</div>
     </div>
-    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;padding:20px;">
+    <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;padding:20px;">
       <div style="font-size:14px;font-weight:500;margin-bottom:6px;">No filters</div>
       <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Black-and-white, sepia, vintage, lens-blur filters all off. The photo is what it is.</div>
     </div>
   </div>
 
-  <h2 class="spec-h2">Illustration style</h2>
+  <h2 class="spec-h2">Illustration Style</h2>
   <div class="illust-row">
     <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="#000" stroke-width="1.5">
       <rect x="8" y="14" width="32" height="20" rx="2"/>
@@ -377,13 +383,13 @@
     Illustrations match the <strong>monoline icon style</strong> — same stroke weight (1.5 pt nominal), same green or black, same 48-unit grid. They are essentially icons drawn larger. Don't create illustrations in a different style; if you need an illustration, request an icon-style asset.
   </div>
 
-  <h2 class="spec-h2">When to use which</h2>
-  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+  <h2 class="spec-h2">When To Use Which</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;overflow:hidden;">
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead>
         <tr>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Use case</th>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Family</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Use case</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Family</th>
         </tr>
       </thead>
       <tbody>
@@ -448,7 +454,7 @@
 
     <div class="dd dont">
       <div class="sample" style="background:linear-gradient(135deg,#FFE0B2,#FFAB91);position:relative;">
-        <div style="position:absolute;inset:25% 15%;background:rgba(0,0,0,0.1);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:48px;color:rgba(0,0,0,0.3);">×</div>
+        <div style="position:absolute;inset:25% 15%;background:rgba(0,0,0,0.1);border-radius:0;display:flex;align-items:center;justify-content:center;font-size:48px;color:rgba(0,0,0,0.3);">×</div>
       </div>
       <div class="meta">
         <span class="badge">Don't</span>
@@ -469,13 +475,13 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Quick reference</h2>
-  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+  <h2 class="spec-h2">Quick Reference</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;overflow:hidden;">
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead>
         <tr>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Property</th>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Spec</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Property</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Spec</th>
         </tr>
       </thead>
       <tbody>
@@ -490,18 +496,53 @@
     </table>
   </div>
 
+
+  
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft</div>
     </div>
     <div>
       <h4>More</h4>
       <a href="content.html">All topics</a>
-      <a href="logos-hero.html">Logos &amp; hero</a>
+      <a href="logos-hero.html">Logos</a>
       <a href="assets.html">Assets</a>
     </div>
     <div>

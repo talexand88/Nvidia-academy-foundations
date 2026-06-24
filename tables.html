@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tables — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    
+    
+    color: var(--text-secondary);
+    margin: 64px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 72ch;
+  }
+  .summary-note strong { color: var(--text-primary); }
+
+  /* Academy table style — from the slide reference */
+  .ac-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 14px;
+    color: #111;
+  }
+  .ac-table thead th {
+    color: #76B900;
+    font-weight: 700;
+    text-align: center;
+    padding: 12px 16px;
+    background: #fff;
+    border: none;
+  }
+  .ac-table thead th:first-child { text-align: left; }
+  .ac-table tbody td {
+    padding: 12px 16px;
+    text-align: center;
+    border: none;
+    background: #fff;
+  }
+  .ac-table tbody td:first-child {
+    text-align: left;
+    font-weight: 500;
+  }
+  /* Alternating row backgrounds */
+  .ac-table tbody tr:nth-child(even) td {
+    background: var(--gray-050);
+  }
+  /* Section divider row — Row Heading spans full table, no data */
+  .ac-table tr.divider td {
+    background: var(--gray-100) !important;
+    padding: 10px 16px;
+    font-weight: 500;
+  }
+  /* Inline status indicators */
+  .check { color: #76B900; font-weight: 700; }
+  .xmark { color: #C2262D; font-weight: 700; }
+
+  .table-frame {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    padding: 16px;
+    margin: 12px 0 8px;
+  }
+  .table-caption {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  /* Spec tables */
+  .spec-table-wrap {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .spec-table th {
+    background: var(--surface-section);
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    
+    
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .spec-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td.mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .spec-table .chip {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.08);
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 16px 0;
+  }
+  @media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+  .anatomy-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 24px 28px;
+  }
+  .anatomy-card h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+  .anatomy-card ul {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    padding-left: 20px;
+    margin: 0;
+  }
+  .anatomy-card ul li strong { color: var(--text-primary); font-weight: 500; }
+
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    padding: 16px;
+    background: var(--surface-section);
+    min-height: 140px;
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    
+    
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="patterns.html">Patterns</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Tables</span>
+  </nav>
+
+  <div class="topic-hero">
+    <h1>Tables</h1>
+    <p class="subtitle">For comparing items across attributes. Green column titles, alternating row stripes, inline status marks for quick scanning.</p>
+  </div>
+
+  <div class="summary-note"><strong>Source.</strong> The Academy table style is set by the canonical PowerPoint table example. It's a slide-first pattern, not pulled from Kaizen (Kaizen Tables target product UI). For web / video, translate the slide spec.</div>
+
+  <h2 class="spec-h2">The Pattern</h2>
+  <div class="table-frame">
+    <table class="ac-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Column title</th>
+          <th>Column title</th>
+          <th>Column title</th>
+          <th>Column title</th>
+          <th>Column title</th>
+          <th>Column title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Row heading</td><td>Text</td><td>Text</td><td>Text</td><td>Text</td><td>Text</td><td>Text</td></tr>
+        <tr><td>Row heading</td><td>Text</td><td>Text</td><td>Text</td><td></td><td></td><td><span class="xmark">✗</span></td></tr>
+        <tr class="divider"><td colspan="7">Row heading</td></tr>
+        <tr><td>Row heading</td><td></td><td>Text</td><td>Text</td><td>Text</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Row heading</td><td>Text</td><td>Text</td><td>Text</td><td>Text</td><td>Text</td><td>Text</td></tr>
+        <tr><td>Row heading</td><td></td><td><span class="xmark">✗</span></td><td>Text</td><td>Text</td><td>Text</td><td>Text</td></tr>
+        <tr><td>Row heading</td><td></td><td></td><td>Text</td><td>Text</td><td>Text</td><td>Text</td></tr>
+        <tr><td>Row heading</td><td><span class="check">✓</span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Row heading</td><td><span class="check">✓</span></td><td></td><td></td><td></td><td>Text</td><td>Text</td></tr>
+      </tbody>
+    </table>
+    <div class="table-caption">Source information in NVIDIA Sans, medium gray, 20 pt</div>
+  </div>
+
+  <h2 class="spec-h2">Visual Specs</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th style="width:160px;">Element</th><th>Style</th><th>Color</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Column title row</strong></td><td>Bold, centered (first column left-aligned), no row fill</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td><strong>Row heading</strong></td><td>Medium weight, left-aligned, first column</td><td class="mono">Black</td></tr>
+        <tr><td><strong>Body text</strong></td><td>Regular, centered (numbers and short values)</td><td class="mono">Black</td></tr>
+        <tr><td><strong>Odd rows</strong></td><td>White fill</td><td class="mono"><span class="chip" style="background:#FFFFFF;"></span>#FFFFFF</td></tr>
+        <tr><td><strong>Even rows</strong></td><td>Light gray fill (zebra striping)</td><td class="mono"><span class="chip" style="background:#EEEEEE;"></span>gray-050 / #EEEEEE</td></tr>
+        <tr><td><strong>Section divider row</strong></td><td>Row spans the whole table, single Row heading, medium gray fill</td><td class="mono"><span class="chip" style="background:#E0E0E0;"></span>gray-100 / #E0E0E0</td></tr>
+        <tr><td><strong>Check mark</strong></td><td>Inline ✓, bold, in cell where condition applies</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td><strong>X mark</strong></td><td>Inline ✗, bold, in cell where condition fails</td><td class="mono"><span class="chip" style="background:#C2262D;"></span>Red #C2262D</td></tr>
+        <tr><td><strong>Caption</strong></td><td>Below the table, NVIDIA Sans, medium gray, 20 pt</td><td class="mono">gray-500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Anatomy</h2>
+  <div class="anatomy">
+    <div class="anatomy-card">
+      <h3>Header Row</h3>
+      <ul>
+        <li><strong>Color</strong> — column titles in NVIDIA Green, bold.</li>
+        <li><strong>First cell</strong> — left blank (it's the row-heading column).</li>
+        <li><strong>No border</strong> — column titles sit on white; the rest of the table provides the visual structure via row striping.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>Body Rows</h3>
+      <ul>
+        <li><strong>Zebra striping</strong> — alternate white / gray-050.</li>
+        <li><strong>Row headings</strong> — left-aligned, medium weight.</li>
+        <li><strong>Data cells</strong> — centered.</li>
+        <li><strong>Empty cells</strong> — leave blank, don't write "N/A" or "—" unless the absence is meaningful.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>Section Divider</h3>
+      <ul>
+        <li><strong>Spans the full table</strong> — colspan all columns.</li>
+        <li><strong>Single label</strong> — used as a group header inside the table body.</li>
+        <li><strong>Darker gray fill</strong> — gray-100, distinct from the zebra rows.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>Status Marks</h3>
+      <ul>
+        <li><strong>✓ check</strong> — green, applied to "has this", "supported", "passes".</li>
+        <li><strong>✗ x</strong> — red, applied to "doesn't have", "unsupported", "fails".</li>
+        <li><strong>Blank cell</strong> — neutral / not applicable. Don't use a third symbol.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Sizing — PowerPoint</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Element</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Column title</td><td class="mono">NVIDIA Sans Bold, 22 pt</td></tr>
+        <tr><td>Row heading</td><td class="mono">NVIDIA Sans Medium, 20 pt</td></tr>
+        <tr><td>Body text</td><td class="mono">NVIDIA Sans Regular, 20 pt</td></tr>
+        <tr><td>Cell padding</td><td class="mono">12 pt vertical, 16 pt horizontal</td></tr>
+        <tr><td>Status mark (✓ / ✗)</td><td class="mono">20 pt, bold, centered in cell</td></tr>
+        <tr><td>Caption</td><td class="mono">NVIDIA Sans Regular, 20 pt, gray-500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">In After Effects</h2>
+  <div class="summary-note">For motion: use the same recipe but at <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">28 px / 32 px / 28 px</code> (column / row heading / body). Build the row stripes as two background rectangles, alternate, then overlay text. Animate by sliding rows in from the left (200 ms each, 50 ms stagger) rather than fading the table in as a unit.</div>
+
+  <h2 class="spec-h2">Do</h2>
+  <div class="dd-grid">
+    <div class="dd do">
+      <div class="sample">
+        <table class="ac-table" style="font-size:11px;">
+          <thead><tr><th></th><th>A</th><th>B</th><th>C</th></tr></thead>
+          <tbody>
+            <tr><td>Row 1</td><td><span class="check">✓</span></td><td>—</td><td><span class="xmark">✗</span></td></tr>
+            <tr><td>Row 2</td><td>—</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Status marks for boolean attributes</div>
+        <div class="why">Green ✓ for "has it", red ✗ for "doesn't have it". Scannable.</div>
+      </div>
+    </div>
+    <div class="dd do">
+      <div class="sample">
+        <table class="ac-table" style="font-size:11px;">
+          <thead><tr><th></th><th>Col</th><th>Col</th></tr></thead>
+          <tbody>
+            <tr class="divider"><td colspan="3">Section A</td></tr>
+            <tr><td>Row</td><td>Text</td><td>Text</td></tr>
+            <tr><td>Row</td><td>Text</td><td>Text</td></tr>
+            <tr class="divider"><td colspan="3">Section B</td></tr>
+            <tr><td>Row</td><td>Text</td><td>Text</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Section dividers for grouped rows</div>
+        <div class="why">When rows fall into 2–4 named groups, a darker gray spanning row is cleaner than repeated heading rows.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Don't</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample">
+        <table style="width:100%;font-size:11px;color:#111;border:1px solid #999;border-collapse:collapse;">
+          <thead><tr><th style="border:1px solid #999;padding:6px;background:#76B900;color:#fff;">A</th><th style="border:1px solid #999;padding:6px;background:#76B900;color:#fff;">B</th></tr></thead>
+          <tbody>
+            <tr><td style="border:1px solid #999;padding:6px;">x</td><td style="border:1px solid #999;padding:6px;">y</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Solid green header band with white text</div>
+        <div class="why">Fails WCAG contrast (white on NVIDIA Green is 2.4 : 1). Column titles are <em>green text on white</em>, not the reverse.</div>
+      </div>
+    </div>
+    <div class="dd dont">
+      <div class="sample">
+        <table style="width:100%;font-size:11px;color:#111;border-collapse:collapse;">
+          <thead><tr><th style="padding:6px;color:#76B900;">A</th><th style="padding:6px;color:#76B900;">B</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:6px;border:1px solid #999;">x</td><td style="padding:6px;border:1px solid #999;">y</td></tr>
+            <tr><td style="padding:6px;border:1px solid #999;">x</td><td style="padding:6px;border:1px solid #999;">y</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Full borders around every cell</div>
+        <div class="why">The Academy table uses row striping, not gridlines. Borders add noise.</div>
+      </div>
+    </div>
+    <div class="dd dont">
+      <div class="sample">
+        <table class="ac-table" style="font-size:11px;">
+          <thead><tr><th></th><th>A</th><th>B</th></tr></thead>
+          <tbody>
+            <tr><td>Row</td><td>~</td><td>~</td></tr>
+            <tr><td>Row</td><td>○</td><td>△</td></tr>
+            <tr><td>Row</td><td>?</td><td>!</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Invented status symbols</div>
+        <div class="why">Only ✓, ✗, or blank. No tildes, circles, question marks, exclamation marks.</div>
+      </div>
+    </div>
+  </div>
+
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html" class="active">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Patterns</h4>
+      <a href="patterns.html">All patterns</a>
+      <a href="banners.html">Banners</a>
+      <a href="notifications.html">Notifications</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

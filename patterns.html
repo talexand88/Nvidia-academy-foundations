@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patterns — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .pattern-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: border-color 150ms, transform 150ms;
+  }
+  .pattern-card:hover {
+    border-color: var(--brand-green);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .pattern-card.coming {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .pattern-card .preview {
+    background: var(--surface-section);
+    padding: 28px 24px;
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pattern-card .meta {
+    padding: 18px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pattern-card .tag {
+    font-size: 11px;
+    font-weight: 500;
+    
+    
+    color: var(--text-tertiary);
+  }
+  .pattern-card .tag.live { color: var(--feedback-success); }
+  .pattern-card h3 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .pattern-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Mini visuals for each pattern card */
+  .p-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    max-width: 220px;
+  }
+  .p-banner .b {
+    padding: 7px 12px;
+    border-radius: 0;
+    border: 1px solid;
+    font-size: 11px;
+    color: #111;
+  }
+  .p-banner .b.info { background: #D9F0FB; border-color: #7AB8DC; }
+  .p-banner .b.warn { background: #FFE9A8; border-color: #E8B100; }
+
+  .p-notif {
+    display: flex;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 0;
+    overflow: hidden;
+    width: 100%;
+    max-width: 220px;
+  }
+  .p-notif .s { width: 4px; background: #5F9000; }
+  .p-notif .n {
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #111;
+  }
+  .p-notif .n strong { font-weight: 700; display: block; font-size: 11px; }
+
+  .p-table {
+    width: 100%;
+    max-width: 220px;
+    border-collapse: collapse;
+    font-size: 10px;
+    background: #fff;
+    border-radius: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .p-table th { background: var(--surface-section); padding: 5px 8px; text-align: left; font-weight: 500; }
+  .p-table td { padding: 5px 8px; border-top: 1px solid var(--border); }
+
+  .p-list {
+    font-size: 12px;
+    text-align: left;
+    color: var(--text-primary);
+  }
+  .p-list ul { padding-left: 18px; margin: 0; }
+  .p-list li { margin-bottom: 3px; }
+
+  .p-timeline {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    max-width: 220px;
+    align-items: center;
+  }
+  .p-timeline .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gray-200);
+  }
+  .p-timeline .dot.done { background: #76B900; }
+  .p-timeline .dot.active { background: #fff; border: 2px solid #76B900; width: 14px; height: 14px; }
+  .p-timeline .seg {
+    flex: 1;
+    height: 2px;
+    background: var(--gray-200);
+  }
+  .p-timeline .seg.done { background: #76B900; }
+
+  .p-hero {
+    width: 100%;
+    max-width: 220px;
+    aspect-ratio: 16/9;
+    background:
+      radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.65) 0%, transparent 55%),
+      linear-gradient(135deg, #0C0C0C 0%, #161616 100%);
+    border-radius: 0;
+  }
+
+  .help-note {
+    background: var(--surface-section);
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 40px 0 0;
+    max-width: 72ch;
+  }
+  .help-note strong { color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Patterns</span>
+  </nav>
+
+  <div class="topic-hero">
+    <h1>Patterns</h1>
+    <p class="subtitle">Reusable content blocks for slides, video frames, and pages — sourced from Kaizen UI Foundations and translated for the Academy.</p>
+  </div>
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html" class="active">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <div class="pattern-grid">
+
+    <a href="banners.html" class="pattern-card">
+      <div class="preview">
+        <div class="p-banner">
+          <div class="b info">Information banner</div>
+          <div class="b warn">Warning banner</div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Banners</h3>
+        <div class="desc">Full-width tinted strip. One line. Page-level setup. No actions.</div>
+      </div>
+    </a>
+
+    <a href="notifications.html" class="pattern-card">
+      <div class="preview">
+        <div class="p-notif">
+          <div class="s"></div>
+          <div class="n"><strong>Model deployed</strong>Inference endpoint active</div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Notifications</h3>
+        <div class="desc">White card with status stripe. Title + body. Optional action.</div>
+      </div>
+    </a>
+
+    <a href="tables.html" class="pattern-card">
+      <div class="preview">
+        <table class="p-table">
+          <thead><tr><th style="color:#76B900;font-weight:700;background:#fff;">GPU</th><th style="color:#76B900;font-weight:700;background:#fff;">VRAM</th></tr></thead>
+          <tbody><tr><td>H100</td><td>80 GB</td></tr><tr style="background:var(--gray-050);"><td>A100</td><td>80 GB</td></tr></tbody>
+        </table>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Tables</h3>
+        <div class="desc">Green column titles, zebra rows, inline ✓/✗ status marks for scanning.</div>
+      </div>
+    </a>
+
+    <a href="lists.html" class="pattern-card">
+      <div class="preview">
+        <div class="p-list">
+          <ul>
+            <li>Sentence case</li>
+            <li>No trailing periods</li>
+            <li>One verb per item</li>
+          </ul>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Lists</h3>
+        <div class="desc">Three nesting levels, NVIDIA-green bullets, mixable with paragraphs.</div>
+      </div>
+    </a>
+
+    <a href="timeline.html" class="pattern-card">
+      <div class="preview">
+        <div class="p-timeline">
+          <div class="dot done"></div>
+          <div class="seg done"></div>
+          <div class="dot done"></div>
+          <div class="seg done"></div>
+          <div class="dot done"></div>
+          <div class="seg done"></div>
+          <div class="dot done"></div>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Timeline &amp; Progress</h3>
+        <div class="desc">Horizontal stops on a green line. Progression and Timeline variants, plus a progress bar.</div>
+      </div>
+    </a>
+
+    <a href="hero.html" class="pattern-card">
+      <div class="preview">
+        <div class="p-hero"></div>
+      </div>
+      <div class="meta">
+        <span class="tag live">Live</span>
+        <h3>Hero Section</h3>
+        <div class="desc">Full-bleed opener with eyebrow + title + CTA. Sparingly used — course intros only.</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="help-note">
+    <strong>All six patterns are now live.</strong> The set covers Kaizen-sourced components (Banners, Notifications, Hero) and Academy-sourced slide patterns (Tables, Lists, Timeline). To suggest a new pattern, leave a comment below or email <a href="mailto:academy-design@nvidia.com">academy-design@nvidia.com</a>.
+  </div>
+
+
+  
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html" class="active">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Patterns</h4>
+      <a href="banners.html">Banners</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="tables.html">Tables</a>
+      <a href="lists.html">Lists</a>
+      <a href="timeline.html">Timeline &amp; progress</a>
+      <a href="hero.html">Hero section</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a pattern</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

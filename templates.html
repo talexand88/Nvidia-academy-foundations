@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Templates — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 500;
+    
+    
+    color: var(--text-secondary);
+    margin: 56px 0 20px;
+  }
+
+  .template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+
+  .tpl-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .tpl-card.coming { opacity: 0.6; }
+
+  .tpl-card .preview {
+    aspect-ratio: 16/9;
+    background: var(--surface-section);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .tpl-card .preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tpl-card .meta {
+    padding: 22px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tpl-card .tag {
+    font-size: 11px;
+    font-weight: 500;
+    
+    
+    color: var(--feedback-success);
+  }
+  .tpl-card.coming .tag { color: var(--text-tertiary); }
+  .tpl-card h3 {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .tpl-card .desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .tpl-card .specs {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: var(--brand-green);
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 0;
+    text-decoration: none;
+    transition: background 150ms;
+    margin-top: 14px;
+    width: fit-content;
+  }
+  .download-btn:hover {
+    background: #92d100;
+    text-decoration: none;
+  }
+  .download-btn svg { width: 14px; height: 14px; }
+
+  .ae-placeholder {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: var(--brand-green);
+    font-size: 64px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html" class="active">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="assets.html">Assets</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Templates</span>
+  </nav>
+
+
+  <div class="topic-hero">
+    <h1>Templates</h1>
+    <p class="sub">Starter files for slides and motion. Download, save a copy with a new name, then replace placeholder content.</p>
+  </div>
+
+  <h2 class="section-label" id="powerpoint">PowerPoint master</h2>
+  <div class="template-grid">
+
+    <div class="tpl-card">
+      <div class="preview" style="background:#FFFFFF;">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="width:35%;height:auto;">
+          <rect x="12" y="16" width="56" height="40" rx="3" fill="none" stroke="#76B900" stroke-width="2.5"/>
+          <rect x="20" y="23" width="28" height="3" fill="#76B900"/>
+          <line x1="20" y1="34" x2="60" y2="34" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <line x1="20" y1="40" x2="52" y2="40" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <line x1="20" y1="46" x2="56" y2="46" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <rect x="12" y="60" width="26" height="11" rx="1.5" fill="#76B900"/>
+          <text x="25" y="68" font-family="Consolas, monospace" font-size="7" font-weight="700" fill="#000" text-anchor="middle">.PPTX</text>
+        </svg>
+      </div>
+      <div class="meta">
+        <span class="tag">Live</span>
+        <h3>Master · Light</h3>
+        <div class="desc">All canonical layouts: title cards, syllabus, code, charts, notes. Light background — for general slides.</div>
+        <div class="specs">.pptx · 40 × 22.5 in canvas · 5.8 MB</div>
+        <a class="download-btn" href="downloads/templates/nvidia-academy-master_Light.pptx" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download .pptx
+        </a>
+      </div>
+    </div>
+
+    <div class="tpl-card">
+      <div class="preview" style="background:#0C0C0C;">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="width:35%;height:auto;">
+          <rect x="12" y="16" width="56" height="40" rx="3" fill="none" stroke="#76B900" stroke-width="2.5"/>
+          <rect x="20" y="23" width="28" height="3" fill="#76B900"/>
+          <line x1="20" y1="34" x2="60" y2="34" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <line x1="20" y1="40" x2="52" y2="40" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <line x1="20" y1="46" x2="56" y2="46" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <rect x="12" y="60" width="26" height="11" rx="1.5" fill="#76B900"/>
+          <text x="25" y="68" font-family="Consolas, monospace" font-size="7" font-weight="700" fill="#000" text-anchor="middle">.PPTX</text>
+        </svg>
+      </div>
+      <div class="meta">
+        <span class="tag">Live</span>
+        <h3>Master · Dark</h3>
+        <div class="desc">Same layouts on a dark background — for hero title cards, video stills, and stage presentations.</div>
+        <div class="specs">.pptx · 40 × 22.5 in canvas · 6.1 MB</div>
+        <a class="download-btn" href="downloads/templates/nvidia-academy-master_Dark.pptx" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
+          Download .pptx
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section-label" id="after-effects">After Effects template</h2>
+  <div class="template-grid">
+
+    <div class="tpl-card coming">
+      <div class="preview ae-placeholder">▶</div>
+      <div class="meta">
+        <span class="tag">Coming soon</span>
+        <h3>Academy Motion Template</h3>
+        <div class="desc">Project file with title openers, section bridges, "Up next" cards, and end cards. Compositions wired to the Academy timeline.</div>
+        <div class="specs">.aep · 1920 × 1080 · 30 fps</div>
+      </div>
+    </div>
+
+  </div>
+
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Assets</h4>
+      <a href="assets.html">All assets</a>
+      <a href="icons.html">Icons</a>
+      <a href="logos.html">Logos</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a template</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

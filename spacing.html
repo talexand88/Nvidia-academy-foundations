@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spacing &amp; layout — NVIDIA Academy Foundations</title>
+<title>Spacing &amp; layout — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .topic-hero { margin-bottom: 48px; }
@@ -22,8 +22,8 @@
   h2.spec-h2 {
     font-size: 14px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    
+    
     color: var(--text-secondary);
     margin: 72px 0 24px;
     padding-bottom: 12px;
@@ -38,7 +38,7 @@
   .spec-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -123,7 +123,7 @@
     padding: 16px;
     background: var(--brand-white);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 0;
   }
   .text-vis .t-title { font-size: 16px; font-weight: 500; line-height: 1.2; }
   .text-vis .t-sub { font-size: 12px; color: var(--text-secondary); }
@@ -184,7 +184,7 @@
     width: 280px;
     height: 140px;
     background: var(--gray-050);
-    border-radius: 4px;
+    border-radius: 0;
     padding: 12px;
     display: flex;
     gap: 6px;
@@ -198,7 +198,7 @@
 
   .summary-note {
     background: var(--surface-section);
-    border-radius: 8px;
+    border-radius: 0;
     padding: 16px 20px;
     font-size: 14px;
     color: var(--text-secondary);
@@ -211,7 +211,7 @@
   .conv-table {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
   }
   .conv-table table {
@@ -227,8 +227,8 @@
   .conv-table th {
     background: var(--surface-section);
     font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    
+    
     color: var(--text-secondary);
     font-weight: 500;
   }
@@ -247,7 +247,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -255,6 +255,7 @@
     <a href="content.html" class="active">Content</a>
     <a href="toolkit.html">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
   </nav>
   <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
@@ -264,6 +265,14 @@
 </header>
 
 <main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Spacing &amp; layout</span>
+  </nav>
+
 
   <div class="topic-hero">
     <h1>Spacing &amp; layout</h1>
@@ -274,15 +283,14 @@
     <a href="color.html">Color</a>
     <a href="frames-cards.html">Frames &amp; cards</a>
     <a href="spacing.html" class="active">Spacing &amp; layout</a>
-    <a href="assets.html">Assets</a>
-    <a href="logos-hero.html">Logos &amp; hero</a>
-    <a href="imagery.html">Imagery</a>
+    <a href="logos-hero.html">Logos</a>
     <a href="code-cli.html">Code &amp; CLI</a>
     <a href="charts.html">Charts</a>
-    <a href="motion.html" class="disabled">Motion — v2</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
   </nav>
 
-  <h2 class="spec-h2">Slide margins — keep content away from the edge</h2>
+  <h2 class="spec-h2">Slide Margins — Keep Content Away From The Edge</h2>
   <div class="spec-grid">
     <div class="spec-card">
       <div class="vis"><div class="slide-vis standard"><div class="safe"></div></div></div>
@@ -313,7 +321,7 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Vertical rhythm — space between blocks</h2>
+  <h2 class="spec-h2">Vertical Rhythm — Space Between Blocks</h2>
   <div class="spec-grid">
     <div class="spec-card">
       <div class="vis">
@@ -382,7 +390,7 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Spacing scale</h2>
+  <h2 class="spec-h2">Spacing Scale</h2>
   <div class="summary-note">Use values from this scale only. Don't free-pick spacing — the rhythm holds the whole composition together.</div>
   <div class="conv-table">
     <table>
@@ -401,7 +409,7 @@
     </table>
   </div>
 
-  <h2 class="spec-h2">Text spacing inside a frame</h2>
+  <h2 class="spec-h2">Text Spacing Inside A Frame</h2>
   <div class="spec-grid">
     <div class="spec-card">
       <div class="vis">
@@ -440,7 +448,7 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Video safe zone</h2>
+  <h2 class="spec-h2">Video Safe Zone</h2>
   <div class="spec-grid">
     <div class="spec-card" style="grid-column:span 2;">
       <div class="vis" style="height:auto;padding:8px 0 64px;">
@@ -463,7 +471,7 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Quick reference</h2>
+  <h2 class="spec-h2">Quick Reference</h2>
   <div class="conv-table">
     <table>
       <thead>
@@ -484,12 +492,49 @@
     </table>
   </div>
 
+
+  
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html" class="active">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft</div>
     </div>
     <div>

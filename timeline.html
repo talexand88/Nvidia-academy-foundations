@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline &amp; progress — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    
+    
+    color: var(--text-secondary);
+    margin: 64px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 72ch;
+  }
+  .summary-note strong { color: var(--text-primary); }
+
+  /* Academy timeline — horizontal green line, green dots, content above/below */
+  .ac-tl-frame {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 36px 32px 28px;
+    color: #111;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+  .ac-tl {
+    display: grid;
+    gap: 0;
+    position: relative;
+    min-width: 720px;
+  }
+  /* Horizontal connector line */
+  .ac-tl::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    top: 50%;
+    height: 2px;
+    background: #76B900;
+    z-index: 0;
+  }
+  .tl-stop {
+    position: relative;
+    padding: 0 12px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tl-stop .above {
+    padding-bottom: 36px;
+    min-height: 90px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .tl-stop .eyebrow {
+    color: #76B900;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .tl-stop .headline {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+  .tl-stop .dot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #76B900;
+    z-index: 2;
+  }
+  /* Drop lines from dot */
+  .tl-stop .drop-up,
+  .tl-stop .drop-down {
+    position: absolute;
+    left: 50%;
+    width: 2px;
+    background: #76B900;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  .tl-stop .drop-up { bottom: 50%; height: 18px; }
+  .tl-stop .drop-down { top: 50%; height: 18px; }
+  .tl-stop .below {
+    padding-top: 36px;
+    min-height: 110px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .tl-stop .below ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tl-stop .below ul li {
+    position: relative;
+    padding-left: 12px;
+    margin-bottom: 3px;
+    color: #111;
+  }
+  .tl-stop .below ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #76B900;
+  }
+  .ac-tl.stops-4 { grid-template-columns: repeat(4, 1fr); }
+  .ac-tl.stops-5 { grid-template-columns: repeat(5, 1fr); }
+
+  .tl-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 4px;
+  }
+  .tl-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 20px;
+  }
+
+  /* Progress bar */
+  .pb-frame {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 22px 26px;
+    margin: 12px 0;
+  }
+  .pb-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .pb-meta .right {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+  }
+  .pb-bar {
+    height: 8px;
+    background: var(--surface-section);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .pb-bar .fill {
+    height: 100%;
+    background: #76B900;
+    border-radius: 0;
+  }
+
+  /* Spec tables */
+  .spec-table-wrap {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .spec-table th {
+    background: var(--surface-section);
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    
+    
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .spec-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td.mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .spec-table .chip {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.08);
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 16px 0;
+  }
+  @media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+  .anatomy-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 24px 28px;
+  }
+  .anatomy-card h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+  .anatomy-card ul {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    padding-left: 20px;
+    margin: 0;
+  }
+  .anatomy-card ul li strong { color: var(--text-primary); font-weight: 500; }
+
+  /* Do / Don't */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    padding: 16px;
+    background: var(--surface-section);
+    min-height: 120px;
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    
+    
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="patterns.html">Patterns</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Timeline &amp; progress</span>
+  </nav>
+
+  <div class="topic-hero">
+    <h1>Timeline &amp; progress</h1>
+    <p class="subtitle">Horizontal sequences of stops along a green line. Use for course progression, project phases, or chapter overviews. A separate progress bar covers in-progress percentages.</p>
+  </div>
+
+  <div class="summary-note"><strong>Source.</strong> Two variants from the canonical Academy PowerPoint reference — <strong>Progression</strong> (headline + description per stop) and <strong>Timeline</strong> (adds a green Timeframe eyebrow above each headline).</div>
+
+  <h2 class="spec-h2">Variant 1 — Progression (4 Stops)</h2>
+  <div class="ac-tl-frame">
+    <h3 class="tl-title">Progression</h3>
+    <p class="tl-sub">Optional subtitle goes here</p>
+    <div class="ac-tl stops-4">
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="summary-note">Headlines sit <em>above</em> the line. Description bullets sit <em>below</em>. A short vertical drop line connects each dot to its headline and its description block.</div>
+
+  <h2 class="spec-h2">Variant 2 — Timeline (5 Stops, With Timeframe Label)</h2>
+  <div class="ac-tl-frame">
+    <h3 class="tl-title">Timeline</h3>
+    <p class="tl-sub">Optional subtitle goes here</p>
+    <div class="ac-tl stops-5">
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="eyebrow">Timeframe</div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="eyebrow">Timeframe</div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="eyebrow">Timeframe</div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="eyebrow">Timeframe</div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-stop">
+        <div class="above">
+          <div>
+            <div class="eyebrow">Timeframe</div>
+            <div class="headline">Headline text<br>goes here</div>
+          </div>
+        </div>
+        <div class="drop-up"></div>
+        <div class="dot"></div>
+        <div class="drop-down"></div>
+        <div class="below">
+          <ul>
+            <li>Description and/or main points</li>
+            <li>Keep points to a minimum</li>
+            <li>Don't overcrowd the slide; less is more</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="summary-note">Same shape as Progression, with a small NVIDIA-green <strong>Timeframe</strong> eyebrow above each headline. Use when the stops have explicit time labels (Q1, Week 3, 2026, etc.).</div>
+
+  <h2 class="spec-h2">Visual Specs</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Element</th><th>Style</th><th>Color</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Horizontal line</strong></td><td>Stroke only, runs left-to-right across the stops</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td><strong>Stop dot</strong></td><td>Solid filled circle, sits on the horizontal line</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td><strong>Drop lines</strong></td><td>Short vertical strokes, up and down from each dot</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td><strong>Timeframe eyebrow</strong></td><td>Bold, slightly smaller than the headline</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td><strong>Headline</strong></td><td>Bold, 2 lines maximum, sentence case</td><td class="mono">Black</td></tr>
+        <tr><td><strong>Description bullets</strong></td><td>Standard Academy bullets (see <a href="lists.html">Lists</a>)</td><td class="mono">Black text, green bullets</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Sizing — PowerPoint</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Element</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Page title (Progression / Timeline)</td><td class="mono">88 pt, Bold</td></tr>
+        <tr><td>Optional subtitle</td><td class="mono">48 pt, Medium, gray-500</td></tr>
+        <tr><td>Horizontal line stroke</td><td class="mono">2 pt</td></tr>
+        <tr><td>Stop dot diameter</td><td class="mono">14 pt</td></tr>
+        <tr><td>Drop line length (up / down)</td><td class="mono">28 pt each</td></tr>
+        <tr><td>Timeframe eyebrow</td><td class="mono">24 pt, Bold, NVIDIA Green</td></tr>
+        <tr><td>Headline</td><td class="mono">28 pt, Bold, black</td></tr>
+        <tr><td>Description bullet text</td><td class="mono">22 pt, Regular</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Number Of Stops</h2>
+  <div class="anatomy">
+    <div class="anatomy-card">
+      <h3>Sweet Spot</h3>
+      <ul>
+        <li><strong>3 stops</strong> — minimum for a meaningful sequence.</li>
+        <li><strong>4 stops</strong> — Progression default.</li>
+        <li><strong>5 stops</strong> — Timeline default; comfortably fits on a 40 × 22.5 in slide.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>Edges</h3>
+      <ul>
+        <li><strong>2 stops</strong> — use a Before / After comparison block, not a timeline.</li>
+        <li><strong>6+ stops</strong> — drop descriptions, or split into two slides. Descriptions need to be legible at 22 pt; they collapse below 5 stops on a 40 × 22.5 canvas.</li>
+        <li><strong>7+ stops</strong> — switch to a vertical timeline (not documented here yet).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Progress Bar</h2>
+  <p style="font-size:14px;color:var(--text-secondary);max-width:65ch;margin:0 0 14px;">For "X% complete" — a single horizontal fill bar. Use on course homepages, lab launch screens, and any place where the count is continuous rather than stepped.</p>
+
+  <div class="pb-frame">
+    <div class="pb-meta">
+      <span>Unit 3 of 5 · Training the model</span>
+      <span class="right">60%</span>
+    </div>
+    <div class="pb-bar"><div class="fill" style="width:60%;"></div></div>
+  </div>
+
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Element</th><th>Style</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Track</td><td class="mono">8 px / 8 pt high, gray-050 fill, 4 px / 4 pt radius</td></tr>
+        <tr><td>Fill</td><td class="mono">NVIDIA Green, same height, 4 px / 4 pt radius</td></tr>
+        <tr><td>Label (left)</td><td class="mono">14 px / 18 pt, Regular, sentence case</td></tr>
+        <tr><td>Percent (right)</td><td class="mono">14 px / 18 pt, Consolas, gray-500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">In After Effects</h2>
+  <div class="summary-note">
+    <strong>Timeline animation.</strong> Build the green line as a stroke layer. Animate stops in left-to-right with each stop fading in (220 ms) followed by its description sliding up from below (180 ms, 100 ms after the dot). Stagger 300 ms per stop.
+    <br><br>
+    <strong>Progress bar animation.</strong> Animate the fill width from 0 → target % over 800 ms with a slight ease-out. Don't oscillate or bounce. Update the percent label on each keyframe so the number matches the bar.
+  </div>
+
+  <h2 class="spec-h2">Do</h2>
+  <div class="dd-grid">
+    <div class="dd do">
+      <div class="sample" style="font-size:13px;">
+        <strong style="display:block;margin-bottom:6px;">Course Q1 / Q2 / Q3 / Q4</strong>
+        4 evenly spaced stops with quarter labels. Predictable, scannable.
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Even spacing, regular intervals</div>
+        <div class="why">When stops represent equal time chunks, space them evenly.</div>
+      </div>
+    </div>
+    <div class="dd do">
+      <div class="sample" style="font-size:13px;">
+        <strong style="display:block;margin-bottom:6px;">Bullet descriptions ≤ 3 items</strong>
+        Each stop's "Description and/or main points" stays short. The slide breathes.
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Keep descriptions tight</div>
+        <div class="why">If a stop needs more than 3 short bullets, it deserves its own slide.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Don't</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample" style="font-size:13px;">
+        <strong style="display:block;margin-bottom:6px;">8 stops on one slide</strong>
+        Headlines collapse to 1 line, descriptions get cut, the line breaks the eye.
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Too many stops</div>
+        <div class="why">7+ stops belongs on two slides or in a vertical timeline.</div>
+      </div>
+    </div>
+    <div class="dd dont">
+      <div class="sample" style="font-size:13px;">
+        <strong style="display:block;margin-bottom:6px;">Colored dots per status</strong>
+        Green for done, gray for future, orange for in-progress.
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Color-code the dots</div>
+        <div class="why">All dots stay NVIDIA Green. If you need status (done / current / future), use a separate Stepper component (not documented yet) — don't bend the timeline.</div>
+      </div>
+    </div>
+    <div class="dd dont">
+      <div class="sample" style="font-size:13px;">
+        <strong style="display:block;margin-bottom:6px;">Diagonal or curved line</strong>
+        Stops arranged on a curve, with the line following.
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Decorative line shapes</div>
+        <div class="why">The line is horizontal. Curves and angles add visual noise without adding meaning.</div>
+      </div>
+    </div>
+  </div>
+
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html" class="active">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Patterns</h4>
+      <a href="patterns.html">All patterns</a>
+      <a href="banners.html">Banners</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="tables.html">Tables</a>
+      <a href="lists.html">Lists</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

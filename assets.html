@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Assets — NVIDIA Academy Foundations</title>
+<title>Assets — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .topic-hero { margin-bottom: 48px; }
@@ -22,7 +22,7 @@
   .asset-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     text-decoration: none;
     color: var(--text-primary);
@@ -57,8 +57,8 @@
   .asset-card .tag {
     font-size: 11px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    
+    
     color: var(--text-tertiary);
   }
   .asset-card .tag.live { color: var(--feedback-success); }
@@ -142,7 +142,7 @@
     width: 65%;
     aspect-ratio: 16/9;
     background: #0C0C0C;
-    border-radius: 4px;
+    border-radius: 0;
     position: relative;
     overflow: hidden;
   }
@@ -188,8 +188,8 @@
   .section-label {
     font-size: 13px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    
+    
     color: var(--text-secondary);
     margin: 56px 0 16px;
   }
@@ -203,7 +203,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -211,6 +211,7 @@
     <a href="content.html">Content</a>
     <a href="toolkit.html">Toolkit</a>
     <a href="assets.html" class="active">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
   </nav>
   <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
@@ -248,18 +249,15 @@
       </div>
     </a>
 
-    <a href="#" class="asset-card coming">
-      <div class="preview">
-        <div class="p-logos">
-          <div class="mark"></div>
-          <div class="wm">NVIDIA</div>
-        </div>
+    <a href="logos.html" class="asset-card">
+      <div class="preview" style="background:#FFFFFF;padding:24px;">
+        <img src="downloads/logos/nvidia-logo-horiz-rgb-blk-for-screen.png" alt="NVIDIA logo" style="max-width:75%;max-height:60%;object-fit:contain;">
       </div>
       <div class="meta">
-        <span class="tag">Coming soon</span>
+        <span class="tag live">Live</span>
         <h3>Logos</h3>
-        <div class="desc">Horizontal and vertical lockups. Two-color, all-black, all-white. SVG and PNG.</div>
-        <div class="count">— · pending NVDAM links</div>
+        <div class="desc">Horizontal and vertical lockups in color and all-white. Transparent PNG, ready for slides, video, and web.</div>
+        <div class="count">6 files · PNG</div>
       </div>
     </a>
 
@@ -269,7 +267,7 @@
       </div>
       <div class="meta">
         <span class="tag">Coming soon</span>
-        <h3>Hero compositions</h3>
+        <h3>Hero Compositions</h3>
         <div class="desc">Embossed-glass and linear-scratched 3D NVIDIA renders. Use on title cards.</div>
         <div class="count">— · sourced from NVDAM</div>
       </div>
@@ -292,28 +290,34 @@
   <div class="section-label">Templates</div>
   <div class="asset-grid">
 
-    <a href="#" class="asset-card coming">
-      <div class="preview" style="background:var(--gray-050);">
-        <div class="p-pptx">
-          <div class="pptx-title">Course title</div>
-        </div>
+    <a href="templates.html#powerpoint" class="asset-card">
+      <div class="preview" style="background:#0C0C0C;">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="width:55%;height:auto;">
+          <rect x="12" y="16" width="56" height="40" rx="3" fill="none" stroke="#76B900" stroke-width="2.5"/>
+          <rect x="20" y="23" width="28" height="3" fill="#76B900"/>
+          <line x1="20" y1="34" x2="60" y2="34" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <line x1="20" y1="40" x2="52" y2="40" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <line x1="20" y1="46" x2="56" y2="46" stroke="#76B900" stroke-width="1.5" opacity="0.7"/>
+          <rect x="12" y="60" width="26" height="11" rx="1.5" fill="#76B900"/>
+          <text x="25" y="68" font-family="Consolas, monospace" font-size="7" font-weight="700" fill="#000" text-anchor="middle">.PPTX</text>
+        </svg>
       </div>
       <div class="meta">
-        <span class="tag">Coming soon</span>
-        <h3>PowerPoint master</h3>
-        <div class="desc">Master deck with all canonical Layouts: title cards, syllabus, code, charts, notes.</div>
-        <div class="count">— · .pptx · 40 × 22.5 in canvas</div>
+        <span class="tag live">Live</span>
+        <h3>PowerPoint Master</h3>
+        <div class="desc">Master deck with all canonical layouts: title cards, syllabus, code, charts, notes. Light and Dark.</div>
+        <div class="count">2 files · .pptx · 40 × 22.5 in canvas</div>
       </div>
     </a>
 
-    <a href="#" class="asset-card coming">
+    <a href="templates.html#after-effects" class="asset-card">
       <div class="preview">
         <div class="p-ae">▶</div>
       </div>
       <div class="meta">
         <span class="tag">Coming soon</span>
-        <h3>After Effects starter</h3>
-        <div class="desc">Project library with title openers, section bridges, Coming Up Next, end cards.</div>
+        <h3>After Effects Template</h3>
+        <div class="desc">Project file with title openers, section bridges, "Up next" cards, and end cards.</div>
         <div class="count">— · .aep · 1920 × 1080 · 30 fps</div>
       </div>
     </a>
@@ -347,7 +351,7 @@
       </div>
       <div class="meta">
         <span class="tag live">Live</span>
-        <h3>NVIDIA Icon Library plugin</h3>
+        <h3>NVIDIA Icon Library Plugin</h3>
         <div class="desc">PowerPoint task-pane add-in that inserts NVIDIA icons directly into slides. Install once.</div>
         <div class="count">talexand88.github.io/nvidia-icon-addin ↗</div>
       </div>
@@ -355,12 +359,36 @@
 
   </div>
 
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft</div>
     </div>
     <div>

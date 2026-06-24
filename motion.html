@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Motion library — NVIDIA Academy Foundations</title>
+<title>Motion library — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .v2-banner {
     background: var(--surface-section);
     border-left: 4px solid var(--brand-green);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    border-radius: 0;
     padding: 24px 28px;
     margin-bottom: 32px;
     display: flex;
@@ -30,8 +30,8 @@
     font-size: var(--fs-200);
     padding: 6px 14px;
     border-radius: var(--radius-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    
+    
     flex-shrink: 0;
   }
 
@@ -71,8 +71,8 @@
   .pair-side .pair-label {
     font-size: var(--fs-100);
     color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    
+    
     margin-bottom: 12px;
   }
   .pair-side .pair-icon {
@@ -155,7 +155,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -163,6 +163,7 @@
     <a href="content.html">Content</a>
     <a href="toolkit.html">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="active placeholder">Motion — v2</a>
 
   </nav>
@@ -174,19 +175,18 @@
 
 <main class="portal-main">
 
-  <h1 class="page-title">Motion library</h1>
+  <h1 class="page-title">Motion Library</h1>
   <p class="page-lede">A reference library of curated Lottie animations, each paired 1:1 with a static icon from the NVDAM library. Browse, preview, grab the canonical motion for your video — the portal does not generate motion; that's what After Effects is for.</p>
   <nav class="topic-nav">
     <a href="typography.html">Typography</a>
     <a href="color.html">Color</a>
     <a href="frames-cards.html">Frames &amp; cards</a>
     <a href="spacing.html">Spacing &amp; layout</a>
-    <a href="assets.html">Assets</a>
-    <a href="logos-hero.html">Logos &amp; hero</a>
-    <a href="imagery.html">Imagery</a>
+    <a href="logos-hero.html">Logos</a>
     <a href="code-cli.html">Code &amp; CLI</a>
     <a href="charts.html">Charts</a>
-    <a href="motion.html" class="active">Motion — v2</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
   </nav>
   <div class="v2-banner">
     <div class="v2-banner-content">
@@ -196,13 +196,13 @@
     <span class="v2-tag">v2 — Reserved</span>
   </div>
 
-  <h2 class="section-title">How motion will be organized</h2>
+  <h2 class="section-title">How Motion Will Be Organized</h2>
   <p style="color:var(--text-secondary);max-width:70ch;">Each icon in the NVDAM static library will have a matching Lottie animation in the curated NVIDIA workspace on lottiefiles.com. The pairing is 1:1 by design: if your slide uses the "AI compute" icon, your matching video uses its Lottie. No mixing across families, no authoring custom motion from a static SVG, no rasterizing a Lottie frame to use as a static icon.</p>
 
   <div class="preview-grid">
 
     <div class="preview-card">
-      <h3>Static / motion pairing</h3>
+      <h3>Static / Motion Pairing</h3>
       <p>Every static icon has exactly one canonical motion partner. Both are sourced — neither is generated in the portal.</p>
       <div class="pair-mock">
         <div class="pair-side">
@@ -221,7 +221,7 @@
     </div>
 
     <div class="preview-card">
-      <h3>When motion vs. static</h3>
+      <h3>When Motion Vs. Static</h3>
       <p>The rule of thumb: if the surface plays motion automatically, use the Lottie; otherwise use the static icon.</p>
       <table style="width:100%;font-size:var(--fs-200);margin-top:16px;border-collapse:collapse;">
         <tr><td style="padding:6px 0;color:var(--text-secondary);">PowerPoint slide</td><td style="padding:6px 0;font-family:var(--font-mono);">→ static</td></tr>
@@ -235,11 +235,11 @@
 
   </div>
 
-  <h2 class="section-title">Motion timing standards</h2>
+  <h2 class="section-title">Motion Timing Standards</h2>
   <p style="color:var(--text-secondary);max-width:70ch;">The Academy publishes default motion durations and easings for video production. Override only with a documented reason. These are referenced from §6.4.3 and will be linked to each motion icon in the v2 library.</p>
 
   <div class="timing-table">
-    <h3>Default motion durations</h3>
+    <h3>Default Motion Durations</h3>
     <table>
       <thead><tr><th>Motion type</th><th>Duration</th><th>Easing</th></tr></thead>
       <tbody>
@@ -256,15 +256,15 @@
 
   <div class="lottie-cta">
     <div class="lottie-text">
-      <h3>Working in video today?</h3>
+      <h3>Working In Video Today?</h3>
       <p>The LottieFiles team workspace is currently invite-only. Request access through Academy production. Until v2 launches, motion designers select Lotties directly from the LottieFiles workspace, paired by name to the static library.</p>
     </div>
     <a href="https://lottiefiles.com/" target="_blank" class="btn btn-primary">Open LottieFiles ↗</a>
   </div>
 
-  <h2 class="section-title">Planned features (v2)</h2>
+  <h2 class="section-title">Planned Features (v2)</h2>
   <div class="planned-features">
-    <h3>What v2 adds</h3>
+    <h3>What V2 Adds</h3>
     <ul>
       <li>Browsable grid of every motion icon, paired to its static counterpart</li>
       <li>Inline Lottie preview — autoplay, hover-replay, scrub timeline</li>
@@ -272,7 +272,7 @@
       <li>After Effects export — drop directly into a composition with timing rules pre-applied</li>
       <li>Reduced-motion fallback notes per icon (which static frame to use, when)</li>
       <li>Video-frame review tool (extension of the screenshot reviewer for video stills and exports)</li>
-      <li>After Effects starter project library — opening titles, section openers, Coming Up Next bridges, end cards</li>
+      <li>After Effects template project — opening titles, section openers, "Up next" bridges, end cards</li>
       <li>Motion timing reference — durations, easings, and how they relate to the audio mix (-16 LUFS, etc.)</li>
     </ul>
   </div>
@@ -282,7 +282,7 @@
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft · June 2026</div>
     </div>
     <div>

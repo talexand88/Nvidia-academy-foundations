@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Logos &amp; hero — NVIDIA Academy Foundations</title>
+<title>Logos — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .topic-hero { margin-bottom: 48px; }
@@ -22,8 +22,8 @@
   h2.spec-h2 {
     font-size: 14px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    
+    
     color: var(--text-secondary);
     margin: 72px 0 24px;
     padding-bottom: 12px;
@@ -32,7 +32,7 @@
 
   .summary-note {
     background: var(--surface-section);
-    border-radius: 8px;
+    border-radius: 0;
     padding: 16px 20px;
     font-size: 14px;
     color: var(--text-secondary);
@@ -89,7 +89,7 @@
   .spec-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 28px;
     display: flex;
     flex-direction: column;
@@ -190,7 +190,7 @@
   .minsize-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 28px;
   }
   .minsize-card .vis {
@@ -199,7 +199,7 @@
     align-items: center;
     justify-content: center;
     background: var(--surface-section);
-    border-radius: 8px;
+    border-radius: 0;
     margin-bottom: 16px;
   }
   .minsize-card .name { font-size: 16px; font-weight: 500; margin-bottom: 8px; }
@@ -219,7 +219,7 @@
     max-width: 480px;
     aspect-ratio: 16/9;
     background: var(--gray-975);
-    border-radius: 4px;
+    border-radius: 0;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -287,7 +287,7 @@
   .dd {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
   }
   .dd.do { border-top: 4px solid #76B900; }
@@ -308,8 +308,8 @@
   .dd .badge {
     font-size: 11px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    
+    
     margin-bottom: 6px;
   }
   .dd.do .badge { color: #76B900; }
@@ -325,7 +325,7 @@
   /* Hero variants */
   .hero-card {
     background: var(--gray-975);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     border: 1px solid var(--gray-800);
   }
@@ -411,7 +411,7 @@
   .nvdam-banner {
     background: var(--surface-section);
     border-left: 4px solid var(--brand-green);
-    border-radius: 0 8px 8px 0;
+    border-radius: 0;
     padding: 16px 20px;
     margin: 16px 0 24px;
     display: flex;
@@ -433,7 +433,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -441,6 +441,7 @@
     <a href="content.html" class="active">Content</a>
     <a href="toolkit.html">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
   </nav>
   <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
@@ -450,25 +451,32 @@
 </header>
 
 <main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Logos</span>
+  </nav>
+
 
   <div class="topic-hero">
-    <h1>Logos &amp; hero</h1>
-    <p class="subtitle">The NVIDIA logo, where to put it. The 3D hero composition, when to use it.</p>
+    <h1>Logos</h1>
+    <p class="subtitle">Where the NVIDIA logo goes, what variants exist, and the rules that keep it usable.</p>
   </div>
   <nav class="topic-nav">
     <a href="typography.html">Typography</a>
     <a href="color.html">Color</a>
     <a href="frames-cards.html">Frames &amp; cards</a>
     <a href="spacing.html">Spacing &amp; layout</a>
-    <a href="assets.html">Assets</a>
-    <a href="logos-hero.html" class="active">Logos &amp; hero</a>
-    <a href="imagery.html">Imagery</a>
+    <a href="logos-hero.html" class="active">Logos</a>
     <a href="code-cli.html">Code &amp; CLI</a>
     <a href="charts.html">Charts</a>
-    <a href="motion.html" class="disabled">Motion — v2</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
   </nav>
 
-  <h2 class="spec-h2">Logo variants</h2>
+  <h2 class="spec-h2">Logo Variants</h2>
   <div class="spec-grid">
     <div class="spec-card">
       <div class="vis"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
@@ -491,7 +499,7 @@
 
   <div class="summary-note">Pick whichever fits the space. Don't switch lockups within the same deck unless layout demands it.</div>
 
-  <h2 class="spec-h2">Clear space around the logo</h2>
+  <h2 class="spec-h2">Clear Space Around The Logo</h2>
   <div class="clear-space-wrap">
     <div>
       <div class="clear-space">
@@ -509,13 +517,13 @@
 
   <div class="summary-note">The rule is proportional, not fixed: <strong>clear space scales with the logo.</strong> Whatever pt or px size the wordmark renders at, the clear space on all four sides equals that same height. The bigger the logo, the more breathing room around it.</div>
 
-  <div class="conv-table" style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:16px 0 24px;">
+  <div class="conv-table" style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;overflow:hidden;margin:16px 0 24px;">
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead>
         <tr>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Wordmark height (cap-height of "N")</th>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Clear space on all sides</th>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Typical use</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Wordmark height (cap-height of "N")</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Clear space on all sides</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Typical use</th>
         </tr>
       </thead>
       <tbody>
@@ -527,7 +535,7 @@
     </table>
   </div>
 
-  <h2 class="spec-h2">Minimum size</h2>
+  <h2 class="spec-h2">Minimum Size</h2>
   <div class="minsize-grid">
     <div class="minsize-card">
       <div class="vis"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
@@ -548,7 +556,7 @@
   </div>
   <div class="summary-note">Below these sizes the logo becomes illegible. If you can't fit the logo at its minimum, the canvas isn't ready for branding yet.</div>
 
-  <h2 class="spec-h2">Color variants</h2>
+  <h2 class="spec-h2">Color Variants</h2>
   <div class="spec-grid">
     <div class="spec-card">
       <div class="vis"><div class="nv-logo"><div class="mark"></div><div class="wordmark">NVIDIA</div></div></div>
@@ -578,7 +586,7 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Placement on a slide or video frame</h2>
+  <h2 class="spec-h2">Placement On A Slide Or Video Frame</h2>
   <div class="slide-mock">
     <div class="logo-pos">
       <div class="nv-logo white"><div class="mark" style="width:28px;height:20px;"></div><div class="wordmark" style="color:#FFFFFF;font-size:16px;">NVIDIA</div></div>
@@ -653,123 +661,84 @@
 
   </div>
 
-  <h2 class="spec-h2">3D hero composition</h2>
-  <div class="summary-note">The rendered 3D NVIDIA "eye" you see on course title cards is not a logo — it's a sanctioned brand illustration. You don't generate it; you grab the approved asset from NVDAM.</div>
-
-  <div class="nvdam-banner">
-    <div class="nvdam-text"><strong>Get the asset from NVDAM.</strong> Don't generate, render, or modify hero compositions yourself. If a needed variant doesn't exist, request it through the corporate brand team.</div>
-    <a href="https://nvdam.nvidia.com/" target="_blank" class="btn btn-primary">Open NVDAM ↗</a>
+  <h2 class="spec-h2">Co-branding With A Partner Logo</h2>
+  <div class="summary-note">When the NVIDIA mark sits next to another brand's logo, separate them with a thin vertical divider — not a "+" or an "x", not adjacent without space, not stacked.</div>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;padding:36px 28px;display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:24px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:38px;height:28px;background:var(--brand-green);border-radius:2px;"></div>
+      <div style="font-weight:700;font-size:22px;letter-spacing:-0.02em;">NVIDIA</div>
+    </div>
+    <div style="width:1px;height:32px;background:var(--gray-300);"></div>
+    <div style="font-weight:500;font-size:20px;color:var(--text-secondary);letter-spacing:-0.01em;">Partner Logo</div>
   </div>
+  <ul style="font-size:14px;color:var(--text-secondary);line-height:1.7;padding-left:22px;max-width:72ch;margin:0 0 24px;">
+    <li>Divider: <strong style="color:var(--text-primary);">1 pt, gray-300, vertical, same height as the cap-height of "NVIDIA"</strong>.</li>
+    <li>Spacing on each side of the divider: <strong style="color:var(--text-primary);">equal to the height of the "N"</strong>.</li>
+    <li>Logos should be visually balanced — match optical (not geometric) size.</li>
+    <li>NVIDIA usually leads (sits on the left) when NVIDIA is the host / primary brand.</li>
+    <li>For three or more logos, switch to a horizontal row with the same divider spacing; never stack.</li>
+  </ul>
 
-  <h2 class="spec-h2">Two approved hero variants</h2>
-  <div class="hero-grid">
+  <h2 class="spec-h2">Picking The Right Variant — Flow</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 18px;max-width:65ch;">Use this in order:</p>
+  <ol style="font-size:14px;color:var(--text-secondary);line-height:1.8;padding-left:22px;max-width:72ch;margin:0 0 24px;">
+    <li><strong style="color:var(--text-primary);">Light background?</strong> Use the <strong>color + black wordmark</strong> horizontal lockup.</li>
+    <li><strong style="color:var(--text-primary);">Dark background (under #4B4B4B)?</strong> Use the <strong>color + white wordmark</strong>.</li>
+    <li><strong style="color:var(--text-primary);">Photo, busy texture, or low contrast?</strong> Use the <strong>1-color all-white</strong> variant.</li>
+    <li><strong style="color:var(--text-primary);">Square / portrait layout (social tile, app icon)?</strong> Use the <strong>vertical lockup</strong> of the same color family.</li>
+  </ol>
+  <div class="summary-note">For one-color situations only, the all-white version is allowed. There is no all-black NVIDIA logo — the eye is always green when full color is on; otherwise it's white. Greyscale and tinted versions are not part of the system.</div>
 
-    <div class="hero-card">
-      <div class="vis embossed">
-        <div class="h-logo"><span class="mark"></span><span class="wm">NVIDIA</span></div>
-        <div class="h-title">
-          <div class="label">Self-Paced Course</div>
-          <div class="t">AI infrastructure fundamentals</div>
-        </div>
-      </div>
-      <div class="meta">
-        <div class="name">Embossed glass</div>
-        <div class="usage">The default. Use on <strong>course title cards</strong> — the opening identifier for the whole course. Smooth radial glow, glass-rendered eye.</div>
-      </div>
-    </div>
+  <h2 class="spec-h2">Download The Files</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 14px;max-width:70ch;">All six variants (horizontal + vertical × three color treatments) are hosted in the Assets section as transparent PNGs.</p>
+  <a href="logos.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--brand-green);color:#000;font-size:14px;font-weight:600;border-radius:0;text-decoration:none;">
+    Open the Logos asset page →
+  </a>
+  <div class="summary-note" style="margin-top:24px;">For the canonical source (more formats, print files, the full corporate brand guide), see <a href="https://brand.nvidia.com/d/9M9wySQgZT2X/n-a?#/nvidia-logo/logo-quick-start-guideline" target="_blank" rel="noopener">NVIDIA's brand portal logo quick-start guide</a>.</div>
 
-    <div class="hero-card">
-      <div class="vis linear">
-        <div class="h-logo"><span class="mark"></span><span class="wm">NVIDIA</span></div>
-        <div class="h-title">
-          <div class="label">Unit 13</div>
-          <div class="t">Management and monitoring</div>
-        </div>
-      </div>
-      <div class="meta">
-        <div class="name">Linear scratched</div>
-        <div class="usage">Use on <strong>unit and section openers</strong>. Provides visual differentiation from the course title without breaking the family. Linear texture across the eye.</div>
-      </div>
-    </div>
 
-  </div>
+  
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html" class="active">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
 
-  <h2 class="spec-h2">Which hero, when</h2>
-  <div class="spec-grid">
-    <div class="spec-card">
-      <div class="vis"><div style="width:100%;aspect-ratio:16/9;background:radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%), linear-gradient(135deg, #0C0C0C, #161616);border-radius:4px;"></div></div>
-      <div class="name">Embossed glass →</div>
-      <div class="use">Course title card · web course detail hero · marketing materials for the course as a whole</div>
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
     </div>
-    <div class="spec-card">
-      <div class="vis"><div style="width:100%;aspect-ratio:16/9;background:repeating-linear-gradient(110deg, transparent 0, transparent 4px, rgba(255,255,255,0.04) 4px, rgba(255,255,255,0.04) 5px), radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.5) 0%, transparent 55%), #0C0C0C;border-radius:4px;"></div></div>
-      <div class="name">Linear scratched →</div>
-      <div class="use">Unit title card · section opener · transitions inside a course</div>
-    </div>
-  </div>
-
-  <h2 class="spec-h2">Title placement on a hero composition</h2>
-  <div class="slide-mock">
-    <div class="logo-pos">
-      <div class="nv-logo white"><div class="mark" style="width:28px;height:20px;"></div><div class="wordmark" style="color:#FFFFFF;font-size:16px;">NVIDIA</div></div>
-    </div>
-    <div class="title-pos">
-      <div class="label">Self-Paced Course</div>
-      <div class="title">Course title goes here</div>
-    </div>
-  </div>
-  <div class="summary-note">Logo upper-left. Course / unit label small above. Title in the lower-left, large and bold, at Display 1 (<code style="font-family:var(--font-mono);background:var(--surface-section);padding:2px 6px;border-radius:3px;font-size:12px;">48 pt / 64 px, Bold, white</code>). The 3D eye occupies the right two-thirds of the frame.</div>
-
-  <h2 class="spec-h2">Don'ts for hero compositions</h2>
-  <div class="dd-grid">
-    <div class="dd dont">
-      <div class="sample dark"><div style="color:#fff;font-size:13px;text-align:center;">Custom render<br>in Blender</div></div>
-      <div class="meta">
-        <span class="badge">Don't</span>
-        <div class="label">Generate your own 3D variant</div>
-        <div class="why">Only use the variants in NVDAM. No in-house renders, no AI-generated alternatives.</div>
-      </div>
-    </div>
-
-    <div class="dd dont">
-      <div class="sample" style="background:radial-gradient(circle at 75% 50%, #890C58 0%, #0C0C0C 60%);"></div>
-      <div class="meta">
-        <span class="badge">Don't</span>
-        <div class="label">Recolor the hero</div>
-        <div class="why">The green glow is part of the asset. No magenta, blue, or other tints.</div>
-      </div>
-    </div>
-
-    <div class="dd dont">
-      <div class="sample" style="background:#FFFFFF;">
-        <div style="width:80%;aspect-ratio:16/9;background:radial-gradient(circle at 75% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 50%), linear-gradient(135deg, #0C0C0C, #161616);"></div>
-      </div>
-      <div class="meta">
-        <span class="badge">Don't</span>
-        <div class="label">Place a hero on a light slide</div>
-        <div class="why">Hero compositions are dark-mode only. On a light slide, use a flat green or photographic surface instead.</div>
-      </div>
-    </div>
-
-    <div class="dd dont">
-      <div class="sample" style="background:#0C0C0C;position:relative;">
-        <div style="position:absolute;left:10%;top:30%;color:#fff;font-size:11px;text-align:left;">Title<br>over the<br>eye area</div>
-        <div style="position:absolute;right:0;top:0;width:60%;height:100%;background:radial-gradient(circle at 50% 50%, rgba(118, 185, 0, 0.7) 0%, transparent 60%);"></div>
-      </div>
-      <div class="meta">
-        <span class="badge">Don't</span>
-        <div class="label">Overlap title with the eye</div>
-        <div class="why">Title stays in the lower-left clear zone. The eye composition is its own focal element.</div>
-      </div>
-    </div>
-  </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
 
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft</div>
     </div>
     <div>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero section — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    
+    
+    color: var(--text-secondary);
+    margin: 64px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 72ch;
+  }
+  .summary-note strong { color: var(--text-primary); }
+
+  /* Hero sample — Kaizen variants */
+  .hr {
+    position: relative;
+    border-radius: 0;
+    overflow: hidden;
+    padding: 56px 56px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .hr .eyebrow {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .hr .hr-title {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .hr .hr-body {
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    max-width: 48ch;
+  }
+  .hr .actions {
+    display: flex;
+    gap: 12px;
+  }
+  .hr .btn {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 11px 22px;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: inherit;
+    border: 1px solid transparent;
+  }
+  .hr .btn-primary {
+    background: #76B900;
+    color: #000;
+    border-color: #76B900;
+  }
+  .hr .btn-secondary {
+    background: transparent;
+    border-color: currentColor;
+  }
+
+  /* Dark variant — black bg, white text */
+  .hr.dark {
+    background: #000;
+    color: #fff;
+  }
+  .hr.dark .btn-secondary { color: #fff; }
+
+  /* Dark with media — image-y dark background, white text */
+  .hr.dark-media {
+    color: #fff;
+    background:
+      linear-gradient(115deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(180deg, #3a3a3a, #1a1a1a 80%);
+  }
+  .hr.dark-media .btn-secondary { color: #fff; }
+
+  /* Light variant — gray bg, dark text */
+  .hr.light {
+    background: var(--gray-100);
+    color: #111;
+  }
+  .hr.light .btn-secondary { color: #111; }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .tag-chip {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .hr.light .tag-chip { background: rgba(0,0,0,0.10); color: #111; }
+
+  /* Anatomy diagram */
+  .anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 16px 0;
+  }
+  @media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+  .anatomy-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 24px 28px;
+  }
+  .anatomy-card h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+  .anatomy-card ul {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    padding-left: 20px;
+    margin: 0;
+  }
+  .anatomy-card ul li strong { color: var(--text-primary); font-weight: 500; }
+
+  /* Spec tables */
+  .spec-table-wrap {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .spec-table th {
+    background: var(--surface-section);
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    
+    
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .spec-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td.mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .academy-note {
+    background: rgba(245, 195, 0, 0.08);
+    border-left: 4px solid #F5C300;
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin: 24px 0;
+    max-width: 72ch;
+  }
+  .academy-note strong { color: #B58A00; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="patterns.html">Patterns</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Hero section</span>
+  </nav>
+
+  <div class="topic-hero">
+    <h1>Hero section</h1>
+    <p class="subtitle">A full-bleed block that introduces a page or section with the most important content — eyebrow, title, body, and one or two calls to action. Optional background media.</p>
+  </div>
+
+  <div class="summary-note"><strong>Source.</strong> The Hero pattern comes from the Kaizen UI Foundations Hero component. The Academy uses it sparingly — usually as a course intro card or a major section opener.</div>
+
+  <div class="academy-note">
+    <strong>Academy use is rare.</strong> Most slides and web pages don't need a hero. Reserve it for course intros, unit openers, and one-screen marketing pages. For inline title-and-subtitle setups inside a deck, use a normal Page Title from <a href="typography.html">Typography</a>.
+  </div>
+
+  <h2 class="spec-h2">When To Use</h2>
+  <p style="font-size:14px;color:var(--text-secondary);max-width:65ch;margin:0 0 14px;">Use a Hero to prominently display the most important content with visuals and a call to action. The hero is typically the first element users see on a page (below the app bar / header).</p>
+
+  <h2 class="spec-h2">Default — Dark Background, White Text</h2>
+  <div class="hr dark">
+    <div class="eyebrow">NVIDIA Academy</div>
+    <div class="hr-title">Course title goes here</div>
+    <div class="hr-body">A one-line description that complements the title without restating it.</div>
+    <div class="actions">
+      <button class="btn btn-primary">Explore</button>
+      <button class="btn btn-secondary">Documentation</button>
+    </div>
+  </div>
+  <div class="summary-note">Black background. White text. Green-filled primary button. Outlined secondary button (white border). This is the default Academy variant.</div>
+
+  <h2 class="spec-h2">With Dark Media — Image Background</h2>
+  <div class="hr dark-media">
+    <div class="eyebrow">NVIDIA Academy</div>
+    <div class="hr-title">Course title goes here</div>
+    <div class="hr-body">For course title cards: the hero composition fills the background, with a darkened overlay for legibility.</div>
+    <div class="actions">
+      <button class="btn btn-primary">Explore</button>
+      <button class="btn btn-secondary">Documentation</button>
+    </div>
+  </div>
+  <div class="summary-note">When a background image is in play, Kaizen sets <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">mediaTheme="dark"</code> which applies the <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">.nv-dark</code> class — keeping text in white. Add a CSS <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">filter</code> (brightness or blur) when the image is too busy.</div>
+
+  <h2 class="spec-h2">With Light Media — Image Background, Dark Text</h2>
+  <div class="hr light">
+    <div class="eyebrow">NVIDIA Academy</div>
+    <div class="hr-title">Course title goes here</div>
+    <div class="hr-body">A light-themed hero. Used when the page is light overall and the hero image is a bright product shot.</div>
+    <div class="actions">
+      <button class="btn btn-primary">Explore</button>
+      <button class="btn btn-secondary">Documentation</button>
+    </div>
+  </div>
+  <div class="summary-note">Light background, dark text. <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">mediaTheme="light"</code> / <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">.nv-light</code>. Less common in the Academy.</div>
+
+  <h2 class="spec-h2">With Tag Chips</h2>
+  <div class="hr dark-media">
+    <div class="eyebrow">NVIDIA Academy</div>
+    <div class="hr-title">AI infrastructure fundamentals</div>
+    <div class="tags">
+      <span class="tag-chip">Self-paced</span>
+      <span class="tag-chip">Beginner</span>
+      <span class="tag-chip">4 hours</span>
+    </div>
+    <div class="hr-body">A short course overview. Tags add scannable metadata above the body.</div>
+    <div class="actions">
+      <button class="btn btn-primary">Start course</button>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Anatomy</h2>
+  <div class="anatomy">
+    <div class="anatomy-card">
+      <h3>Required</h3>
+      <ul>
+        <li><strong>Eyebrow</strong> — context label above the title (e.g., "NVIDIA Academy", course family).</li>
+        <li><strong>Title</strong> — the most important content. One or two lines maximum.</li>
+        <li><strong>Body</strong> — single-paragraph explanation. Adds context but doesn't restate the title.</li>
+        <li><strong>Primary action</strong> — the next step the learner should take.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>Optional</h3>
+      <ul>
+        <li><strong>Background media</strong> — image, video, or a generated hero composition. Set <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:12px;">mediaTheme</code> to light or dark.</li>
+        <li><strong>Secondary action</strong> — outlined button next to the primary. Use only if the second action is genuinely useful (e.g., "Read the docs" alongside "Start course").</li>
+        <li><strong>Tag chips</strong> — short metadata (duration, level, format) between title and body.</li>
+        <li><strong>CSS filter</strong> — brightness / blur on the media when it's too busy for readable text.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Sizing &amp; Typography</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Element</th><th>Size</th><th>Weight</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Eyebrow</td><td class="mono">16 px / 12 pt</td><td>Bold (700)</td></tr>
+        <tr><td>Title</td><td class="mono">44–56 px / 60–88 pt (matches Cover scale)</td><td>Bold (700)</td></tr>
+        <tr><td>Body</td><td class="mono">20 px / 24 pt</td><td>Regular (400)</td></tr>
+        <tr><td>Tag chip</td><td class="mono">13 px / 16 pt</td><td>Medium (500)</td></tr>
+        <tr><td>Button label</td><td class="mono">14 px / 18 pt</td><td>Bold (700)</td></tr>
+        <tr><td>Padding (inside hero)</td><td class="mono">56 px / 64 pt</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Color Rules (mediaTheme)</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>mediaTheme</th><th>Background</th><th>Text</th><th>Primary button</th><th>Secondary button</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">dark / nv-dark</td>
+          <td>Dark image, gradient, or solid #000</td>
+          <td>White</td>
+          <td>NVIDIA Green fill, black text</td>
+          <td>Transparent, 1 px white border, white text</td>
+        </tr>
+        <tr>
+          <td class="mono">light / nv-light</td>
+          <td>Light image or solid light gray</td>
+          <td>Black</td>
+          <td>NVIDIA Green fill, black text</td>
+          <td>Transparent, 1 px black border, black text</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="summary-note" style="margin-top:12px;"><strong>Contrast check.</strong> Whatever the media looks like, the hero text must reach WCAG AA contrast against it. If the underlying image makes that impossible, add a darkening overlay (e.g. <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.20))</code>) before placing text.</div>
+
+  <h2 class="spec-h2">In PowerPoint &amp; After Effects</h2>
+  <div class="summary-note">
+    <strong>PowerPoint course title card.</strong> Use the 40 × 22.5 in master, fill with the hero composition image, add a darkening rectangle on top (50% black, full slide), then layer Title at 88 pt bold white, eyebrow at 24 pt bold green above, and a button at 18 pt. This mirrors the "default + dark media" recipe above.
+    <br><br>
+    <strong>After Effects course opener.</strong> 1920 × 1080, same recipe at <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">76 px</code> title, <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">16 px</code> eyebrow, <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">28 px</code> body. Animate by sliding the title and body up from below (220 ms each, 80 ms stagger), then fading in the button group.
+  </div>
+
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html" class="active">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Patterns</h4>
+      <a href="patterns.html">All patterns</a>
+      <a href="banners.html">Banners</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="tables.html">Tables</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

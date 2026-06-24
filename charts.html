@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Charts &amp; data viz — NVIDIA Academy Foundations</title>
+<title>Charts &amp; data viz — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .topic-hero { margin-bottom: 24px; }
@@ -27,12 +27,12 @@
     margin: 0 0 56px;
     padding: 6px;
     background: var(--surface-section);
-    border-radius: 12px;
+    border-radius: 0;
   }
   .topic-nav a {
     font-size: 13px;
     padding: 7px 12px;
-    border-radius: 6px;
+    border-radius: 0;
     color: var(--text-secondary);
     text-decoration: none;
   }
@@ -58,8 +58,8 @@
   h2.spec-h2 {
     font-size: 14px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    
+    
     color: var(--text-secondary);
     margin: 64px 0 24px;
     padding-bottom: 12px;
@@ -68,7 +68,7 @@
 
   .summary-note {
     background: var(--surface-section);
-    border-radius: 8px;
+    border-radius: 0;
     padding: 16px 20px;
     font-size: 14px;
     color: var(--text-secondary);
@@ -78,7 +78,7 @@
   }
   .summary-note.proposed {
     border-left: 4px solid #F5C300;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0;
     background: var(--surface-section);
   }
   .summary-note strong { color: var(--text-primary); }
@@ -91,7 +91,7 @@
   .spec-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -153,7 +153,7 @@
   .chart-bar .bar {
     width: 18px;
     background: #76B900;
-    border-radius: 2px 2px 0 0;
+    border-radius: 0;
   }
   .chart-bar .b1 { height: 60%; }
   .chart-bar .b2 { height: 85%; background: #008564; }
@@ -192,7 +192,7 @@
   .palette-row .sw {
     background: var(--brand-white);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
   }
   .palette-row .sw .fill { height: 70px; }
@@ -212,7 +212,7 @@
   .annotated-chart {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 32px;
   }
   .annotated-chart .title {
@@ -264,7 +264,7 @@
   .dd {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
   }
   .dd.do { border-top: 4px solid #76B900; }
@@ -280,8 +280,8 @@
   .dd .badge {
     font-size: 11px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    
+    
     margin-bottom: 6px;
   }
   .dd.do .badge { color: #76B900; }
@@ -297,7 +297,7 @@
     align-items: flex-end;
     gap: 4px;
   }
-  .mc .bar { width: 12px; border-radius: 2px 2px 0 0; }
+  .mc .bar { width: 12px; border-radius: 0; }
   .mc-good .bar:nth-child(1) { height: 50%; background: #76B900; }
   .mc-good .bar:nth-child(2) { height: 80%; background: #008564; }
   .mc-good .bar:nth-child(3) { height: 60%; background: #5D1682; }
@@ -323,15 +323,14 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
     <a href="index.html">Home</a>
     <a href="content.html" class="active">Content</a>
     <a href="toolkit.html">Toolkit</a>
-    <a href="assets.html">Assets</a>
-    <a href="motion.html" class="placeholder">Motion — v2</a>
+    <a href="case-studies.html">Case studies</a>
   </nav>
   <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
     <input name="q" type="text" class="header-search" placeholder="Search…">
@@ -340,6 +339,14 @@
 </header>
 
 <main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Charts &amp; data viz</span>
+  </nav>
+
 
   <div class="topic-hero">
     <h1>Charts &amp; data viz</h1>
@@ -351,15 +358,12 @@
     <a href="color.html">Color</a>
     <a href="frames-cards.html">Frames &amp; cards</a>
     <a href="spacing.html">Spacing &amp; layout</a>
-    <a href="assets.html">Assets</a>
-    <a href="logos-hero.html">Logos &amp; hero</a>
-    <a href="imagery.html">Imagery</a>
+    <a href="logos-hero.html">Logos</a>
     <a href="code-cli.html">Code &amp; CLI</a>
     <a href="charts.html" class="active">Charts</a>
-    <a href="motion.html" class="disabled">Motion — v2</a>
   </nav>
 
-  <h2 class="spec-h2">Chart types we use</h2>
+  <h2 class="spec-h2">Chart Types We Use</h2>
   <div class="spec-grid">
     <div class="spec-card">
       <div class="vis">
@@ -410,7 +414,7 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Chart series palette</h2>
+  <h2 class="spec-h2">Chart Series Palette</h2>
 
   <div class="summary-note proposed">
     <strong>Proposed — not yet finalized.</strong> The Academy reuses the five Section identity colors as the default chart-series palette. A dedicated chart palette is on the v0.2 governance shortlist. Flag any preference; otherwise these are the defaults.
@@ -428,7 +432,7 @@
     Assign in order: first series in NVIDIA Green, second in deep teal, and so on. If you need more than five series, the chart is too dense — group categories together or split into multiple charts.
   </div>
 
-  <h2 class="spec-h2">Anatomy of a chart</h2>
+  <h2 class="spec-h2">Anatomy Of A Chart</h2>
   <div class="annotated-chart">
     <div class="title">Course completion by region</div>
     <div class="subtitle">Q3 2026</div>
@@ -519,13 +523,13 @@
     </div>
   </div>
 
-  <h2 class="spec-h2">Quick reference</h2>
-  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+  <h2 class="spec-h2">Quick Reference</h2>
+  <div style="background:var(--surface-box);border:1px solid var(--border);border-radius:0;overflow:hidden;">
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead>
         <tr>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Element</th>
-          <th style="background:var(--surface-section);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Spec</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Element</th>
+          <th style="background:var(--surface-section);font-size:12px;color:var(--text-secondary);font-weight:500;padding:12px 16px;text-align:left;">Spec</th>
         </tr>
       </thead>
       <tbody>
@@ -541,12 +545,47 @@
     </table>
   </div>
 
+
+  
+  <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html" class="active">Charts</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft</div>
     </div>
     <div>

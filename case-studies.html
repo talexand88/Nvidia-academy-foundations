@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case studies — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  .coming-banner {
+    background: var(--surface-section);
+    border-left: 4px solid var(--brand-green);
+    border-radius: 0 12px 12px 0;
+    padding: 28px 32px;
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .coming-banner-content { flex: 1; }
+  .coming-banner h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .coming-banner p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .coming-tag {
+    background: var(--brand-green);
+    color: var(--brand-black);
+    font-weight: 500;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 0;
+    
+    
+    flex-shrink: 0;
+  }
+
+  .ideas {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .ideas h3 { font-size: 18px; font-weight: 500; margin-bottom: 14px; }
+  .ideas ul {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    padding-left: 22px;
+    margin: 0;
+  }
+  .ideas li { margin-bottom: 6px; }
+  .ideas li strong { color: var(--text-primary); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html" class="active">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+
+  <div class="topic-hero">
+    <h1>Case studies</h1>
+    <p class="sub">Worked examples of the system in real production — full decks, video stills, and course pages annotated against the guidelines.</p>
+  </div>
+
+  <div class="coming-banner">
+    <div class="coming-banner-content">
+      <h2>Coming soon</h2>
+      <p>This section will hold annotated walk-throughs of real Academy materials — what worked, what didn't, and which guideline was applied where. We're collecting candidate projects now.</p>
+    </div>
+    <span class="coming-tag">In planning</span>
+  </div>
+
+  <div class="ideas">
+    <h3>What Might Live Here</h3>
+    <ul>
+      <li><strong>A finished course deck</strong>, slide-by-slide, with callouts pointing back to Typography, Color, Frames, and Spacing rules.</li>
+      <li><strong>A video walkthrough</strong> — stills from a published Academy video annotated with the active guidelines (lower-thirds, code overlays, transitions).</li>
+      <li><strong>A "before / after" study</strong> — a slide rebuilt to spec, with the diff shown side by side.</li>
+      <li><strong>A pattern decision walk-through</strong> — a real design question the team faced, the options considered, and which guideline drove the answer.</li>
+    </ul>
+  </div>
+
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="content.html">All topics</a>
+      <a href="typography.html">Typography</a>
+      <a href="color.html">Color</a>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="screenshot-review.html">Review a screenshot</a>
+      <a href="pptx-validator.html">Validate a deck</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a case study</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lists — NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+  .topic-hero { margin-bottom: 32px; }
+  .topic-hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .topic-hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  h2.spec-h2 {
+    font-size: 14px;
+    font-weight: 500;
+    
+    
+    color: var(--text-secondary);
+    margin: 64px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-note {
+    background: var(--surface-section);
+    border-radius: 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 12px 0 24px;
+    max-width: 72ch;
+  }
+  .summary-note strong { color: var(--text-primary); }
+
+  /* Academy list — sample on a slide background */
+  .ac-list-frame {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 40px 48px;
+    color: #111;
+    margin: 12px 0 8px;
+  }
+  .ac-list .lvl-1 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .ac-list ul {
+    list-style: none;
+    margin: 0 0 4px 0;
+    padding: 0;
+  }
+  .ac-list ul li {
+    position: relative;
+    padding-left: 22px;
+    line-height: 1.45;
+    margin-bottom: 4px;
+  }
+  .ac-list ul li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #76B900;
+  }
+  .ac-list ul.lvl-2 { padding-left: 22px; }
+  .ac-list ul.lvl-2 > li { font-size: 24px; }
+  .ac-list ul.lvl-3 { padding-left: 22px; }
+  .ac-list ul.lvl-3 > li { font-size: 22px; }
+  .ac-list ul.lvl-3 > li::before {
+    background: #76B900;
+    width: 5px;
+    height: 5px;
+  }
+  .ac-list .paragraph {
+    font-size: 22px;
+    margin: 6px 0;
+    line-height: 1.4;
+  }
+
+  /* Spec tables */
+  .spec-table-wrap {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .spec-table th {
+    background: var(--surface-section);
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    
+    
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .spec-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td.mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .spec-table .chip {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.08);
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .three-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .three-card {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 22px 26px;
+  }
+  .three-card .label {
+    font-size: 11px;
+    
+    
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+  .three-card .demo {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+  }
+  .three-card .demo ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .three-card .demo ul li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 4px;
+  }
+  .three-card .demo ul li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #76B900;
+  }
+  .three-card .demo ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .three-card .demo ol li {
+    margin-bottom: 4px;
+  }
+  .three-card .demo ol li::marker {
+    color: #76B900;
+    font-weight: 700;
+  }
+  .three-card .demo .dl-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .three-card .demo .dl-row strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* Do / Don't */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+  .dd {
+    background: var(--surface-box);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .dd.do { border-top: 4px solid #76B900; }
+  .dd.dont { border-top: 4px solid #C2262D; }
+  .dd .sample {
+    padding: 18px;
+    background: var(--surface-section);
+    font-size: 14px;
+    color: #111;
+    min-height: 100px;
+  }
+  .dd .sample ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .dd .sample ul li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 4px;
+  }
+  .dd .sample ul li::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #76B900;
+  }
+  .dd .meta { padding: 14px 18px; }
+  .dd .badge {
+    font-size: 11px;
+    font-weight: 500;
+    
+    
+    margin-bottom: 6px;
+  }
+  .dd.do .badge { color: #76B900; }
+  .dd.dont .badge { color: #C2262D; }
+  .dd .label { font-size: 14px; font-weight: 500; }
+  .dd .why { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html" class="active">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="motion.html" class="placeholder">Motion — v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search…">
+  </form>
+</header>
+
+<main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="content.html">Content</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="patterns.html">Patterns</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">Lists</span>
+  </nav>
+
+  <div class="topic-hero">
+    <h1>Lists</h1>
+    <p class="subtitle">Bulleted and numbered lists for narrative content. Up to three nesting levels, small NVIDIA-green bullets, sentence case throughout.</p>
+  </div>
+
+  <div class="summary-note"><strong>Source.</strong> The Academy list style is set by the canonical PowerPoint reference: a 3-level hierarchy at 44 / 40 / 36 pt, small green dot bullets, with the option to mix bullet lists and un-bulleted paragraphs in the same block.</div>
+
+  <h2 class="spec-h2">The Pattern — Three Levels</h2>
+  <div class="ac-list-frame">
+    <div class="ac-list">
+      <div class="lvl-1">First level of text at 44 pt</div>
+      <ul class="lvl-2">
+        <li>Second level of text at 40 pt</li>
+        <li>
+          Second level of text at 40 pt
+          <ul class="lvl-3">
+            <li>Third level of text at 36 pt</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="paragraph">Text goes here</div>
+      <div class="paragraph">Text goes here</div>
+      <ul class="lvl-3">
+        <li>Text goes here</li>
+        <li>Text goes here</li>
+        <li>Text goes here</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Sizes — PowerPoint</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Level</th><th>Size</th><th>Weight</th><th>Bullet</th><th>Indent</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Level 1</strong> · Heading line</td>
+          <td class="mono">44 pt</td>
+          <td>Medium (500)</td>
+          <td>None</td>
+          <td class="mono">0 pt</td>
+        </tr>
+        <tr>
+          <td><strong>Level 2</strong> · Primary bullets</td>
+          <td class="mono">40 pt</td>
+          <td>Regular (400)</td>
+          <td>NVIDIA Green dot</td>
+          <td class="mono">22 pt</td>
+        </tr>
+        <tr>
+          <td><strong>Level 3</strong> · Sub-bullets</td>
+          <td class="mono">36 pt</td>
+          <td>Regular (400)</td>
+          <td>NVIDIA Green dot (smaller)</td>
+          <td class="mono">44 pt</td>
+        </tr>
+        <tr>
+          <td><strong>Paragraph</strong> · Un-bulleted line</td>
+          <td class="mono">36–40 pt (match nearby list)</td>
+          <td>Regular (400)</td>
+          <td>None</td>
+          <td class="mono">0 pt</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Sizes — After Effects</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Level</th><th>Size</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Level 1 · Heading line</td><td class="mono">36 px</td></tr>
+        <tr><td>Level 2 · Primary bullets</td><td class="mono">32 px</td></tr>
+        <tr><td>Level 3 · Sub-bullets</td><td class="mono">28 px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="spec-h2">Bullet Glyph</h2>
+  <div class="spec-table-wrap">
+    <table class="spec-table">
+      <thead>
+        <tr><th>Element</th><th>Style</th><th>Color</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Level 2 bullet</td><td>Solid filled circle, ~6 pt diameter at 40 pt text</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td>Level 3 bullet</td><td>Solid filled circle, ~5 pt diameter at 36 pt text</td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+        <tr><td>Numbered list</td><td>Arabic numeral followed by period: <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:13px;">1.</code></td><td class="mono"><span class="chip" style="background:#76B900;"></span>NVIDIA Green #76B900</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="summary-note">Bullet diameter scales with text. A useful ratio: <strong>bullet diameter ≈ text size × 0.15</strong>. At 40 pt text, that's a 6 pt dot.</div>
+
+  <h2 class="spec-h2">Three List Shapes</h2>
+  <div class="three-grid">
+    <div class="three-card">
+      <div class="label">Unordered (bullets)</div>
+      <div class="demo">
+        <ul>
+          <li>Each item starts with a noun or verb</li>
+          <li>Sentence case throughout</li>
+          <li>No trailing periods on short items</li>
+        </ul>
+      </div>
+    </div>
+    <div class="three-card">
+      <div class="label">Ordered (steps)</div>
+      <div class="demo">
+        <ol>
+          <li>Start the container</li>
+          <li>Mount the volume</li>
+          <li>Run the script</li>
+        </ol>
+      </div>
+    </div>
+    <div class="three-card">
+      <div class="label">Definition (term + value)</div>
+      <div class="demo">
+        <div class="dl-row"><strong>Model</strong><span>H100 SXM</span></div>
+        <div class="dl-row"><strong>Memory</strong><span>80 GB</span></div>
+        <div class="dl-row"><strong>Power</strong><span>700 W</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Rules</h2>
+  <div class="summary-note">
+    <strong>Sentence case.</strong> First letter capitalized, rest lowercase. Acronyms and proper nouns keep their capitalization.
+    <br><br>
+    <strong>No trailing periods on short items.</strong> If items are full sentences, end them with periods. If they're fragments ("Mount the volume"), no periods.
+    <br><br>
+    <strong>Maximum three levels of nesting.</strong> If you need a fourth level, the slide is doing too much — split it into two slides.
+    <br><br>
+    <strong>One verb per item</strong> in step lists. Don't combine actions ("Mount the volume and configure the network" → split into two steps).
+  </div>
+
+  <h2 class="spec-h2">Do</h2>
+  <div class="dd-grid">
+    <div class="dd do">
+      <div class="sample">
+        <ul>
+          <li>Single-clause items</li>
+          <li>Same grammatical form</li>
+          <li>One verb each</li>
+        </ul>
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Parallel structure</div>
+        <div class="why">Items mirror each other in length and grammar — easier to scan.</div>
+      </div>
+    </div>
+    <div class="dd do">
+      <div class="sample">
+        <div style="font-weight:500;margin-bottom:6px;">Heading line at level 1</div>
+        <ul>
+          <li>Primary point</li>
+          <li>Another primary point</li>
+        </ul>
+        <div style="margin-top:6px;">Optional unbulleted paragraph</div>
+      </div>
+      <div class="meta">
+        <span class="badge">Do</span>
+        <div class="label">Mix bullets with paragraphs</div>
+        <div class="why">A heading can sit above bullets, and unbulleted lines can break up a long list.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Don't</h2>
+  <div class="dd-grid">
+    <div class="dd dont">
+      <div class="sample">
+        <ul>
+          <li>Long winding item that runs to the next line and keeps going for a while</li>
+          <li>Different grammar</li>
+          <li>Also has a verb and a noun and then a clause</li>
+        </ul>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Mismatched item lengths and grammar</div>
+        <div class="why">Mix of fragments and clauses with wildly different lengths breaks the pattern.</div>
+      </div>
+    </div>
+    <div class="dd dont">
+      <div class="sample">
+        <ul>
+          <li>Top level
+            <ul style="margin-left:18px;margin-top:4px;">
+              <li>Sub-level
+                <ul style="margin-left:18px;margin-top:4px;">
+                  <li>Sub-sub-level
+                    <ul style="margin-left:18px;margin-top:4px;">
+                      <li>Sub-sub-sub-level</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Four or more nesting levels</div>
+        <div class="why">Split into two slides. The third level is the floor; below that is structural confusion.</div>
+      </div>
+    </div>
+    <div class="dd dont">
+      <div class="sample">
+        <ul style="list-style:square;list-style-position:inside;color:#000;">
+          <li style="padding-left:0;">Square bullet</li>
+          <li style="padding-left:0;">Square bullet</li>
+        </ul>
+        <ul style="list-style:disc;list-style-position:inside;color:#0071C5;margin-top:6px;">
+          <li style="padding-left:0;">Blue bullet</li>
+          <li style="padding-left:0;">Blue bullet</li>
+        </ul>
+      </div>
+      <div class="meta">
+        <span class="badge">Don't</span>
+        <div class="label">Non-system bullet glyphs or colors</div>
+        <div class="why">Only NVIDIA-green filled circles. No squares, dashes, arrows, or alternate colors.</div>
+      </div>
+    </div>
+  </div>
+
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html" class="active">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>v0.1 Draft</div>
+    </div>
+    <div>
+      <h4>Patterns</h4>
+      <a href="patterns.html">All patterns</a>
+      <a href="banners.html">Banners</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="tables.html">Tables</a>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <a href="typography.html">Typography</a>
+      <a href="content.html">All topics</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

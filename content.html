@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Content — NVIDIA Academy Foundations</title>
+<title>Content — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .topic-hero { margin-bottom: 48px; }
@@ -26,7 +26,7 @@
   .topic-card {
     background: var(--surface-box);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 28px;
     text-decoration: none;
     color: var(--text-primary);
@@ -65,8 +65,8 @@
   .topic-card .tag {
     font-size: 11px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    
+    
     color: var(--text-tertiary);
   }
   .topic-card .tag.live { color: var(--feedback-success); }
@@ -83,18 +83,18 @@
     display: flex;
     gap: 4px;
   }
-  .p-color .sw { width: 28px; height: 28px; border-radius: 4px; }
+  .p-color .sw { width: 28px; height: 28px; border-radius: 0; }
 
   .p-frame {
     width: 80px; height: 50px;
     border: 2px solid var(--brand-green);
-    border-radius: 4px;
+    border-radius: 0;
   }
   .p-spacing {
     display: flex;
     gap: 8px;
   }
-  .p-spacing .blk { width: 36px; height: 36px; background: var(--gray-100); border-radius: 4px; }
+  .p-spacing .blk { width: 36px; height: 36px; background: var(--gray-100); border-radius: 0; }
 
   .p-icon svg { width: 56px; height: 56px; }
 
@@ -109,14 +109,14 @@
   .p-imagery {
     width: 100px; height: 60px;
     background: linear-gradient(135deg, var(--gray-975), #2a5a1f);
-    border-radius: 4px;
+    border-radius: 0;
   }
   .p-code {
     font-family: var(--font-mono);
     background: var(--gray-975);
     color: var(--brand-white);
     padding: 10px 14px;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 11px;
   }
   .p-code .g { color: var(--brand-green); }
@@ -146,7 +146,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -154,6 +154,7 @@
     <a href="content.html" class="active">Content</a>
     <a href="toolkit.html">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
   </nav>
   <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
@@ -194,7 +195,7 @@
     <a href="frames-cards.html" class="topic-card">
       <div class="preview"><div class="p-frame"></div></div>
       <span class="tag live">Live</span>
-      <h3>Frames &amp; cards</h3>
+      <h3>Frames &amp; Cards</h3>
       <div class="topic-desc">Stroke, padding, margins. How creative you can get.</div>
     </a>
 
@@ -207,7 +208,7 @@
         </div>
       </div>
       <span class="tag live">Live</span>
-      <h3>Spacing &amp; layout</h3>
+      <h3>Spacing &amp; Layout</h3>
       <div class="topic-desc">Grid, margins, breathing room.</div>
     </a>
 
@@ -232,15 +233,8 @@
         </div>
       </div>
       <span class="tag live">Live</span>
-      <h3>Logos &amp; hero</h3>
+      <h3>Logos</h3>
       <div class="topic-desc">Placement, sizing, clear space, which hero when.</div>
-    </a>
-
-    <a href="imagery.html" class="topic-card">
-      <div class="preview"><div class="p-imagery"></div></div>
-      <span class="tag live">Live</span>
-      <h3>Imagery</h3>
-      <div class="topic-desc">When photos, when illustrations, when hero.</div>
     </a>
 
     <a href="code-cli.html" class="topic-card">
@@ -258,32 +252,93 @@
     <a href="charts.html" class="topic-card">
       <div class="preview"><div class="p-chart"></div></div>
       <span class="tag live">Live</span>
-      <h3>Charts &amp; data viz</h3>
+      <h3>Charts &amp; Data Viz</h3>
       <div class="topic-desc">Chart types, colors per series, labeling.</div>
     </a>
 
-    <a href="motion.html" class="topic-card">
-      <div class="preview"><div class="p-motion">▶</div></div>
-      <span class="tag">v2 reserved</span>
-      <h3>Motion</h3>
-      <div class="topic-desc">Curated motion library, matched 1:1 to icons.</div>
+    <a href="patterns.html" class="topic-card">
+      <div class="preview">
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-left:3px solid #76B900;background:rgba(118,185,0,0.10);border-radius:2px;font-size:10px;">✓ Action</div>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-left:3px solid #F5C300;background:rgba(245,195,0,0.10);border-radius:2px;font-size:10px;">! Warning</div>
+        </div>
+      </div>
+      <span class="tag live">Live</span>
+      <h3>Patterns</h3>
+      <div class="topic-desc">Banners, tables, lists, timeline, hero.</div>
+    </a>
+
+    <a href="topologies.html" class="topic-card">
+      <div class="preview">
+        <svg viewBox="0 0 80 60" width="80" height="60" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#666" stroke-width="0.8" fill="none">
+            <line x1="20" y1="14" x2="14" y2="34"/><line x1="20" y1="14" x2="40" y2="34"/><line x1="20" y1="14" x2="66" y2="34"/>
+            <line x1="40" y1="14" x2="14" y2="34"/><line x1="40" y1="14" x2="40" y2="34"/><line x1="40" y1="14" x2="66" y2="34"/>
+            <line x1="60" y1="14" x2="14" y2="34"/><line x1="60" y1="14" x2="40" y2="34"/><line x1="60" y1="14" x2="66" y2="34"/>
+            <line x1="14" y1="42" x2="10" y2="50"/><line x1="14" y1="42" x2="22" y2="50"/>
+            <line x1="40" y1="42" x2="36" y2="50"/><line x1="40" y1="42" x2="48" y2="50"/>
+            <line x1="66" y1="42" x2="60" y2="50"/><line x1="66" y1="42" x2="70" y2="50"/>
+          </g>
+          <g stroke="#111" stroke-width="1" fill="#fff">
+            <rect x="14" y="6" width="12" height="10" rx="1"/>
+            <rect x="34" y="6" width="12" height="10" rx="1"/>
+            <rect x="54" y="6" width="12" height="10" rx="1"/>
+            <rect x="8" y="34" width="12" height="10" rx="1"/>
+            <rect x="34" y="34" width="12" height="10" rx="1"/>
+            <rect x="60" y="34" width="12" height="10" rx="1"/>
+            <rect x="6" y="50" width="8" height="6" rx="1"/>
+            <rect x="18" y="50" width="8" height="6" rx="1"/>
+            <rect x="32" y="50" width="8" height="6" rx="1"/>
+            <rect x="44" y="50" width="8" height="6" rx="1"/>
+            <rect x="56" y="50" width="8" height="6" rx="1"/>
+            <rect x="66" y="50" width="8" height="6" rx="1"/>
+          </g>
+        </svg>
+      </div>
+      <span class="tag">Draft</span>
+      <h3>Topologies</h3>
+      <div class="topic-desc">Network and system diagrams — nodes, links, frames.</div>
     </a>
 
   </div>
+
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
 
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft</div>
     </div>
     <div>
       <h4>Quick links</h4>
       <a href="typography.html">Typography</a>
       <a href="assets.html">Assets</a>
-      <a href="motion.html">Motion</a>
+      <a href="case-studies.html">Case studies</a>
     </div>
     <div>
       <h4>Tools</h4>

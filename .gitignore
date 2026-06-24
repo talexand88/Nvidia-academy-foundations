@@ -23,6 +23,9 @@ Desktop.ini
 browse.html
 governance.html
 
+# Unused PPTX thumbnail previews (replaced by SVG icons in templates.html)
+downloads/templates/previews/
+
 # Old JSON data files (replaced by .js script versions)
 data/icons.json
 data/svg-paths.json

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PowerPoint validator — NVIDIA Academy Foundations</title>
+<title>PowerPoint validator — NVIDIA Academy Visual Foundations</title>
 <link rel="stylesheet" href="shared/tokens.css">
 <style>
   .placeholder-notice {
     background: var(--surface-section);
     border-left: 4px solid var(--feedback-warning);
     padding: 14px 18px;
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    border-radius: 0;
     margin-bottom: 32px;
     font-size: var(--fs-200);
     color: var(--text-secondary);
@@ -137,7 +137,7 @@
     <span class="brand-mark">N</span>
     <span>
       <span class="brand-text">NVIDIA Academy</span>
-      <span class="brand-sub" style="display:block;">Foundations</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
     </span>
   </a>
   <nav>
@@ -145,6 +145,7 @@
     <a href="content.html">Content</a>
     <a href="toolkit.html" class="active">Toolkit</a>
     <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
     <a href="motion.html" class="placeholder">Motion — v2</a>
 
   </nav>
@@ -155,8 +156,16 @@
 </header>
 
 <main class="portal-main">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <a href="toolkit.html">Toolkit</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current">PowerPoint deck validator</span>
+  </nav>
 
-  <h1 class="page-title">PowerPoint deck validator</h1>
+
+  <h1 class="page-title">PowerPoint Deck Validator</h1>
   <p class="page-lede">Upload your <code>.pptx</code>. The tool unpacks the deck, checks it against the design system, and returns a compliance report. Catch the wrong canvas size, legacy fonts, white-on-green CTAs, and non-system icons before your deck ships.</p>
 
   <div class="placeholder-notice">
@@ -340,12 +349,48 @@
     </ul>
   </div>
 
+
+    <nav class="topic-nav">
+    <a href="typography.html">Typography</a>
+    <a href="color.html">Color</a>
+    <a href="frames-cards.html">Frames &amp; cards</a>
+    <a href="spacing.html">Spacing &amp; layout</a>
+    <a href="logos-hero.html">Logos</a>
+    <a href="code-cli.html">Code &amp; CLI</a>
+    <a href="charts.html">Charts</a>
+    <a href="patterns.html">Patterns</a>
+    <a href="topologies.html">Topologies</a>
+  </nav>
+
+  <section class="comments-block">
+    <h2>Comments</h2>
+    <p class="comments-sub">Question or suggestion about this page? Drop a comment below. Sign in with your GitHub account.</p>
+    <div class="giscus-setup-note">
+      <strong>Setup pending.</strong> Once Discussions are enabled on the repo and configured at <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, replace <code>__GISCUS_REPO_ID__</code> and <code>__GISCUS_CATEGORY_ID__</code> in the script tag below with the real values. See <code>GISCUS_SETUP.md</code> in the repo root.
+    </div>
+    <div class="giscus" style="margin-top:16px;"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="talexand88/nvidia-academy-foundations"
+            data-repo-id="__GISCUS_REPO_ID__"
+            data-category="Page comments"
+            data-category-id="__GISCUS_CATEGORY_ID__"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+
 </main>
 
 <footer class="portal-footer">
   <div class="footer-grid">
     <div>
-      <h4>NVIDIA Academy Foundations</h4>
+      <h4>NVIDIA Academy Visual Foundations</h4>
       <div>v0.1 Draft · June 2026</div>
     </div>
     <div>
