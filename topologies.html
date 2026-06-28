@@ -232,7 +232,7 @@
 
   <div class="topic-hero">
     <h1>Topologies</h1>
-    <p class="subtitle">How to draw network, system, and infrastructure diagrams — node shapes, connection styles, hierarchies, framing, and labels.</p>
+    <p class="subtitle">How to draw network, system, and infrastructure diagrams. Sourced from Unit 01 (icon set) and Unit 10 (Leaf-Spine, Fat-tree, Dragonfly+, Torus 3D).</p>
   </div>
   <nav class="topic-nav">
     <a href="typography.html">Typography</a>
@@ -245,10 +245,6 @@
     <a href="patterns.html">Patterns</a>
     <a href="topologies.html" class="active">Topologies</a>
   </nav>
-
-  <div class="draft-banner">
-    <strong>Draft.</strong> This page captures the working idea using the canonical Academy InfiniBand fat-tree as the anchor sample. The spec details below are placeholders — they'll firm up as we collect more diagrams across course content.
-  </div>
 
   <h2 class="spec-h2">The Anchor Sample — InfiniBand Fat-tree</h2>
   <div class="topo-frame">
@@ -376,98 +372,346 @@
   </div>
   <div class="summary-note">A three-tier fat-tree: spine (top), leaf (middle), hosts (bottom). Container framed in cyan with the fabric name in NVIDIA Green at the top-left. Switches use a bidirectional-arrow glyph; hosts use a rack-slot glyph. Connections are thin neutral lines that sit behind the nodes.</div>
 
-  <h2 class="spec-h2">Node Vocabulary — Proposed</h2>
-  <div class="node-grid">
+  <h2 class="spec-h2">The Four Canonical Topologies</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 16px;max-width:65ch;">From Unit 10. Pick the one that matches your fabric type and follow its layout rules.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:20px;margin:16px 0 24px;">
+
+    <div style="background:var(--surface-box);border:1px solid var(--border);overflow:hidden;">
+      <div style="padding:20px;background:#fff;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 240 140" width="240" height="140">
+          <!-- Spine row (3) -->
+          <g stroke="#666" stroke-width="1.2" fill="none">
+            <line x1="60" y1="40" x2="40" y2="100"/><line x1="60" y1="40" x2="100" y2="100"/><line x1="60" y1="40" x2="160" y2="100"/><line x1="60" y1="40" x2="200" y2="100"/>
+            <line x1="120" y1="40" x2="40" y2="100"/><line x1="120" y1="40" x2="100" y2="100"/><line x1="120" y1="40" x2="160" y2="100"/><line x1="120" y1="40" x2="200" y2="100"/>
+            <line x1="180" y1="40" x2="40" y2="100"/><line x1="180" y1="40" x2="100" y2="100"/><line x1="180" y1="40" x2="160" y2="100"/><line x1="180" y1="40" x2="200" y2="100"/>
+          </g>
+          <g stroke="#111" stroke-width="1.2" fill="#fff">
+            <rect x="48" y="28" width="24" height="16"/><rect x="108" y="28" width="24" height="16"/><rect x="168" y="28" width="24" height="16"/>
+            <rect x="28" y="98" width="24" height="16"/><rect x="88" y="98" width="24" height="16"/><rect x="148" y="98" width="24" height="16"/><rect x="188" y="98" width="24" height="16"/>
+          </g>
+          <text x="222" y="40" font-family="Arial" font-size="8" fill="#666">Spine</text>
+          <text x="222" y="110" font-family="Arial" font-size="8" fill="#666">Leaf</text>
+        </svg>
+      </div>
+      <div style="padding:16px 20px;border-top:1px solid var(--border);">
+        <h3 style="font-size:16px;font-weight:500;margin:0 0 6px;">Leaf-Spine</h3>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">Two rows. Leaf switches (bottom) connect down to hosts; spine switches (top) interconnect the leaves. Every leaf connects to every spine. For larger fabrics, add a third "Super Spine / Core" row above.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface-box);border:1px solid var(--border);overflow:hidden;">
+      <div style="padding:20px;background:#fff;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 240 140" width="240" height="140">
+          <!-- Fat-tree: thicker lines at top, thinner at bottom -->
+          <g stroke="#666" fill="none">
+            <g stroke-width="2">
+              <line x1="60" y1="30" x2="40" y2="75"/><line x1="60" y1="30" x2="100" y2="75"/><line x1="60" y1="30" x2="160" y2="75"/><line x1="60" y1="30" x2="200" y2="75"/>
+              <line x1="120" y1="30" x2="40" y2="75"/><line x1="120" y1="30" x2="100" y2="75"/><line x1="120" y1="30" x2="160" y2="75"/><line x1="120" y1="30" x2="200" y2="75"/>
+              <line x1="180" y1="30" x2="40" y2="75"/><line x1="180" y1="30" x2="100" y2="75"/><line x1="180" y1="30" x2="160" y2="75"/><line x1="180" y1="30" x2="200" y2="75"/>
+            </g>
+            <g stroke-width="1">
+              <line x1="40" y1="90" x2="28" y2="118"/><line x1="40" y1="90" x2="52" y2="118"/>
+              <line x1="100" y1="90" x2="88" y2="118"/><line x1="100" y1="90" x2="112" y2="118"/>
+              <line x1="160" y1="90" x2="148" y2="118"/><line x1="160" y1="90" x2="172" y2="118"/>
+              <line x1="200" y1="90" x2="188" y2="118"/><line x1="200" y1="90" x2="212" y2="118"/>
+            </g>
+          </g>
+          <g stroke="#111" stroke-width="1.2" fill="#fff">
+            <rect x="48" y="18" width="24" height="14"/><rect x="108" y="18" width="24" height="14"/><rect x="168" y="18" width="24" height="14"/>
+            <rect x="28" y="75" width="24" height="14"/><rect x="88" y="75" width="24" height="14"/><rect x="148" y="75" width="24" height="14"/><rect x="188" y="75" width="24" height="14"/>
+            <rect x="20" y="118" width="16" height="18"/><rect x="44" y="118" width="16" height="18"/>
+            <rect x="80" y="118" width="16" height="18"/><rect x="104" y="118" width="16" height="18"/>
+            <rect x="140" y="118" width="16" height="18"/><rect x="164" y="118" width="16" height="18"/>
+            <rect x="180" y="118" width="16" height="18"/><rect x="204" y="118" width="16" height="18"/>
+          </g>
+        </svg>
+      </div>
+      <div style="padding:16px 20px;border-top:1px solid var(--border);">
+        <h3 style="font-size:16px;font-weight:500;margin:0 0 6px;">Fat-tree</h3>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">Hierarchical tree where links near the top are "fatter" (higher bandwidth). Show by drawing the top tier at 2 pt stroke and the bottom tier at 1 pt. Visually communicates the bandwidth asymmetry.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface-box);border:1px solid var(--border);overflow:hidden;">
+      <div style="padding:20px;background:#fff;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 240 140" width="240" height="140">
+          <!-- Three groups, full mesh between them -->
+          <g stroke="#666" stroke-width="1" fill="none">
+            <!-- intra-group bipartite (gray) -->
+            <line x1="36" y1="22" x2="24" y2="50"/><line x1="36" y1="22" x2="48" y2="50"/>
+            <line x1="200" y1="22" x2="188" y2="50"/><line x1="200" y1="22" x2="212" y2="50"/>
+            <line x1="118" y1="100" x2="104" y2="124"/><line x1="118" y1="100" x2="132" y2="124"/>
+          </g>
+          <g stroke="#76B900" stroke-width="1.5" fill="none">
+            <!-- inter-group mesh -->
+            <line x1="36" y1="22" x2="200" y2="22"/>
+            <line x1="36" y1="22" x2="118" y2="100"/>
+            <line x1="200" y1="22" x2="118" y2="100"/>
+          </g>
+          <g stroke="#111" stroke-width="1.2" fill="#fff">
+            <!-- group 1 (top-left) -->
+            <rect x="26" y="14" width="20" height="12"/>
+            <rect x="14" y="46" width="20" height="12"/><rect x="38" y="46" width="20" height="12"/>
+            <!-- group 2 (top-right) -->
+            <rect x="190" y="14" width="20" height="12"/>
+            <rect x="178" y="46" width="20" height="12"/><rect x="202" y="46" width="20" height="12"/>
+            <!-- group 3 (bottom) -->
+            <rect x="108" y="92" width="20" height="12"/>
+            <rect x="94" y="124" width="20" height="12"/><rect x="122" y="124" width="20" height="12"/>
+          </g>
+          <text x="90" y="62" font-family="Arial" font-size="7" fill="#76B900" font-weight="700">Inter-group</text>
+          <text x="90" y="71" font-family="Arial" font-size="7" fill="#76B900" font-weight="700">full mesh</text>
+        </svg>
+      </div>
+      <div style="padding:16px 20px;border-top:1px solid var(--border);">
+        <h3 style="font-size:16px;font-weight:500;margin:0 0 6px;">Dragonfly+</h3>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">Groups of leaf-spine sub-fabrics, connected to each other in a full mesh. Inter-group lines in NVIDIA Green, intra-group lines in neutral gray. Requires adaptive routing.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface-box);border:1px solid var(--border);overflow:hidden;">
+      <div style="padding:20px;background:#fff;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 240 160" width="240" height="160">
+          <!-- 8 switches in a 2x2x2 grid (isometric), three-color rings showing wrap-around -->
+          <!-- Ring colors: X=green, Y=garnet, Z=blue -->
+          <g fill="none" stroke-width="1.5">
+            <!-- X (green) rings -->
+            <ellipse cx="120" cy="40" rx="80" ry="12" stroke="#76B900"/>
+            <ellipse cx="120" cy="120" rx="80" ry="12" stroke="#76B900"/>
+            <!-- Y (garnet) rings -->
+            <ellipse cx="60" cy="80" rx="14" ry="58" stroke="#890C58"/>
+            <ellipse cx="180" cy="80" rx="14" ry="58" stroke="#890C58"/>
+            <!-- Z (blue) — vertical wraps -->
+            <path d="M60 30 Q40 80 60 130" stroke="#0071C5"/>
+            <path d="M180 30 Q200 80 180 130" stroke="#0071C5"/>
+          </g>
+          <!-- Switches at the 4 corners visible -->
+          <g stroke="#111" stroke-width="1.2" fill="#fff">
+            <rect x="48" y="22" width="24" height="16"/>
+            <rect x="168" y="22" width="24" height="16"/>
+            <rect x="48" y="112" width="24" height="16"/>
+            <rect x="168" y="112" width="24" height="16"/>
+          </g>
+          <!-- Axis labels -->
+          <text x="115" y="14" font-family="Arial" font-size="8" fill="#76B900" font-weight="700">+x</text>
+          <text x="40" y="80" font-family="Arial" font-size="8" fill="#890C58" font-weight="700">+y</text>
+          <text x="14" y="80" font-family="Arial" font-size="8" fill="#0071C5" font-weight="700">+z</text>
+        </svg>
+      </div>
+      <div style="padding:16px 20px;border-top:1px solid var(--border);">
+        <h3 style="font-size:16px;font-weight:500;margin:0 0 6px;">Torus 3D</h3>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">3D grid with wrap-around connections in three dimensions. NVIDIA Green for X rings, Garnet for Y, CPU Blue for Z. Switches drawn as isometric cubes when scale allows. Coordinate labels at the corners.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="spec-h2">The Canonical Icon Set</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 16px;max-width:65ch;">Twelve approved node types from <strong>Unit 01 slide 20</strong>. All are 2D line drawings on white, drawn from PowerPoint shapes. For 3D scenes (Torus and similar), the switch is redrawn as an isometric cube with the same arrow glyph on the front face.</p>
+
+  <div class="node-grid" style="grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));">
+
     <div class="node-card">
-      <div class="vis"><div class="node-switch"><svg viewBox="0 0 26 14" width="22" height="12"><g stroke="#111" stroke-width="1" fill="none"><path d="M3 4 L23 4 M5 2 L3 4 L5 6 M21 2 L23 4 L21 6"/><path d="M3 10 L23 10 M5 8 L3 10 L5 12 M21 8 L23 10 M21 12 L23 10"/></g></svg></div></div>
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><rect x="2" y="2" width="56" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/><g stroke="#111" stroke-width="1.2" fill="none"><path d="M10 14 L46 14 M14 11 L10 14 L14 17 M42 11 L46 14 L42 17"/><path d="M10 26 L46 26 M14 23 L10 26 L14 29 M42 23 L46 26 L42 29"/></g></svg>
+      </div>
       <div class="name">Switch</div>
-      <div class="desc">White fill, 1.5 pt black stroke, bidirectional-arrow glyph centered.</div>
+      <div class="desc">White fill, 1.5 pt black stroke, bidirectional arrows.</div>
     </div>
+
     <div class="node-card">
-      <div class="vis"><div class="node-server"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div></div>
-      <div class="name">Server / host rack</div>
-      <div class="desc">Taller rectangle, white fill, slot lines inside indicating rack U positions.</div>
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><rect x="2" y="2" width="56" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/><g stroke="#111" stroke-width="1.2" fill="none"><path d="M10 14 L46 14 M14 11 L10 14 L14 17 M42 11 L46 14 L42 17"/><path d="M10 26 L46 26 M14 23 L10 26 L14 29 M42 23 L46 26 L42 29"/></g><rect x="40" y="-2" width="22" height="12" fill="#76B900"/><text x="51" y="7" text-anchor="middle" font-family="Arial" font-size="8" font-weight="700" fill="#000">SM</text></svg>
+      </div>
+      <div class="name">Switch with SM</div>
+      <div class="desc">Switch + small green "SM" badge. One per fabric.</div>
     </div>
+
     <div class="node-card">
-      <div class="vis"><div class="node-gpu">GPU</div></div>
-      <div class="name">GPU</div>
-      <div class="desc">NVIDIA-green stroke and tint, monospace label. Reserved for GPU-specific nodes.</div>
+      <div class="vis">
+        <svg viewBox="0 0 40 60" width="40" height="60"><rect x="2" y="2" width="36" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/><g font-family="monospace" font-size="6" fill="#666" text-anchor="middle"><text x="20" y="14">- - -</text><text x="20" y="22">- - -</text><text x="20" y="30">- - -</text><text x="20" y="38">- - -</text><text x="20" y="46">- - -</text><text x="20" y="54">- - -</text></g></svg>
+      </div>
+      <div class="name">Server</div>
+      <div class="desc">Tall rectangle, horizontal slot rows of "- - -".</div>
     </div>
+
     <div class="node-card">
-      <div class="vis"><div style="width:50px;height:50px;border:1.5px solid #111;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;color:#111;">·</div></div>
-      <div class="name">Endpoint / dot</div>
-      <div class="desc">For abstract nodes (clients, sensors) where shape doesn't matter — small circle.</div>
+      <div class="vis">
+        <svg viewBox="0 0 40 60" width="40" height="60"><rect x="2" y="2" width="36" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/><g font-family="monospace" font-size="6" fill="#666" text-anchor="middle"><text x="20" y="14">- - -</text><text x="20" y="22">- - -</text><text x="20" y="30">- - -</text><text x="20" y="38">- - -</text><text x="20" y="46">- - -</text><text x="20" y="54">- - -</text></g><rect x="22" y="-2" width="22" height="12" fill="#76B900"/><text x="33" y="7" text-anchor="middle" font-family="Arial" font-size="8" font-weight="700" fill="#000">SM</text></svg>
+      </div>
+      <div class="name">Server with SM</div>
+      <div class="desc">Server running the Subnet Manager.</div>
     </div>
-  </div>
-  <div class="pending">
-    <div class="ptag">Pending</div>
-    <h3>Node Spec To Firm Up</h3>
-    <ul>
-      <li><strong>Exact dimensions</strong> in pt for PowerPoint and px for After Effects, per node type.</li>
-      <li><strong>Inside glyphs</strong> — the canonical bidirectional-arrow for switches, the rack-slot pattern for hosts. Pull from the icon library where possible.</li>
-      <li><strong>When to use which</strong> — switch vs. router vs. NIC, server rack vs. single host, GPU vs. CPU node.</li>
-      <li><strong>Sizing relative to the canvas</strong> — what's a "small" topology (≤ 12 nodes), what's a "dense" one.</li>
-    </ul>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><rect x="2" y="2" width="56" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="30" cy="20" r="11" fill="none" stroke="#111" stroke-width="1.2"/><g stroke="#111" stroke-width="1.2" fill="none"><path d="M20 20 L40 20 M24 17 L20 20 L24 23 M36 17 L40 20 L36 23"/></g></svg>
+      </div>
+      <div class="name">Router</div>
+      <div class="desc">Switch frame with a circle inside, single bidirectional arrow.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 50 40" width="50" height="40"><rect x="6" y="14" width="38" height="14" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="14" cy="21" r="2" fill="#111"/><circle cx="36" cy="21" r="2" fill="#111"/><path d="M4 21 L8 21 M42 21 L48 21" stroke="#111" stroke-width="1.5"/></svg>
+      </div>
+      <div class="name">HCA</div>
+      <div class="desc">Host Channel Adapter — small rectangle with two ports.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><path d="M14 28 Q6 28 6 21 Q6 14 14 14 Q14 6 24 7 Q34 4 40 10 Q52 9 52 19 Q56 21 54 28 Z" fill="#fff" stroke="#111" stroke-width="1.5"/></svg>
+      </div>
+      <div class="name">Network cloud</div>
+      <div class="desc">Cloud silhouette for external networks.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 40 50" width="40" height="50"><ellipse cx="20" cy="8" rx="14" ry="4" fill="#fff" stroke="#111" stroke-width="1.5"/><path d="M6 8 L6 42 Q6 46 20 46 Q34 46 34 42 L34 8" fill="#fff" stroke="#111" stroke-width="1.5"/><ellipse cx="20" cy="20" rx="14" ry="3" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="20" cy="32" rx="14" ry="3" fill="none" stroke="#111" stroke-width="1"/></svg>
+      </div>
+      <div class="name">Storage</div>
+      <div class="desc">Stacked disks. For storage arrays / SAN endpoints.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><rect x="2" y="2" width="56" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/><g stroke="#111" stroke-width="1.2" fill="none"><path d="M10 20 L46 20 M14 17 L10 20 L14 23 M42 17 L46 20 L42 23"/></g><text x="30" y="34" text-anchor="middle" font-family="Arial" font-size="7" font-weight="700" fill="#666">GW</text></svg>
+      </div>
+      <div class="name">Gateway</div>
+      <div class="desc">Connects InfiniBand to Ethernet or another fabric.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><rect x="2" y="2" width="56" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="30" cy="20" r="8" fill="none" stroke="#111" stroke-width="1.5"/><path d="M30 12 L30 20 L35 23" stroke="#111" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="name">Monitoring</div>
+      <div class="desc">Monitoring / telemetry appliance.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 40" width="60" height="40"><rect x="2" y="2" width="56" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/><g stroke="#111" stroke-width="1.2" fill="none"><path d="M10 14 L46 14 M14 11 L10 14 L14 17 M42 11 L46 14 L42 17"/><path d="M10 26 L46 26 M14 23 L10 26 L14 29 M42 23 L46 26 L42 29"/></g><rect x="40" y="-2" width="22" height="12" fill="#76B900"/><text x="51" y="7" text-anchor="middle" font-family="Arial" font-size="8" font-weight="700" fill="#000">SM</text><text x="30" y="36" text-anchor="middle" font-family="Arial" font-size="6" font-weight="500" fill="#666">UFM</text></svg>
+      </div>
+      <div class="name">UFM with SM</div>
+      <div class="desc">Unified Fabric Manager appliance with embedded Subnet Manager.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 50" width="60" height="50"><circle cx="30" cy="14" r="6" fill="none" stroke="#111" stroke-width="1.5"/><path d="M14 44 Q14 28 30 28 Q46 28 46 44" fill="none" stroke="#111" stroke-width="1.5"/></svg>
+      </div>
+      <div class="name">Fabric Admin</div>
+      <div class="desc">A person — the human operator of the fabric.</div>
+    </div>
+
+    <div class="node-card">
+      <div class="vis">
+        <svg viewBox="0 0 60 50" width="60" height="50"><g fill="#fff" stroke="#111" stroke-width="1.5"><polygon points="14,30 30,38 30,18 14,10"/><polygon points="14,10 30,18 46,10 30,2" opacity="0.92"/><polygon points="30,18 46,10 46,30 30,38" opacity="0.7"/></g><g stroke="#111" stroke-width="0.8" fill="none"><path d="M18 22 L30 28 M22 24 L34 30 M19 19 L31 25 M23 21 L35 27"/></g></svg>
+      </div>
+      <div class="name">Switch (3D)</div>
+      <div class="desc">Isometric cube variant. Use only in 3D scenes — Torus and similar.</div>
+    </div>
+
   </div>
 
-  <h2 class="spec-h2">Connection Styles — Proposed</h2>
+  <div class="summary-note" style="margin-top:24px;">
+    <strong>Sizing.</strong> 56 × 36 pt for switches in a small topology (≤ 12 nodes), scale down to 40 × 26 pt for dense layouts (24+ nodes). Server racks scale taller, never wider — keep the slot-stripe pattern visible. Don't introduce new icons; if a needed node type isn't here, file a comment and we'll add it.
+  </div>
+
+  <h2 class="spec-h2">Connection Styles</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 16px;max-width:65ch;">Lines do two things: show structure (every diagram) and distinguish dimensions or roles (multi-color diagrams like Torus 3D and Dragonfly+).</p>
+
+  <h3 style="font-size:16px;font-weight:500;margin:24px 0 10px;color:var(--text-primary);">Line weight &amp; color</h3>
+  <div class="spec-table-wrap" style="background:var(--surface-box);border:1px solid var(--border);overflow:hidden;">
+    <table class="spec-table" style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="background:var(--surface-section);text-align:left;padding:12px 16px;font-size:12px;color:var(--text-secondary);font-weight:500;border-bottom:1px solid var(--border);">Use</th>
+          <th style="background:var(--surface-section);text-align:left;padding:12px 16px;font-size:12px;color:var(--text-secondary);font-weight:500;border-bottom:1px solid var(--border);">Stroke</th>
+          <th style="background:var(--surface-section);text-align:left;padding:12px 16px;font-size:12px;color:var(--text-secondary);font-weight:500;border-bottom:1px solid var(--border);">Color</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Default link</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">1.2 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);"><span style="display:inline-block;width:16px;height:16px;background:#757575;vertical-align:middle;margin-right:6px;"></span>gray-500</td></tr>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Highlight / hot path</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">2 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);"><span style="display:inline-block;width:16px;height:16px;background:#76B900;vertical-align:middle;margin-right:6px;"></span>NVIDIA Green</td></tr>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Dimension / role · 1st</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">1.5 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);"><span style="display:inline-block;width:16px;height:16px;background:#76B900;vertical-align:middle;margin-right:6px;"></span>NVIDIA Green</td></tr>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Dimension / role · 2nd</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">1.5 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);"><span style="display:inline-block;width:16px;height:16px;background:#890C58;vertical-align:middle;margin-right:6px;"></span>Garnet #890C58</td></tr>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Dimension / role · 3rd</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">1.5 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);"><span style="display:inline-block;width:16px;height:16px;background:#0071C5;vertical-align:middle;margin-right:6px;"></span>CPU Blue #0071C5</td></tr>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Fat-tree top tier</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">2 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">gray-500</td></tr>
+        <tr><td style="padding:12px 16px;border-bottom:1px solid var(--border);">Fat-tree bottom tier</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">1 pt</td><td style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:var(--font-mono);">gray-500</td></tr>
+        <tr><td style="padding:12px 16px;">Directional flow</td><td style="padding:12px 16px;font-family:var(--font-mono);">1.2 pt + arrowhead</td><td style="padding:12px 16px;font-family:var(--font-mono);">gray-500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:500;margin:24px 0 10px;color:var(--text-primary);">Shape rules</h3>
+  <ul style="font-size:14px;color:var(--text-secondary);line-height:1.7;padding-left:22px;max-width:72ch;margin:0 0 24px;">
+    <li><strong style="color:var(--text-primary);">Straight</strong> for hierarchical layouts — Leaf-Spine, Fat-tree, Dragonfly+ bipartite groups.</li>
+    <li><strong style="color:var(--text-primary);">Curved</strong> for wrap-around connections — Torus rings, where the line has to bend back to the opposite side.</li>
+    <li><strong style="color:var(--text-primary);">Crossings overlap</strong> — don't draw line "hops". Cleaner to let lines visually cross. If too many crossings make it unreadable, the diagram is too dense; split it.</li>
+    <li><strong style="color:var(--text-primary);">No arrowheads</strong> on physical fabric links — connections are bidirectional by definition. Reserve arrowheads for routing flows.</li>
+    <li><strong style="color:var(--text-primary);">Bundle notation</strong> — when one line represents N parallel links, label the line "<code style="font-family:var(--font-mono);">×N</code>" in small gray text rather than drawing N lines.</li>
+  </ul>
+
+  <h2 class="spec-h2">Framing &amp; Labels</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 16px;max-width:65ch;">When the diagram represents a <em>named</em> subsystem — a fabric, a cluster, a pod — bracket it in a 2 pt cyan frame and put the name in NVIDIA Green at the top-left inside the frame. Conceptual / illustrative diagrams skip the frame.</p>
+
+  <div class="anatomy">
+    <div class="anatomy-card">
+      <h3>Frame</h3>
+      <ul>
+        <li><strong>Stroke</strong> — 2 pt, <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:12px;">#6BB8C7</code> (sample cyan).</li>
+        <li><strong>Fill</strong> — white (#FFFFFF).</li>
+        <li><strong>Padding</strong> — 28 pt around the topology graphics.</li>
+        <li><strong>Title position</strong> — top-left, inset 14 pt from the frame edges.</li>
+        <li><strong>Title color</strong> — NVIDIA Green, Bold 16 pt.</li>
+        <li><strong>Multiple frames</strong> — adjacent (not nested). For pod-of-pods, render each pod as its own framed unit with a short cyan connector between them.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>Labels inside the diagram</h3>
+      <ul>
+        <li><strong>Switch names</strong> — short: SW-A, SW-B, SW-C. Not full inventory IDs.</li>
+        <li><strong>Role labels</strong> — off to the side: "Leaf / Edge", "Spine / Core", "Super Spine / Core".</li>
+        <li><strong>Host labels</strong> — generic "Host / End Node" unless the role matters.</li>
+        <li><strong>SM badge</strong> — small "SM" tag on the switch hosting the Subnet Manager. One per fabric.</li>
+        <li><strong>3D coordinates</strong> — +x / −x, +y / −y, +z / −z at the diagram corners (Torus and other 3D layouts).</li>
+        <li><strong>Link callouts</strong> — "Internal Links" vs "External Links" pointed at representative line bundles with thin gray leader lines.</li>
+        <li><strong>Group brackets</strong> — curly braces or vertical bars to enclose a tier of nodes when the tier needs a name.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">In PowerPoint &amp; After Effects</h2>
+  <div class="anatomy">
+    <div class="anatomy-card">
+      <h3>PowerPoint</h3>
+      <ul>
+        <li><strong>Vector only</strong> — build with PowerPoint shapes, not pasted bitmaps. Switches scale; raster icons don't.</li>
+        <li><strong>Node text</strong> — NVIDIA Sans Bold 18 pt for switch names (SW-A), 16 pt for role labels (Leaf / Edge), 14 pt for host labels.</li>
+        <li><strong>Lines</strong> — 1.2 pt stroke, no glow, no shadow. Send connections to back so they sit behind nodes.</li>
+        <li><strong>Coordinate labels</strong> (3D) — 14 pt, NVIDIA Sans Medium, positioned just outside the diagram frame on the matching axis.</li>
+        <li><strong>Canvas</strong> — leave a 1-in margin from the master title to the top edge of the topology frame.</li>
+      </ul>
+    </div>
+    <div class="anatomy-card">
+      <h3>After Effects</h3>
+      <ul>
+        <li><strong>Animate by tier</strong> — spines fade in first (220 ms), then leaves (180 ms, 80 ms after spines), then hosts (160 ms, 80 ms after leaves), then connection lines draw on (320 ms total, staggered 20 ms per pair).</li>
+        <li><strong>Hold the resolved diagram</strong> for at least 2 seconds before transitioning out so the viewer can read it.</li>
+        <li><strong>Highlight a route</strong> by re-coloring its lines NVIDIA Green at full opacity while dimming the rest to 30%.</li>
+        <li><strong>Don't rotate</strong> 3D topologies during the explanation — keep one camera angle fixed. Rotation belongs on a separate "spin" beat, not while a label is being read.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="spec-h2">Source Decks</h2>
   <div class="summary-note">
-    Lines stay thin, neutral gray, and straight where possible. The point is the structure, not the lines themselves.
-    <ul style="margin-top:10px;padding-left:22px;font-size:14px;line-height:1.65;color:var(--text-secondary);">
-      <li><strong>Default link</strong> — 1.2 pt, <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:12px;">gray-500</code>, no arrowhead.</li>
-      <li><strong>Highlighted / hot path</strong> — 2 pt, NVIDIA Green, no arrowhead.</li>
-      <li><strong>Directional flow</strong> — 1.2 pt with single arrowhead at the destination, only when direction matters.</li>
-      <li><strong>Aggregation / bundle</strong> — 2 pt parallel pair, when a single line represents multiple links.</li>
-    </ul>
-  </div>
-  <div class="pending">
-    <div class="ptag">Pending</div>
-    <h3>Connection Spec To Firm Up</h3>
-    <ul>
-      <li>Curve vs. straight — when (if ever) to use a curve.</li>
-      <li>Crossings — should crossing lines hop or simply overlap?</li>
-      <li>Labels on lines — bandwidth, protocol, "n × link"? Where do they sit?</li>
-      <li>Color usage beyond default + hot — is blue for data, green for control valid, or do we keep it monochrome?</li>
-    </ul>
-  </div>
-
-  <h2 class="spec-h2">Framing &amp; Labels — Proposed</h2>
-  <div class="summary-note">
-    The InfiniBand sample uses a cyan-bordered rounded rectangle framing the whole topology, with the fabric name in NVIDIA Green at the top-left. Framing is optional — used when the topology represents a named subsystem (fabric, cluster, pod) that needs to be visually bracketed.
-  </div>
-  <div class="pending">
-    <div class="ptag">Pending</div>
-    <h3>Framing Spec To Firm Up</h3>
-    <ul>
-      <li><strong>Frame color</strong> — cyan in the sample (~<code style="font-family:var(--font-mono);background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;font-size:12px;">#6BB8C7</code>). Use one of the secondary palette colors, or define a dedicated "topology frame" token?</li>
-      <li><strong>Title color</strong> — NVIDIA Green in the sample. Always green? Or match the frame?</li>
-      <li><strong>Title position</strong> — top-left inset is the convention.</li>
-      <li><strong>Multiple frames</strong> — how do nested or adjacent frames look?</li>
-      <li><strong>Caption / source</strong> — where does the credit line go?</li>
-    </ul>
-  </div>
-
-  <h2 class="spec-h2">In PowerPoint &amp; After Effects — Proposed</h2>
-  <div class="pending">
-    <div class="ptag">Pending</div>
-    <h3>Production Spec To Firm Up</h3>
-    <ul>
-      <li><strong>PowerPoint</strong> — build from shapes (not raster). Use the master template's grid for column alignment. Node text in NVIDIA Sans 18 pt; line stroke 1.2 pt.</li>
-      <li><strong>After Effects</strong> — animate by tier (spine → leaf → hosts), not by individual node. Hold for 2 seconds after the full topology resolves before transitioning.</li>
-      <li><strong>Static asset library</strong> — do we ship a set of pre-drawn node shapes (.pptx + .ai) in the Assets section for producers to copy-paste from?</li>
-    </ul>
-  </div>
-
-  <h2 class="spec-h2">Open Questions</h2>
-  <div class="pending">
-    <div class="ptag">Discussion</div>
-    <h3>Things We'd Like Outside Input On</h3>
-    <ul>
-      <li>Should this guide cover <strong>system-architecture</strong> diagrams (CPU / GPU / NIC / storage block diagrams) as well, or only network topologies?</li>
-      <li>Is there a canonical icon set for non-network nodes (storage, accelerator, edge device) we should adopt before drawing custom shapes?</li>
-      <li>For large topologies (32+ nodes), do we use a different "summary" style — collapsed bundles, "N × server" notation — instead of drawing every node?</li>
-      <li>How does this relate to <a href="charts.html">Charts &amp; data viz</a>? Topology = structure; charts = data. Worth a callout on each page pointing at the other.</li>
-    </ul>
+    The rules on this page are mined from two canonical InfiniBand course decks: <strong>Unit 01 — Introduction to InfiniBand</strong> (icon set, fabric components) and <strong>Unit 10 — Topologies &amp; Routing</strong> (Leaf-Spine, Fat-tree, Dragonfly+, Torus 3D, routing engines). When in doubt, those decks are the reference; when they conflict with this page, file a comment below and we'll reconcile.
   </div>
 
 
