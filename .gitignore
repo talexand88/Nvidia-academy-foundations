@@ -19,6 +19,18 @@ Desktop.ini
 .~lock.*
 *.tmp
 
+# Local database and server-managed storage
+*.sqlite
+*.sqlite3
+*.db
+server/data/
+storage/assets/**
+storage/previews/**
+storage/tmp/**
+!storage/assets/.gitkeep
+!storage/previews/.gitkeep
+!storage/tmp/.gitkeep
+
 # Orphan files from earlier portal iteration (delete manually if present)
 browse.html
 governance.html

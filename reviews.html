@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reviews - NVIDIA Academy Visual Foundations</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<link rel="stylesheet" href="shared/review.css">
+<link rel="stylesheet" href="shared/reviews-page.css">
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">N</span>
+    <span>
+      <span class="brand-text">NVIDIA Academy</span>
+      <span class="brand-sub" style="display:block;">Visual Foundations</span>
+    </span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="content.html">Content</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="assets.html">Assets</a>
+    <a href="case-studies.html">Case studies</a>
+    <a href="reviews.html" class="active">Reviews</a>
+    <a href="motion.html" class="placeholder">Motion - v2</a>
+  </nav>
+  <form class="header-search-wrap" onsubmit="event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.q.value);">
+    <input name="q" type="text" class="header-search" placeholder="Search...">
+  </form>
+</header>
+
+<main class="portal-main">
+  <section class="reviews-hero">
+    <div>
+      <h1>Reviews</h1>
+      <p>Review comments from across the portal, grouped as cards with status, priority, target location, and AI-ready handoff.</p>
+    </div>
+    <a class="reviews-link-button" href="index.html">Back to site</a>
+  </section>
+
+  <section class="reviews-summary" data-reviews-summary></section>
+
+  <section class="reviews-toolbar">
+    <input class="reviews-search" data-review-search type="search" placeholder="Search reviews">
+    <select class="reviews-select" data-review-status aria-label="Status">
+      <option value="all">All statuses</option>
+      <option value="open">Open</option>
+      <option value="resolved">Resolved</option>
+    </select>
+    <select class="reviews-select" data-review-priority aria-label="Priority">
+      <option value="all">All priorities</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+  </section>
+
+  <section class="reviews-actions">
+    <div class="reviews-actions-left">
+      <button class="reviews-button" type="button" data-review-select-visible>Select visible</button>
+      <button class="reviews-button" type="button" data-review-clear-selection>Clear selection</button>
+      <span class="reviews-selected" data-review-selected-count>0 selected</span>
+    </div>
+    <div class="reviews-actions-right">
+      <button class="reviews-button primary" type="button" data-review-create-report disabled>Create report for AI agent</button>
+    </div>
+  </section>
+
+  <section class="reviews-list" data-reviews-list></section>
+
+  <section class="reviews-report" data-review-report hidden>
+    <div class="reviews-report-head">
+      <div>
+        <h2>AI agent report</h2>
+        <p>Edit the report before copying it to your agent.</p>
+      </div>
+      <button class="reviews-button primary" type="button" data-review-copy-report>Copy report</button>
+    </div>
+    <textarea class="reviews-report-output" data-review-report-output></textarea>
+  </section>
+</main>
+
+<footer class="portal-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>NVIDIA Academy Visual Foundations</h4>
+      <div>Review workspace</div>
+    </div>
+    <div>
+      <h4>System</h4>
+      <a href="index.html">Home</a>
+      <a href="content.html">Content</a>
+      <a href="assets.html">Assets</a>
+    </div>
+    <div>
+      <h4>Toolkit</h4>
+      <a href="pattern-tree.html">Pattern picker</a>
+      <a href="screenshot-review.html">Screenshot review</a>
+      <a href="pptx-validator.html">PowerPoint validator</a>
+    </div>
+    <div>
+      <h4>Contribute</h4>
+      <a href="mailto:academy-design@nvidia.com">Suggest a change</a>
+    </div>
+  </div>
+</footer>
+
+<script src="shared/review.js"></script>
+<script src="shared/reviews-page.js"></script>
+</body>
+</html>

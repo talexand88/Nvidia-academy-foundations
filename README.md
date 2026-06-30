@@ -40,6 +40,17 @@ Then visit <http://localhost:8000>.
 3. On GitHub, go to repo **Settings → Pages**, set **Source** to the `main` branch / root, and save.
 4. Within a minute, the site is live at `https://<your-username>.github.io/<your-repo>/`.
 
+## Content platform plan
+
+The current portal is static HTML. The next version can add a self-hosted backend without using a third-party file storage service:
+
+- SQLite stores page, asset, download, and review-comment metadata.
+- Server disk stores uploaded and downloadable files.
+- The database stores relative paths to files, not file contents.
+- Review comments anchor to stable page targets with `data-review-id`.
+
+See `docs/content-storage-architecture.md`, `server/schema.sql`, and `storage/README.md`.
+
 ## File structure
 
 ```
